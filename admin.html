@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>APPÉA 🍎 Admin Panel</title>
+<style>
+      :root {
+        --bg:#faf7f4; --sidebar-bg:#1a1008; --sidebar-hover:#2e1c0e;
+        --primary:#c0392b; --primary-light:#e8c4b8; --primary-soft:#f5e6e0;
+        --accent:#8B1A1A; --accent2:#d4a017;
+        --text:#2c1810; --text-light:#7a5c50; --border:#e8d5c8; --card:#ffffff;
+        --green:#2e7d32; --green-light:#e8f5e9;
+        --yellow:#f59e0b; --yellow-light:#fef3c7;
+        --blue:#5c6bc0; --blue-light:#e8eaf6;
+        --red:#c62828; --red-light:#ffebee;
+        --shadow:0 2px 12px rgba(192,57,43,0.08);
+        --shadow-md:0 4px 24px rgba(192,57,43,0.12);
+        --radius:14px; --radius-sm:8px;
+      }
+      *{margin:0;padding:0;box-sizing:border-box;}
+      body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);display:flex;min-height:100vh;overflow:hidden;}
+
+      .petals-container{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;overflow:hidden;}
+      .petal{position:absolute;top:-60px;animation:petalFall linear infinite;}
+      @keyframes petalFall{0%{transform:translateY(0) rotate(0deg) translateX(0);opacity:0.8;}50%{transform:translateY(50vh) rotate(180deg) translateX(30px);opacity:0.5;}100%{transform:translateY(110vh) rotate(360deg) translateX(-20px);opacity:0;}}
+
+      .sidebar{width:240px;min-height:100vh;background:var(--sidebar-bg);display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;z-index:100;}
+      .sidebar-logo{padding:24px 20px 20px;border-bottom:1px solid rgba(255,255,255,0.08);}
+      .logo-main{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:#fff;letter-spacing:1px;}
+      .logo-sub{font-size:10px;color:rgba(240,230,211,0.5);margin-top:3px;line-height:1.5;}
+      .sidebar-label{font-size:10px;letter-spacing:2px;color:rgba(240,230,211,0.35);padding:20px 20px 8px;text-transform:uppercase;}
+      .nav-item{display:flex;align-items:center;gap:12px;padding:12px 20px;color:rgba(240,230,211,0.65);cursor:pointer;transition:all 0.2s;border-left:3px solid transparent;font-size:14px;}
+      .nav-item:hover{background:var(--sidebar-hover);color:#fff;border-left-color:var(--primary);}
+      .nav-item.active{background:rgba(192,57,43,0.2);color:#fff;border-left-color:var(--primary);}
+      .nav-icon{font-size:16px;width:20px;text-align:center;}
+      .badge{background:var(--primary);color:white;border-radius:20px;font-size:10px;padding:2px 7px;margin-left:auto;font-weight:600;}
+      .sidebar-footer{margin-top:auto;padding:16px 20px;border-top:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;gap:10px;}
+      .user-av{width:36px;height:36px;background:linear-gradient(135deg,var(--primary),var(--accent2));border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:white;flex-shrink:0;}
+      .user-name{font-size:13px;color:#fff;font-weight:500;}
+      .user-role-txt{font-size:11px;color:rgba(240,230,211,0.45);}
+      .logout-btn{background:none;border:none;cursor:pointer;color:rgba(240,230,211,0.4);font-size:16px;margin-left:auto;transition:color 0.2s;}
+      .logout-btn:hover{color:var(--primary);}
+
+      .main{margin-left:240px;flex:1;display:flex;flex-direction:column;min-height:100vh;position:relative;z-index:1;}
+      .topbar{background:var(--card);padding:16px 28px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);position:sticky;top:0;z-index:50;}
+      .page-title h1{font-family:'Playfair Display',serif;font-size:24px;font-weight:700;}
+      .page-title p{font-size:12px;color:var(--text-light);margin-top:1px;}
+      .notif-btn{position:relative;background:var(--primary-soft);border:none;width:40px;height:40px;border-radius:var(--radius-sm);cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;}
+      .notif-dot{position:absolute;top:6px;right:6px;width:8px;height:8px;background:var(--primary);border-radius:50%;border:2px solid white;}
+
+      .page{display:none;padding:24px 28px;overflow-y:auto;height:calc(100vh - 65px);}
+      .page.active{display:block;}
+
+      .stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:20px;}
+      .stat-card{background:var(--card);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow);border:1px solid var(--border);display:flex;align-items:flex-start;gap:14px;transition:transform 0.2s,box-shadow 0.2s;}
+      .stat-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-md);}
+      .stat-icon{width:44px;height:44px;border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;font-size:20px;}
+      .stat-icon.green{background:var(--green-light);}
+      .stat-icon.yellow{background:var(--yellow-light);}
+      .stat-icon.blue{background:var(--blue-light);}
+      .stat-icon.red{background:var(--red-light);}
+      .stat-label{font-size:12px;color:var(--text-light);margin-bottom:4px;}
+      .stat-value{font-size:24px;font-weight:700;font-family:'Playfair Display',serif;}
+      .stat-sub{font-size:11px;color:var(--text-light);margin-top:2px;}
+      @keyframes blink{0%,100%{opacity:1}50%{opacity:0.4}}
+      .stok-warning{animation:blink 1.5s infinite;}
+
+      .dash-charts{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+      .chart-card{background:var(--card);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow);border:1px solid var(--border);}
+      .chart-title{font-family:'Playfair Display',serif;font-size:15px;font-weight:600;margin-bottom:16px;}
+
+      .laporan-item{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid #faf0eb;}
+      .laporan-item:last-child{border-bottom:none;}
+      .laporan-bar{height:6px;background:var(--primary);border-radius:3px;}
+
+      .table-card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);border:1px solid var(--border);overflow:hidden;}
+      .table-header{padding:16px 20px;display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--border);flex-wrap:wrap;}
+      .search-input{flex:1;min-width:180px;padding:8px 14px 8px 36px;border:1px solid var(--border);border-radius:30px;font-size:13px;font-family:'DM Sans',sans-serif;background:var(--bg) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%237a5c50' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.35-4.35'/%3E%3C/svg%3E") no-repeat 12px center;outline:none;transition:border-color 0.2s;}
+      .search-input:focus{border-color:var(--primary);}
+      .filter-tabs{display:flex;gap:6px;flex-wrap:wrap;}
+      .tab-btn{padding:7px 14px;border-radius:30px;border:1px solid var(--border);background:white;font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:500;color:var(--text-light);transition:all 0.2s;}
+      .tab-btn:hover{border-color:var(--primary);color:var(--primary);}
+      .tab-btn.active{background:var(--primary);color:white;border-color:var(--primary);}
+      .btn-primary{padding:8px 16px;background:var(--primary);color:white;border:none;border-radius:30px;font-size:13px;cursor:pointer;display:flex;align-items:center;gap:6px;font-family:'DM Sans',sans-serif;font-weight:500;transition:background 0.2s,transform 0.15s;white-space:nowrap;}
+      .btn-primary:hover{background:var(--accent);transform:translateY(-1px);}
+
+      table{width:100%;border-collapse:collapse;}
+      thead th{background:#fdf5f0;padding:10px 16px;text-align:left;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;color:var(--text-light);border-bottom:1px solid var(--border);}
+      tbody tr{border-bottom:1px solid #faf0eb;transition:background 0.15s;}
+      tbody tr:hover{background:#fdf8f5;}
+      tbody tr:last-child{border-bottom:none;}
+      td{padding:12px 16px;font-size:13px;vertical-align:middle;}
+
+      .sku-badge{background:#f5ede9;color:var(--text-light);padding:2px 7px;border-radius:4px;font-size:11px;font-weight:500;font-family:monospace;}
+      .cat-badge{padding:3px 10px;border-radius:20px;font-size:11px;font-weight:500;}
+      .cat-badge.lippies{background:#fce4ec;color:#c2185b;}
+      .cat-badge.eyeshadow{background:#e8eaf6;color:#3949ab;}
+      .cat-badge.blush{background:#fff3e0;color:#e65100;}
+      .low-stock{color:var(--yellow);font-weight:700;}
+      .ok-stock{color:var(--text-light);}
+
+      .status-badge{padding:4px 10px;border-radius:20px;font-size:11px;font-weight:500;display:inline-flex;align-items:center;gap:4px;}
+      .status-badge::before{content:'';width:6px;height:6px;border-radius:50%;}
+      .status-badge.aktif{background:var(--green-light);color:var(--green);}
+      .status-badge.aktif::before{background:var(--green);}
+      .status-badge.nonaktif{background:var(--red-light);color:var(--red);}
+      .status-badge.nonaktif::before{background:var(--red);}
+      .status-badge.pending{background:var(--yellow-light);color:#b45309;}
+      .status-badge.pending::before{background:var(--yellow);}
+      .status-badge.diproses{background:var(--blue-light);color:var(--blue);}
+      .status-badge.diproses::before{background:var(--blue);}
+      .status-badge.dikirim{background:#f3e8ff;color:#7c3aed;}
+      .status-badge.dikirim::before{background:#7c3aed;}
+      .status-badge.selesai{background:var(--green-light);color:var(--green);}
+      .status-badge.selesai::before{background:var(--green);}
+      .status-badge.dibatalkan{background:var(--red-light);color:var(--red);}
+      .status-badge.dibatalkan::before{background:var(--red);}
+
+      .role-badge{padding:4px 10px;border-radius:20px;font-size:12px;font-weight:500;display:inline-block;}
+      .role-badge.admin{background:#fce4ec;color:#c2185b;}
+      .role-badge.seller{background:#fff9c4;color:#f57f17;}
+      .role-badge.customer{background:#f5ede9;color:var(--text-light);}
+
+      .action-btns{display:flex;gap:6px;align-items:center;}
+      .btn-icon{width:30px;height:30px;border-radius:var(--radius-sm);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:13px;transition:all 0.2s;}
+      .btn-icon.edit{background:#fce4ec;color:#c2185b;}
+      .btn-icon.edit:hover{background:#f48fb1;}
+      .btn-icon.del{background:var(--red-light);color:var(--red);}
+      .btn-icon.del:hover{background:#ef9a9a;}
+      .btn-icon.view{background:var(--primary-soft);color:var(--primary);}
+      .btn-icon.view:hover{background:var(--primary-light);}
+      .btn-next{padding:5px 12px;background:var(--green-light);color:var(--green);border:none;border-radius:var(--radius-sm);font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:500;transition:background 0.2s;}
+      .btn-next:hover{background:#a5d6a7;}
+      .order-id{color:var(--primary);font-weight:600;cursor:pointer;}
+      .order-id:hover{text-decoration:underline;}
+
+      .expand-btn{background:none;border:none;cursor:pointer;font-size:14px;color:var(--text-light);transition:transform 0.2s;}
+      .expand-btn.open{transform:rotate(90deg);}
+      .expand-row{background:#fdf8f5;display:none;}
+      .expand-row.open{display:table-row;}
+      .expand-inner{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px;padding:14px 20px;}
+      .shade-item{background:white;border-radius:var(--radius-sm);padding:8px 12px;border:1px solid var(--border);font-size:12px;}
+      .shade-name{font-weight:600;color:var(--text);}
+      .shade-info{color:var(--text-light);}
+
+      .master-tabs{display:flex;border-bottom:2px solid var(--border);margin-bottom:20px;}
+      .master-tab{padding:10px 20px;cursor:pointer;font-size:14px;font-weight:500;color:var(--text-light);border-bottom:2px solid transparent;margin-bottom:-2px;transition:all 0.2s;display:flex;align-items:center;gap:6px;}
+      .master-tab:hover{color:var(--primary);}
+      .master-tab.active{color:var(--primary);border-bottom-color:var(--primary);}
+      .master-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+      .master-card{background:var(--card);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow);border:1px solid var(--border);}
+      .master-card-title{font-family:'Playfair Display',serif;font-size:16px;font-weight:600;margin-bottom:16px;}
+      .category-item{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid #faf0eb;}
+      .category-item:last-child{border-bottom:none;}
+      .cat-icon{font-size:16px;color:var(--primary);}
+      .cat-name{font-size:14px;font-weight:500;}
+      .cat-count{font-size:11px;color:var(--text-light);}
+
+      .form-group{margin-bottom:14px;}
+      .form-label{font-size:12px;font-weight:500;color:var(--text-light);margin-bottom:5px;display:block;}
+      .form-input{width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:var(--radius-sm);font-size:13px;font-family:'DM Sans',sans-serif;outline:none;transition:border-color 0.2s;}
+      .form-input:focus{border-color:var(--primary);}
+
+      .user-av-sm{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;color:white;}
+
+      .modal-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.4);z-index:200;display:none;align-items:center;justify-content:center;backdrop-filter:blur(3px);}
+      .modal-overlay.open{display:flex;}
+      .modal{background:var(--card);border-radius:var(--radius);padding:28px;width:480px;max-width:95vw;max-height:85vh;overflow-y:auto;box-shadow:var(--shadow-md);animation:modalIn 0.25s ease;}
+      @keyframes modalIn{from{opacity:0;transform:translateY(-20px) scale(0.97)}to{opacity:1;transform:none}}
+      .modal-title{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;margin-bottom:20px;display:flex;justify-content:space-between;align-items:center;}
+      .modal-close{background:none;border:none;font-size:20px;cursor:pointer;color:var(--text-light);}
+      .modal-close:hover{color:var(--primary);}
+      .modal-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:20px;}
+      .btn-cancel{padding:8px 18px;background:none;border:1px solid var(--border);border-radius:30px;font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;color:var(--text-light);transition:all 0.2s;}
+      .btn-cancel:hover{border-color:var(--primary);color:var(--primary);}
+
+      .notif-panel{position:fixed;top:64px;right:16px;width:300px;background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow-md);border:1px solid var(--border);z-index:150;display:none;animation:slideDown 0.2s ease;}
+      .notif-panel.open{display:block;}
+      @keyframes slideDown{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:none}}
+      .notif-header{padding:14px 16px;border-bottom:1px solid var(--border);font-weight:600;font-size:14px;}
+      .notif-item{padding:12px 16px;border-bottom:1px solid #faf0eb;font-size:12px;color:var(--text-light);}
+      .notif-item:last-child{border-bottom:none;}
+      .notif-item strong{color:var(--text);display:block;margin-bottom:2px;font-size:13px;}
+
+      .toast{position:fixed;bottom:24px;right:24px;background:var(--sidebar-bg);color:white;padding:12px 20px;border-radius:var(--radius-sm);font-size:13px;z-index:999;display:none;box-shadow:var(--shadow-md);}
+      .toast.show{display:block;animation:toastIn 0.3s ease;}
+      @keyframes toastIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+      .order-detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;}
+      .detail-field label{font-size:11px;color:var(--text-light);font-weight:500;text-transform:uppercase;letter-spacing:0.5px;}
+      .detail-field p{font-size:14px;font-weight:500;margin-top:2px;}
+
+      .login-page{position:fixed;inset:0;background:var(--sidebar-bg);display:flex;align-items:center;justify-content:center;z-index:500;}
+      .login-box{background:var(--card);border-radius:20px;padding:40px;width:360px;box-shadow:0 20px 60px rgba(0,0,0,0.3);text-align:center;}
+      .login-logo{font-family:'Playfair Display',serif;font-size:36px;font-weight:700;color:var(--primary);margin-bottom:4px;}
+      .login-tagline{font-size:11px;color:var(--text-light);margin-bottom:28px;line-height:1.6;}
+      .login-box .form-input{margin-bottom:12px;}
+      .login-btn{width:100%;padding:11px;background:var(--primary);color:white;border:none;border-radius:var(--radius-sm);font-size:15px;font-weight:600;cursor:pointer;font-family:'Playfair Display',serif;transition:background 0.2s;}
+      .login-btn:hover{background:var(--accent);}
+      .login-err{color:var(--primary);font-size:12px;margin-top:8px;display:none;}
+      ::-webkit-scrollbar{width:5px;}
+      ::-webkit-scrollbar-thumb{background:var(--primary-light);border-radius:10px;}
+      </style>
+      </head>
+      <body>
+
+      <div class="petals-container" id="petalsContainer"></div>
+
+      <!-- LOGIN -->
+      <div class="login-page" id="loginPage">
+        <div class="login-box">
+          <div class="login-logo">APPÉA 🍎</div>
+          <div class="login-tagline">FRESH • JUICY • NATURAL GLOW<br>Inspired by the goodness of apples for a fresh, healthy glow every single day.</div>
+          <input type="text" class="form-input" id="loginUser" placeholder="Username / Email" value="admin@appea.id">
+          <input type="password" class="form-input" id="loginPass" placeholder="Password" value="admin123">
+          <button class="login-btn" onclick="doLogin()">Masuk →</button>
+          <div class="login-err" id="loginErr">Username atau password salah.</div>
+        </div>
+      </div>
+
+      <!-- SIDEBAR -->
+      <aside class="sidebar" id="sidebar" style="display:none">
+        <div class="sidebar-logo">
+          <div class="logo-main">APPÉA 🍎</div>
+          <div class="logo-sub">FRESH • JUICY • NATURAL GLOW<br>Inspired by the goodness of apples for a fresh, healthy glow every single day.</div>
+        </div>
+        <div class="sidebar-label">Menu</div>
+        <div class="nav-item active" onclick="navigate('dashboard',this)"><span class="nav-icon">📊</span> Dashboard</div>
+        <div class="nav-item" onclick="navigate('inventori',this)"><span class="nav-icon">📦</span> Inventori</div>
+        <div class="nav-item" onclick="navigate('pesanan',this)"><span class="nav-icon">🛒</span> Pesanan<span class="badge" id="pesananBadge">3</span></div>
+        <div class="nav-item" onclick="navigate('masterdata',this)"><span class="nav-icon">🗂️</span> Master Data</div>
+        <div class="nav-item" onclick="navigate('pengguna',this)"><span class="nav-icon">👥</span> Pengguna</div>
+        <div class="sidebar-footer">
+          <div class="user-av">AU</div>
+          <div>
+            <div class="user-name">Admin Utama</div>
+          </div>
+          <button class="logout-btn" onclick="doLogout()" title="Logout">⇥</button>
+        </div>
+      </aside>
+
+      <!-- MAIN -->
+      <main class="main" id="mainContent" style="display:none">
+        <div class="topbar">
+          <div class="page-title">
+            <h1 id="pageTitle">Dashboard</h1>
+            <p id="pageDate"></p>
+          </div>
+          <button class="notif-btn" onclick="toggleNotif()">🔔<span class="notif-dot"></span></button>
+        </div>
+
+        <div class="notif-panel" id="notifPanel">
+          <div class="notif-header">🔔 Notifikasi</div>
+          <div class="notif-item"><strong>Pesanan Baru - ORD-001</strong>Siti Rahayu menunggu konfirmasi</div>
+          <div class="notif-item"><strong>Stok Rendah - Petal Glow</strong>Sisa 17 unit (min 20)</div>
+          <div class="notif-item"><strong>Pesanan Baru - ORD-002</strong>Dewi Anggraini sedang diproses</div>
+          <div class="notif-item"><strong>Stok Rendah - Rosy Pink</strong>Sisa 18 unit (min 20)</div>
+        </div>
+
+        <!-- DASHBOARD -->
+        <div class="page active" id="page-dashboard">
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-icon green">📈</div>
+              <div>
+                <div class="stat-label">Total Pendapatan</div>
+                <div class="stat-value">Rp 1.365.000</div>
+                <div class="stat-sub">Dari pesanan selesai</div>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon yellow">🛒</div>
+              <div>
+                <div class="stat-label">Pesanan Aktif</div>
+                <div class="stat-value">4</div>
+                <div class="stat-sub">Pending &amp; diproses</div>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon blue">📦</div>
+              <div>
+                <div class="stat-label">Total Stok</div>
+                <div class="stat-value">1,348</div>
+                <div class="stat-sub">10 produk</div>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon red">⚠️</div>
+              <div>
+                <div class="stat-label">Stok Rendah</div>
+                <div class="stat-value stok-warning">4</div>
+                <div class="stat-sub">&lt; 20 unit per shade</div>
+              </div>
+            </div>
+          </div>
+          <div class="dash-charts">
+            <div class="chart-card">
+              <div class="chart-title">Jumlah Pesanan Bulanan</div>
+              <canvas id="chartPesanan" height="160"></canvas>
+            </div>
+            <div class="chart-card">
+              <div class="chart-title">Produk Terlaris (Qty)</div>
+              <div id="prodTerlarisList"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- INVENTORI -->
+        <div class="page" id="page-inventori">
+          <div class="table-card">
+            <div class="table-header">
+              <input type="text" class="search-input" placeholder="Cari produk..." id="invSearch" oninput="renderInv()">
+              <div class="filter-tabs">
+                <button class="tab-btn active" onclick="setInvCat('Semua',this)">Semua</button>
+                <button class="tab-btn" onclick="setInvCat('Lippies',this)">Lippies</button>
+                <button class="tab-btn" onclick="setInvCat('Eyeshadow',this)">Eyeshadow</button>
+                <button class="tab-btn" onclick="setInvCat('Blush',this)">Blush</button>
+              </div>
+              <button class="btn-primary" onclick="openModal('addProduct')">+ Produk Baru</button>
+            </div>
+            <table>
+              <thead>
+                <tr><th></th><th>Produk</th><th>SKU</th><th>Kategori</th><th>Harga</th><th>Total Stok</th><th>Stok Min</th><th>Aksi</th></tr>
+              </thead>
+              <tbody id="invBody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- PESANAN -->
+        <div class="page" id="page-pesanan">
+          <div class="table-card">
+            <div class="table-header">
+              <input type="text" class="search-input" placeholder="Cari pesanan..." id="ordSearch" oninput="renderOrd()">
+              <div class="filter-tabs">
+                <button class="tab-btn active" onclick="setOrdFilter('Semua',this)">Semua (10)</button>
+                <button class="tab-btn" onclick="setOrdFilter('Pending',this)">Pending (2)</button>
+                <button class="tab-btn" onclick="setOrdFilter('Diproses',this)">Diproses (2)</button>
+                <button class="tab-btn" onclick="setOrdFilter('Dikirim',this)">Dikirim (1)</button>
+                <button class="tab-btn" onclick="setOrdFilter('Selesai',this)">Selesai (4)</button>
+                <button class="tab-btn" onclick="setOrdFilter('Dibatalkan',this)">Dibatalkan (1)</button>
+              </div>
+            </div>
+            <table>
+              <thead>
+                <tr><th>ID Pesanan</th><th>Pelanggan</th><th>Tanggal</th><th>Item</th><th>Total</th><th>Status</th><th>Aksi</th></tr>
+              </thead>
+              <tbody id="ordBody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- MASTER DATA -->
+        <div class="page" id="page-masterdata">
+          <div class="master-tabs">
+            <div class="master-tab active" onclick="switchMaster('kategori',this)">🏷️ Kategori</div>
+            <div class="master-tab" onclick="switchMaster('brand',this)">⭐ Brand</div>
+          </div>
+          <div id="master-kategori">
+            <div class="master-grid">
+              <div class="master-card">
+                <div class="master-card-title">Daftar Kategori (<span id="katCount">3</span>)</div>
+                <div id="katList"></div>
+              </div>
+              <div class="master-card">
+                <div class="master-card-title">Tambah Kategori</div>
+                <div class="form-group"><label class="form-label">Nama Kategori</label><input type="text" class="form-input" id="newKatInput" placeholder="e.g. Foundation"></div>
+                <button class="btn-primary" onclick="addKat()">+ Tambah</button>
+              </div>
+            </div>
+          </div>
+          <div id="master-brand" style="display:none">
+            <div class="master-grid">
+              <div class="master-card">
+                <div class="master-card-title">Daftar Brand (<span id="brandCount">2</span>)</div>
+                <div id="brandList"></div>
+              </div>
+              <div class="master-card">
+                <div class="master-card-title">Tambah Brand</div>
+                <div class="form-group"><label class="form-label">Nama Brand</label><input type="text" class="form-input" id="newBrandInput" placeholder="e.g. APPÉA Core"></div>
+                <button class="btn-primary" onclick="addBrand()">+ Tambah</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PENGGUNA -->
+        <div class="page" id="page-pengguna">
+          <div class="table-card">
+            <div class="table-header">
+              <input type="text" class="search-input" placeholder="Cari pengguna..." id="userSearch" oninput="renderUsers()">
+              <div class="filter-tabs">
+                <button class="tab-btn active" onclick="setUserFilter('Semua',this)">Semua</button>
+                <button class="tab-btn" onclick="setUserFilter('Admin',this)">Admin</button>
+                <button class="tab-btn" onclick="setUserFilter('Seller',this)">Seller</button>
+                <button class="tab-btn" onclick="setUserFilter('Customer',this)">Customer</button>
+              </div>
+              <button class="btn-primary" onclick="openModal('addUser')">+ Pengguna Baru</button>
+            </div>
+            <table>
+              <thead>
+                <tr><th>Pengguna</th><th>Email</th><th>Role</th><th>Status</th><th>Bergabung</th><th>Pesanan</th></tr>
+              </thead>
+              <tbody id="userBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </main>
+
+      <!-- MODAL: Produk Baru -->
+      <div class="modal-overlay" id="modal-addProduct" onclick="closeOuter(event,'addProduct')">
+        <div class="modal">
+          <div class="modal-title">Produk Baru <button class="modal-close" onclick="closeModal('addProduct')">✕</button></div>
+          <div class="form-group"><label class="form-label">Nama Produk</label><input type="text" class="form-input" id="np-name" placeholder="Nama produk"></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+            <div class="form-group"><label class="form-label">SKU</label><input type="text" class="form-input" id="np-sku" placeholder="LIP-005"></div>
+            <div class="form-group"><label class="form-label">Kategori</label><select class="form-input" id="np-kat"><option>Lippies</option><option>Eyeshadow</option><option>Blush</option></select></div>
+            <div class="form-group"><label class="form-label">Harga (Rp)</label><input type="number" class="form-input" id="np-harga" placeholder="89000"></div>
+            <div class="form-group"><label class="form-label">Total Stok</label><input type="number" class="form-input" id="np-stok" placeholder="100"></div>
+            <div class="form-group"><label class="form-label">Stok Min</label><input type="number" class="form-input" id="np-min" placeholder="20"></div>
+          </div>
+          <div class="modal-actions">
+            <button class="btn-cancel" onclick="closeModal('addProduct')">Batal</button>
+            <button class="btn-primary" onclick="addProduct()">Simpan</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- MODAL: Detail Pesanan -->
+      <div class="modal-overlay" id="modal-orderDetail" onclick="closeOuter(event,'orderDetail')">
+        <div class="modal">
+          <div class="modal-title">Detail Pesanan <button class="modal-close" onclick="closeModal('orderDetail')">✕</button></div>
+          <div id="orderDetailContent"></div>
+          <div class="modal-actions"><button class="btn-cancel" onclick="closeModal('orderDetail')">Tutup</button></div>
+        </div>
+      </div>
+
+      <!-- MODAL: Pengguna Baru -->
+      <div class="modal-overlay" id="modal-addUser" onclick="closeOuter(event,'addUser')">
+        <div class="modal">
+          <div class="modal-title">Pengguna Baru <button class="modal-close" onclick="closeModal('addUser')">✕</button></div>
+          <div class="form-group"><label class="form-label">Nama Lengkap</label><input type="text" class="form-input" id="nu-name" placeholder="Nama lengkap"></div>
+          <div class="form-group"><label class="form-label">Email</label><input type="email" class="form-input" id="nu-email" placeholder="email@contoh.com"></div>
+          <div class="form-group"><label class="form-label">Role</label><select class="form-input" id="nu-role"><option>Customer</option><option>Seller</option><option>Admin</option></select></div>
+          <div class="modal-actions">
+            <button class="btn-cancel" onclick="closeModal('addUser')">Batal</button>
+            <button class="btn-primary" onclick="addUser()">Simpan</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- MODAL: Konfirmasi Hapus -->
+      <div class="modal-overlay" id="modal-del" onclick="closeOuter(event,'del')">
+        <div class="modal" style="max-width:340px;text-align:center">
+          <div style="font-size:40px;margin-bottom:12px">🗑️</div>
+          <div class="modal-title" style="justify-content:center;font-size:16px" id="delTitle">Hapus item ini?</div>
+          <p style="font-size:13px;color:var(--text-light);margin-bottom:4px" id="delSub">Tindakan ini tidak dapat dibatalkan.</p>
+          <div class="modal-actions" style="justify-content:center">
+            <button class="btn-cancel" onclick="closeModal('del')">Batal</button>
+            <button class="btn-primary" style="background:var(--red)" onclick="confirmDel()">Hapus</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="toast" id="toast"></div>
+
+      <script>
+      // DATA
+      let products=[
+        {id:1,name:'Airy Blur Lip Mousse',sku:'LIP-001',kat:'Lippies',harga:89000,stok:124,min:19,icon:'💄',shades:[{name:'#01 Cotton Candy',stok:40},{name:'#02 Dusty Rose',stok:45},{name:'#03 Berry Mauve',stok:39}]},
+        {id:2,name:'Rosy Soft Lip Tint',sku:'LIP-002',kat:'Lippies',harga:75000,stok:148,min:22,icon:'💄',shades:[{name:'#01 Cherry Glaze',stok:50},{name:'#02 Peachy Pink',stok:55},{name:'#03 Coral Crush',stok:43}]},
+        {id:3,name:'Petal Glow Lip Glaze',sku:'LIP-003',kat:'Lippies',harga:95000,stok:128,min:17,icon:'💄',shades:[{name:'#01 Rose Quartz',stok:44},{name:'#02 Nude Bliss',stok:47},{name:'#03 Vintage Wine',stok:37}]},
+        {id:4,name:'Cream Veil Lip Cushion',sku:'LIP-004',kat:'Lippies',harga:110000,stok:116,min:25,icon:'💄',shades:[{name:'#01 Milk & Honey',stok:40},{name:'#02 Soft Cinnamon',stok:41},{name:'#03 Fig Kiss',stok:35}]},
+        {id:5,name:'Daily Nude Eyeshadow A01',sku:'EYE-001',kat:'Eyeshadow',harga:145000,stok:214,min:28,icon:'✨',shades:[{name:'Everyday Warm',stok:70},{name:'Sunset Glow',stok:75},{name:'Champagne Toast',stok:69}]},
+        {id:6,name:'Rosy Pink Eyeshadow A02',sku:'EYE-002',kat:'Eyeshadow',harga:145000,stok:180,min:18,icon:'✨',shades:[{name:'Pink Fairy',stok:62},{name:'Mauve Haze',stok:60},{name:'Berry Glam',stok:58}]},
+        {id:7,name:'Soft Glow Eyeshadow A03',sku:'EYE-003',kat:'Eyeshadow',harga:145000,stok:182,min:16,icon:'✨',shades:[{name:'Pearl Dew',stok:62},{name:'Rose Gold',stok:63},{name:'Warm Mink',stok:57}]},
+        {id:8,name:'Apple Blossom Blush',sku:'BLU-001',kat:'Blush',harga:85000,stok:138,min:20,icon:'🍎',shades:[{name:'Flush Pink',stok:46},{name:'Peach Fizz',stok:48},{name:'Berry Swirl',stok:44}]},
+        {id:9,name:'Dewy Coral Blush',sku:'BLU-002',kat:'Blush',harga:90000,stok:122,min:18,icon:'🍎',shades:[{name:'Coral Kiss',stok:42},{name:'Warm Apricot',stok:40},{name:'Sun Rose',stok:40}]},
+        {id:10,name:'Natural Flush Blush',sku:'BLU-003',kat:'Blush',harga:80000,stok:116,min:22,icon:'🍎',shades:[{name:'Barely There',stok:40},{name:'Pink Petal',stok:38},{name:'Soft Vermillion',stok:38}]}
+      ];
+      let orders=[
+        {id:'ORD-001',customer:'Siti Rahayu',email:'siti@gmail.com',date:'2025-04-28',items:2,total:285000,status:'Pending',products:['Airy Blur Lip Mousse x1','Petal Glow Lip Glaze x1']},
+        {id:'ORD-002',customer:'Dewi Anggraini',email:'dewi@gmail.com',date:'2025-04-27',items:1,total:435000,status:'Diproses',products:['Cream Veil Lip Cushion x1','Dewy Coral Blush x2']},
+        {id:'ORD-003',customer:'Rina Kusuma',email:'rina@gmail.com',date:'2025-04-27',items:2,total:200000,status:'Dikirim',products:['Rosy Soft Lip Tint x2','Daily Nude Eyeshadow x1']},
+        {id:'ORD-004',customer:'Putri Maharani',email:'putri@gmail.com',date:'2025-04-26',items:2,total:315000,status:'Selesai',products:['Apple Blossom Blush x2','Rosy Pink Eyeshadow x1']},
+        {id:'ORD-005',customer:'Maya Indah',email:'maya@gmail.com',date:'2025-04-25',items:1,total:145000,status:'Dibatalkan',products:['Daily Nude Eyeshadow A01 x1']},
+        {id:'ORD-006',customer:'Fitri Amalia',email:'fitri@gmail.com',date:'2025-04-25',items:1,total:580000,status:'Selesai',products:['Cream Veil Lip Cushion x3','Soft Glow Eyeshadow x2']},
+        {id:'ORD-007',customer:'Hana Pratiwi',email:'hana@gmail.com',date:'2025-04-24',items:2,total:350000,status:'Selesai',products:['Apple Blossom Blush x2','Natural Flush Blush x2']},
+        {id:'ORD-008',customer:'Laila Sari',email:'laila@gmail.com',date:'2025-04-23',items:3,total:420000,status:'Selesai',products:['Airy Blur Lip Mousse x2','Dewy Coral Blush x1']},
+        {id:'ORD-009',customer:'Nadia Putri',email:'nadia@gmail.com',date:'2025-04-22',items:1,total:155000,status:'Pending',products:['Rosy Soft Lip Tint x2']},
+        {id:'ORD-010',customer:'Reva Cantika',email:'reva@gmail.com',date:'2025-04-21',items:2,total:240000,status:'Diproses',products:['Soft Glow Eyeshadow x1','Apple Blossom Blush x1']}
+      ];
+      let users=[
+        {name:'Admin Utama',initials:'AU',email:'admin@appea.id',role:'Admin',status:'Aktif',joined:'2024-01-15',orders:0,color:'#c0392b'},
+        {name:'Siti Rahayu',initials:'SR',email:'siti@gmail.com',role:'Customer',status:'Aktif',joined:'2024-03-20',orders:5,color:'#e91e63'},
+        {name:'Dewi Anggraini',initials:'DA',email:'dewi@gmail.com',role:'Customer',status:'Aktif',joined:'2024-04-10',orders:8,color:'#9c27b0'},
+        {name:'Rina Kusuma',initials:'RK',email:'rina@gmail.com',role:'Seller',status:'Aktif',joined:'2024-02-28',orders:12,color:'#f57f17'},
+        {name:'Putri Maharani',initials:'PM',email:'putri@gmail.com',role:'Customer',status:'Nonaktif',joined:'2024-05-01',orders:3,color:'#00897b'},
+        {name:'Maya Indah',initials:'MI',email:'maya@gmail.com',role:'Seller',status:'Aktif',joined:'2024-01-30',orders:20,color:'#1565c0'},
+        {name:'Fitri Amalia',initials:'FA',email:'fitri@gmail.com',role:'Customer',status:'Aktif',joined:'2024-06-15',orders:7,color:'#ad1457'},
+        {name:'Hana Pratiwi',initials:'HP',email:'hana@gmail.com',role:'Admin',status:'Aktif',joined:'2024-03-01',orders:0,color:'#2e7d32'}
+      ];
+      let kategori=[{name:'Lippies',produk:4},{name:'Eyeshadow',produk:3},{name:'Blush',produk:3}];
+      let brands=[{name:'APPÉA Core',produk:7},{name:'APPÉA Bloom',produk:3}];
+      let invCat='Semua', ordFilter='Semua', userFilter='Semua', delCb=null;
+
+      // PETALS
+      (function(){
+        const c=document.getElementById('petalsContainer');
+        const em=['🍎','🍂','🌸','🌺','🍃'];
+        for(let i=0;i<18;i++){
+          const p=document.createElement('div'); p.className='petal';
+          p.textContent=em[i%em.length];
+          p.style.left=Math.random()*100+'%';
+          p.style.fontSize=(12+Math.random()*16)+'px';
+          p.style.animationDuration=(6+Math.random()*10)+'s';
+          p.style.animationDelay=(Math.random()*12)+'s';
+          p.style.opacity=0.3+Math.random()*0.4;
+          c.appendChild(p);
+        }
+      })();
+
+      // AUTH
+      function doLogin(){
+        const u=document.getElementById('loginUser').value;
+        const p=document.getElementById('loginPass').value;
+        if((u==='admin@appea.id'||u==='admin')&&p==='admin123'){
+          document.getElementById('loginPage').style.display='none';
+          document.getElementById('sidebar').style.display='flex';
+          document.getElementById('mainContent').style.display='flex';
+          initAll();
+        } else { document.getElementById('loginErr').style.display='block'; }
+      }
+      document.getElementById('loginPass').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin();});
+      function doLogout(){
+        document.getElementById('loginPage').style.display='flex';
+        document.getElementById('sidebar').style.display='none';
+        document.getElementById('mainContent').style.display='none';
+      }
+
+      // NAVIGATION
+      function navigate(page,el){
+        document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+        if(el) el.classList.add('active');
+        document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+        document.getElementById('page-'+page).classList.add('active');
+        const t={dashboard:'Dashboard',inventori:'Manajemen Inventori',pesanan:'Proses Pesanan',masterdata:'Master Data',pengguna:'Manajemen Pengguna'};
+        document.getElementById('pageTitle').textContent=t[page]||'';
+        if(page==='dashboard') setTimeout(drawCharts,60);
+      }
+
+      // INIT
+      function initAll(){
+        document.getElementById('pageDate').textContent=new Date().toLocaleDateString('id-ID',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+        renderInv(); renderOrd(); renderKat(); renderBrands(); renderUsers();
+        setTimeout(drawCharts,200);
+      }
+
+      // DASHBOARD CHARTS
+      function drawCharts(){
+        drawLine('chartPesanan',[40,60,65,50,75,90],['Nov','Des','Jan','Feb','Mar','Apr'],'#d4a017');
+        const prods=[
+          {name:'Soft Glow Eyeshadow A03',qty:82,pct:82},
+          {name:'Airy Blur Lip Mousse',qty:71,pct:71},
+          {name:'Apple Blossom Blush',qty:65,pct:65},
+          {name:'Rosy Soft Lip Tint',qty:58,pct:58},
+          {name:'Daily Nude Eyeshadow A01',qty:50,pct:50}
+        ];
+        document.getElementById('prodTerlarisList').innerHTML=prods.map(p=>`
+          <div class="laporan-item">
+            <span style="font-size:13px;flex:0 0 155px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${p.name}</span>
+            <div class="laporan-bar" style="flex:1;width:${p.pct}%"></div>
+            <span style="font-size:12px;font-weight:600;color:var(--text);flex-shrink:0;margin-left:8px">${p.qty}</span>
+          </div>`).join('');
+      }
+
+      function drawLine(id,data,labels,color){
+        const canvas=document.getElementById(id); if(!canvas) return;
+        const W=canvas.parentElement.clientWidth-40||360, H=160;
+        canvas.width=W; canvas.height=H;
+        const ctx=canvas.getContext('2d');
+        ctx.clearRect(0,0,W,H);
+        const pad={t:10,r:10,b:30,l:42};
+        const cW=W-pad.l-pad.r, cH=H-pad.t-pad.b;
+        const max=Math.max(...data)*1.15;
+        const pts=data.map((v,i)=>({x:pad.l+(i/(data.length-1))*cW,y:pad.t+cH-(v/max)*cH}));
+        const g=ctx.createLinearGradient(0,pad.t,0,pad.t+cH);
+        g.addColorStop(0,color+'44'); g.addColorStop(1,color+'00');
+        ctx.beginPath(); ctx.moveTo(pts[0].x,pts[0].y);
+        for(let i=1;i<pts.length;i++){const m=(pts[i-1].x+pts[i].x)/2;ctx.bezierCurveTo(m,pts[i-1].y,m,pts[i].y,pts[i].x,pts[i].y);}
+        ctx.lineTo(pts[pts.length-1].x,pad.t+cH); ctx.lineTo(pts[0].x,pad.t+cH); ctx.closePath();
+        ctx.fillStyle=g; ctx.fill();
+        ctx.beginPath(); ctx.moveTo(pts[0].x,pts[0].y);
+        for(let i=1;i<pts.length;i++){const m=(pts[i-1].x+pts[i].x)/2;ctx.bezierCurveTo(m,pts[i-1].y,m,pts[i].y,pts[i].x,pts[i].y);}
+        ctx.strokeStyle=color; ctx.lineWidth=2.5; ctx.stroke();
+        pts.forEach(pt=>{ctx.beginPath();ctx.arc(pt.x,pt.y,4,0,Math.PI*2);ctx.fillStyle=color;ctx.fill();ctx.strokeStyle='#fff';ctx.lineWidth=2;ctx.stroke();});
+        ctx.fillStyle='#7a5c50'; ctx.font='10px DM Sans'; ctx.textAlign='center';
+        labels.forEach((l,i)=>ctx.fillText(l,pts[i].x,H-8));
+        ctx.textAlign='right';
+        [0,0.5,1].forEach(f=>{ctx.fillText(Math.round(max*f),pad.l-4,pad.t+cH-f*cH+3);});
+      }
+      window.addEventListener('resize',()=>drawCharts());
+
+      // INVENTORI
+      function setInvCat(cat,el){
+        invCat=cat;
+        document.querySelectorAll('#page-inventori .tab-btn').forEach(b=>b.classList.remove('active'));
+        if(el) el.classList.add('active');
+        renderInv();
+      }
+      function renderInv(){
+        const search=(document.getElementById('invSearch')?.value||'').toLowerCase();
+        const body=document.getElementById('invBody'); body.innerHTML='';
+        products.forEach((p,i)=>{
+          if(invCat!=='Semua'&&p.kat!==invCat) return;
+          if(search&&!p.name.toLowerCase().includes(search)&&!p.sku.toLowerCase().includes(search)) return;
+          const low=p.stok<p.min*2;
+          const tr=document.createElement('tr');
+          tr.innerHTML=`
+            <td><button class="expand-btn" id="eb${i}" onclick="toggleExp(${i})">▶</button></td>
+            <td><span style="font-weight:500">${p.icon} ${p.name}</span></td>
+            <td><span class="sku-badge">${p.sku}</span></td>
+            <td><span class="cat-badge ${p.kat.toLowerCase()}">${p.kat}</span></td>
+            <td><strong>Rp ${p.harga.toLocaleString('id-ID')}</strong></td>
+            <td>${p.stok}</td>
+            <td class="${low?'low-stock stok-warning':'ok-stock'}">${p.min}</td>
+            <td><div class="action-btns">
+              <button class="btn-icon edit" onclick="editProd(${i})">✏️</button>
+              <button class="btn-icon del" onclick="askDel('produk','${p.name}',${i},'prod')">🗑️</button>
+            </div></td>`;
+          body.appendChild(tr);
+          const exp=document.createElement('tr');
+          exp.id='exp'+i; exp.className='expand-row';
+          exp.innerHTML=`<td colspan="8"><div class="expand-inner">${p.shades.map(s=>`<div class="shade-item"><div class="shade-name">${s.name}</div><div class="shade-info">Stok: ${s.stok}</div></div>`).join('')}</div></td>`;
+          body.appendChild(exp);
+        });
+      }
+      function toggleExp(i){document.getElementById('exp'+i).classList.toggle('open');document.getElementById('eb'+i).classList.toggle('open');}
+      function addProduct(){
+        const name=document.getElementById('np-name').value.trim();
+        const sku=document.getElementById('np-sku').value.trim();
+        if(!name||!sku){toast('❌ Nama dan SKU wajib diisi!');return;}
+        const kat=document.getElementById('np-kat').value;
+        const icons={Lippies:'💄',Eyeshadow:'✨',Blush:'🍎'};
+        products.push({id:products.length+1,name,sku,kat,harga:parseInt(document.getElementById('np-harga').value)||0,stok:parseInt(document.getElementById('np-stok').value)||0,min:parseInt(document.getElementById('np-min').value)||20,icon:icons[kat]||'📦',shades:[]});
+        closeModal('addProduct'); renderInv(); toast('✅ Produk ditambahkan!');
+        ['np-name','np-sku','np-harga','np-stok','np-min'].forEach(id=>document.getElementById(id).value='');
+      }
+      function editProd(i){
+        const p=products[i];
+        document.getElementById('np-name').value=p.name;
+        document.getElementById('np-sku').value=p.sku;
+        document.getElementById('np-kat').value=p.kat;
+        document.getElementById('np-harga').value=p.harga;
+        document.getElementById('np-stok').value=p.stok;
+        document.getElementById('np-min').value=p.min;
+        openModal('addProduct');
+      }
+
+      // PESANAN
+      const statusFlow=['Pending','Diproses','Dikirim','Selesai'];
+      function setOrdFilter(f,el){
+        ordFilter=f;
+        document.querySelectorAll('#page-pesanan .tab-btn').forEach(b=>b.classList.remove('active'));
+        if(el) el.classList.add('active');
+        renderOrd();
+      }
+      function renderOrd(){
+        const search=(document.getElementById('ordSearch')?.value||'').toLowerCase();
+        const body=document.getElementById('ordBody'); body.innerHTML='';
+        orders.forEach((o,i)=>{
+          if(ordFilter!=='Semua'&&o.status!==ordFilter) return;
+          if(search&&!o.id.toLowerCase().includes(search)&&!o.customer.toLowerCase().includes(search)) return;
+          const canNext=['Pending','Diproses','Dikirim'].includes(o.status);
+          const canCancel=['Pending','Diproses'].includes(o.status);
+          const tr=document.createElement('tr');
+          tr.innerHTML=`
+            <td><span class="order-id" onclick="viewOrder(${i})">${o.id}</span></td>
+            <td><div style="font-weight:500">${o.customer}</div><div style="font-size:11px;color:var(--text-light)">${o.email}</div></td>
+            <td>${o.date}</td><td>${o.items} item</td>
+            <td><strong>Rp ${o.total.toLocaleString('id-ID')}</strong></td>
+            <td><span class="status-badge ${o.status.toLowerCase()}">${o.status}</span></td>
+            <td><div class="action-btns">
+              <button class="btn-icon view" onclick="viewOrder(${i})">👁️</button>
+              ${canNext?`<button class="btn-next" onclick="nextStatus(${i})">Next →</button>`:''}
+              ${canCancel?`<button class="btn-icon del" onclick="cancelOrder(${i})">✕</button>`:''}
+            </div></td>`;
+          body.appendChild(tr);
+        });
+      }
+      function nextStatus(i){
+        const o=orders[i]; const si=statusFlow.indexOf(o.status);
+        if(si<statusFlow.length-1){o.status=statusFlow[si+1];updateBadge();renderOrd();toast(`✅ ${o.id} → ${o.status}`);}
+      }
+      function cancelOrder(i){orders[i].status='Dibatalkan';updateBadge();renderOrd();toast(`❌ ${orders[i].id} dibatalkan`);}
+      function updateBadge(){document.getElementById('pesananBadge').textContent=orders.filter(o=>['Pending','Diproses'].includes(o.status)).length;}
+      function viewOrder(i){
+        const o=orders[i];
+        document.getElementById('orderDetailContent').innerHTML=`
+          <div class="order-detail-grid">
+            <div class="detail-field"><label>ID Pesanan</label><p>${o.id}</p></div>
+            <div class="detail-field"><label>Status</label><p><span class="status-badge ${o.status.toLowerCase()}">${o.status}</span></p></div>
+            <div class="detail-field"><label>Pelanggan</label><p>${o.customer}</p></div>
+            <div class="detail-field"><label>Email</label><p>${o.email}</p></div>
+            <div class="detail-field"><label>Tanggal</label><p>${o.date}</p></div>
+            <div class="detail-field"><label>Total</label><p><strong>Rp ${o.total.toLocaleString('id-ID')}</strong></p></div>
+          </div>
+          <div><label class="form-label">Produk</label>${o.products.map(pr=>`<div style="padding:6px 0;border-bottom:1px solid var(--border);font-size:13px">📦 ${pr}</div>`).join('')}</div>`;
+        openModal('orderDetail');
+      }
+
+      // MASTER DATA
+      function switchMaster(tab,el){
+        document.querySelectorAll('.master-tab').forEach(t=>t.classList.remove('active')); if(el) el.classList.add('active');
+        document.getElementById('master-kategori').style.display=tab==='kategori'?'block':'none';
+        document.getElementById('master-brand').style.display=tab==='brand'?'block':'none';
+      }
+      function renderKat(){
+        document.getElementById('katCount').textContent=kategori.length;
+        document.getElementById('katList').innerHTML=kategori.map((k,i)=>`
+          <div class="category-item">
+            <span class="cat-icon">🏷️</span>
+            <div style="flex:1"><div class="cat-name">${k.name}</div><div class="cat-count">${k.produk} produk</div></div>
+            <button class="btn-icon del" onclick="askDel('kategori','${k.name}',${i},'kat')">🗑️</button>
+          </div>`).join('');
+      }
+      function renderBrands(){
+        document.getElementById('brandCount').textContent=brands.length;
+        document.getElementById('brandList').innerHTML=brands.map((b,i)=>`
+          <div class="category-item">
+            <span class="cat-icon">⭐</span>
+            <div style="flex:1"><div class="cat-name">${b.name}</div><div class="cat-count">${b.produk} produk</div></div>
+            <button class="btn-icon del" onclick="askDel('brand','${b.name}',${i},'brand')">🗑️</button>
+          </div>`).join('');
+      }
+      function addKat(){
+        const v=document.getElementById('newKatInput').value.trim();
+        if(!v){toast('❌ Nama wajib diisi!');return;}
+        if(kategori.find(k=>k.name.toLowerCase()===v.toLowerCase())){toast('❌ Kategori sudah ada!');return;}
+        kategori.push({name:v,produk:0}); document.getElementById('newKatInput').value=''; renderKat(); toast('✅ Kategori ditambahkan!');
+      }
+      function addBrand(){
+        const v=document.getElementById('newBrandInput').value.trim();
+        if(!v){toast('❌ Nama wajib diisi!');return;}
+        brands.push({name:v,produk:0}); document.getElementById('newBrandInput').value=''; renderBrands(); toast('✅ Brand ditambahkan!');
+      }
+
+      // PENGGUNA
+      function setUserFilter(f,el){
+        userFilter=f;
+        document.querySelectorAll('#page-pengguna .tab-btn').forEach(b=>b.classList.remove('active'));
+        if(el) el.classList.add('active');
+        renderUsers();
+      }
+      function renderUsers(){
+        const search=(document.getElementById('userSearch')?.value||'').toLowerCase();
+        const body=document.getElementById('userBody'); body.innerHTML='';
+        users.forEach(u=>{
+          if(userFilter!=='Semua'&&u.role!==userFilter) return;
+          if(search&&!u.name.toLowerCase().includes(search)&&!u.email.toLowerCase().includes(search)) return;
+          const rc=u.role.toLowerCase().replace(' ','');
+          const tr=document.createElement('tr');
+          tr.innerHTML=`
+            <td style="display:flex;align-items:center;gap:10px;padding:12px 16px">
+              <div class="user-av-sm" style="background:${u.color}">${u.initials}</div>
+              <span style="font-weight:500">${u.name}</span>
+            </td>
+            <td style="font-size:12px;color:var(--text-light)">${u.email}</td>
+            <td><span class="role-badge ${rc}">${u.role}</span></td>
+            <td><span class="status-badge ${u.status.toLowerCase()}">${u.status}</span></td>
+            <td style="font-size:12px">${u.joined}</td>
+            <td style="font-weight:600">${u.orders}</td>`;
+          body.appendChild(tr);
+        });
+      }
+      function addUser(){
+        const name=document.getElementById('nu-name').value.trim();
+        const email=document.getElementById('nu-email').value.trim();
+        const role=document.getElementById('nu-role').value;
+        if(!name||!email){toast('❌ Nama dan email wajib diisi!');return;}
+        const initials=name.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);
+        const colors=['#c0392b','#9c27b0','#1565c0','#2e7d32','#f57f17'];
+        users.push({name,initials,email,role,status:'Aktif',joined:new Date().toISOString().slice(0,10),orders:0,color:colors[users.length%colors.length]});
+        closeModal('addUser'); renderUsers(); toast('✅ Pengguna ditambahkan!');
+        document.getElementById('nu-name').value=''; document.getElementById('nu-email').value='';
+      }
+
+      // DELETE
+      function askDel(type,name,i,dtype){
+        document.getElementById('delTitle').textContent=`Hapus ${type} ini?`;
+        document.getElementById('delSub').textContent=`"${name}" akan dihapus permanen.`;
+        delCb=()=>{
+          if(dtype==='prod'){products.splice(i,1);renderInv();}
+          if(dtype==='kat'){kategori.splice(i,1);renderKat();}
+          if(dtype==='brand'){brands.splice(i,1);renderBrands();}
+          toast(`✅ ${name} dihapus`); closeModal('del');
+        };
+        openModal('del');
+      }
+      function confirmDel(){if(delCb)delCb();}
+
+      // MODALS
+      function openModal(id){document.getElementById('modal-'+id).classList.add('open');}
+      function closeModal(id){document.getElementById('modal-'+id).classList.remove('open');}
+      function closeOuter(e,id){if(e.target===document.getElementById('modal-'+id))closeModal(id);}
+
+      // NOTIF
+      function toggleNotif(){document.getElementById('notifPanel').classList.toggle('open');}
+      document.addEventListener('click',e=>{if(!e.target.closest('.notif-btn')&&!e.target.closest('.notif-panel'))document.getElementById('notifPanel').classList.remove('open');});
+
+      // TOAST
+      function toast(msg){
+        const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show');
+        setTimeout(()=>t.classList.remove('show'),2800);
+      }
+      </script>
+      </body>
+      </html>
