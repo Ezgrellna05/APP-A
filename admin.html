@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>APPÉA 🍎 Admin Panel</title>
+<title>APPÉA 🍎</title>
 <style>
       :root {
         --bg:#faf7f4; --sidebar-bg:#1a1008; --sidebar-hover:#2e1c0e;
@@ -232,9 +232,9 @@
         <div class="nav-item" onclick="navigate('masterdata',this)"><span class="nav-icon">🗂️</span> Master Data</div>
         <div class="nav-item" onclick="navigate('pengguna',this)"><span class="nav-icon">👥</span> Pengguna</div>
         <div class="sidebar-footer">
-          <div class="user-av">AU</div>
+          <div class="user-av">🍎</div>
           <div>
-            <div class="user-name">Admin Utama</div>
+            <div class="user-name">APPÉA Admin</div>
           </div>
           <button class="logout-btn" onclick="doLogout()" title="Logout">⇥</button>
         </div>
@@ -499,7 +499,7 @@
         {name:'Putri Maharani',initials:'PM',email:'putri@gmail.com',role:'Customer',status:'Nonaktif',joined:'2024-05-01',orders:3,color:'#00897b'},
         {name:'Maya Indah',initials:'MI',email:'maya@gmail.com',role:'Seller',status:'Aktif',joined:'2024-01-30',orders:20,color:'#1565c0'},
         {name:'Fitri Amalia',initials:'FA',email:'fitri@gmail.com',role:'Customer',status:'Aktif',joined:'2024-06-15',orders:7,color:'#ad1457'},
-        {name:'Hana Pratiwi',initials:'HP',email:'hana@gmail.com',role:'Admin',status:'Aktif',joined:'2024-03-01',orders:0,color:'#2e7d32'}
+        {name:'Hana Pratiwi',initials:'HP',email:'hana@gmail.com',role:'Seller',status:'Aktif',joined:'2024-03-01',orders:0,color:'#2e7d32'}
       ];
       let kategori=[{name:'Lippies',produk:4},{name:'Eyeshadow',produk:3},{name:'Blush',produk:3}];
       let brands=[{name:'APPÉA Core',produk:7},{name:'APPÉA Bloom',produk:3}];
@@ -508,7 +508,7 @@
       // PETALS
       (function(){
         const c=document.getElementById('petalsContainer');
-        const em=['🍎','🍂','🌸','🌺','🍃'];
+        const em=['🍂'];
         for(let i=0;i<18;i++){
           const p=document.createElement('div'); p.className='petal';
           p.textContent=em[i%em.length];
