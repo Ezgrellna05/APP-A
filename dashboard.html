@@ -1,0 +1,2874 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>APPEA— Beauty That Speaks Softly</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blush: #F2C4CE;
+    --petal: #F9E4EA;
+    --sage: #E8F0EC;
+    --cream: #FDF8F5;
+    --nude: #E3C7AD;
+    --rose: #D9A6A0;
+    --mauve: #BFA3B8;
+    --text: #3A2D35;
+    --text-light: #7A6570;
+    --white: #FFFFFF;
+    --shadow: rgba(191, 143, 163, 0.15);
+    --shadow-deep: rgba(191, 143, 163, 0.3);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  /* ─── SCROLLBAR ─── */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--petal); }
+  ::-webkit-scrollbar-thumb { background: var(--rose); border-radius: 10px; }
+
+  /* ─── NAVBAR ─── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+    background: rgba(253, 248, 245, 0.92);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(242, 196, 206, 0.4);
+    padding: 0 5%;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 70px;
+    transition: all 0.3s ease;
+  }
+
+  .nav-logo {
+    font-family: 'Lucida Sans', sans-serif;
+    font-size: 1.8rem;
+    font-weight: 400;
+    color: var(--text);
+    letter-spacing: 0.05em;
+    text-decoration: none;
+  }
+
+  .nav-logo span {
+    color: var(--rose);
+    font-style: italic;
+  }
+
+  .nav-links {
+    display: flex; gap: 2.5rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    text-decoration: none;
+    color: var(--text-light);
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+    cursor: pointer;
+  }
+
+  .nav-links a:hover { color: var(--rose); }
+
+  .nav-actions {
+    display: flex; align-items: center; gap: 1rem;
+  }
+
+  .cart-btn {
+    position: relative;
+    background: linear-gradient(135deg, var(--blush), var(--rose));
+    border: none;
+    color: white;
+    padding: 0.6rem 1.4rem;
+    border-radius: 50px;
+    font-size: 0.82rem;
+    font-weight: 500;
+    cursor: pointer;
+    letter-spacing: 0.05em;
+    transition: all 0.3s ease;
+    display: flex; align-items: center; gap: 0.4rem;
+  }
+
+  .cart-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px var(--shadow-deep);
+  }
+
+  .cart-count {
+    background: white;
+    color: var(--rose);
+    border-radius: 50%;
+    width: 18px; height: 18px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  /* ─── HERO ─── */
+  .hero {
+    min-height: 100vh;
+    display: flex; align-items: center;
+    padding: 80px 5% 0;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(135deg, var(--petal) 0%, var(--cream) 50%, var(--sage) 100%);
+  }
+
+  .hero-bg-circles {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  .hero-bg-circles::before {
+    content: '';
+    position: absolute;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(242,196,206,0.4) 0%, transparent 70%);
+    top: -100px; right: -100px;
+    border-radius: 50%;
+    animation: float1 8s ease-in-out infinite;
+  }
+
+  .hero-bg-circles::after {
+    content: '';
+    position: absolute;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(191,163,184,0.3) 0%, transparent 70%);
+    bottom: 50px; left: -80px;
+    border-radius: 50%;
+    animation: float2 10s ease-in-out infinite;
+  }
+
+  @keyframes float1 {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(-30px, 30px) scale(1.1); }
+  }
+
+  @keyframes float2 {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(20px, -20px) scale(0.95); }
+  }
+
+  .hero-content {
+    flex: 1;
+    max-width: 550px;
+    z-index: 1;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(242, 196, 206, 0.4);
+    border: 1px solid rgba(217, 166, 160, 0.4);
+    padding: 0.4rem 1rem;
+    border-radius: 50px;
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--rose);
+    margin-bottom: 1.5rem;
+    animation: fadeInUp 0.6s ease forwards;
+  }
+
+  .hero-title {
+    font-family: 'Lucida Sans', sans-serif;
+    font-size: clamp(3rem, 6vw, 5.5rem);
+    font-weight: 300;
+    line-height: 1.1;
+    color: var(--text);
+    margin-bottom: 1.2rem;
+    animation: fadeInUp 0.8s ease 0.1s both;
+  }
+
+  .hero-title em {
+    font-style: italic;
+    color: var(--rose);
+  }
+
+  .hero-subtitle {
+    font-size: 1rem;
+    color: var(--text-light);
+    line-height: 1.7;
+    margin-bottom: 2.5rem;
+    font-weight: 300;
+    animation: fadeInUp 0.8s ease 0.2s both;
+  }
+
+  .hero-ctas {
+    display: flex; gap: 1rem; flex-wrap: wrap;
+    animation: fadeInUp 0.8s ease 0.3s both;
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, var(--blush), #E88FA3);
+    color: white;
+    border: none;
+    padding: 0.9rem 2rem;
+    border-radius: 50px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    letter-spacing: 0.05em;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 40px rgba(232, 143, 163, 0.4);
+  }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--text);
+    border: 1.5px solid rgba(217, 166, 160, 0.5);
+    padding: 0.9rem 2rem;
+    border-radius: 50px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    letter-spacing: 0.05em;
+    transition: all 0.3s ease;
+    display: inline-block;
+    text-decoration: none;
+  }
+
+  .btn-outline:hover {
+    background: var(--petal);
+    border-color: var(--rose);
+    transform: translateY(-2px);
+  }
+
+  .hero-visual {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    min-height: 500px;
+    animation: fadeInRight 1s ease 0.4s both;
+  }
+
+  .hero-product-showcase {
+    position: relative;
+    width: 380px;
+    height: 380px;
+  }
+
+  .showcase-circle {
+    position: absolute;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .showcase-main {
+    width: 220px; height: 220px;
+    background: linear-gradient(135deg, var(--petal), var(--blush));
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 20px 60px var(--shadow-deep);
+    font-family: 'Lucida Sans', sans-serif;
+    font-size: 1.1rem;
+    color: var(--text);
+    z-index: 3;
+    animation: pulseGlow 4s ease-in-out infinite;
+    border: 2px solid rgba(255,255,255,0.6);
+  }
+
+  .showcase-main .emoji { font-size: 2.5rem; margin-bottom: 0.3rem; }
+  .showcase-main .label { font-size: 0.85rem; color: var(--text-light); margin-top: 0.2rem; }
+
+  @keyframes pulseGlow {
+    0%, 100% { box-shadow: 0 20px 60px var(--shadow-deep); }
+    50% { box-shadow: 0 30px 80px rgba(232, 143, 163, 0.4); }
+  }
+
+  .showcase-orbit {
+    position: absolute;
+    width: 90px; height: 90px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column;
+    font-size: 0.7rem;
+    color: var(--text);
+    border: 1.5px solid rgba(255,255,255,0.8);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 25px var(--shadow);
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    z-index: 2;
+  }
+
+  .showcase-orbit:hover { transform: scale(1.1) !important; }
+  .showcase-orbit .o-emoji { font-size: 1.5rem; }
+  .showcase-orbit .o-label { font-size: 0.62rem; font-weight: 500; margin-top: 0.2rem; text-align: center; }
+
+  .orb1 { top: 10px; left: 10px; background: rgba(243,198,179,0.7); animation: orbit1 6s ease-in-out infinite; }
+  .orb2 { top: 10px; right: 10px; background: rgba(249,228,234,0.7); animation: orbit2 7s ease-in-out infinite; }
+  .orb3 { bottom: 10px; left: 10px; background: rgba(232,232,236,0.7); animation: orbit3 5s ease-in-out infinite; }
+  .orb4 { bottom: 10px; right: 10px; background: rgba(217,166,160,0.7); animation: orbit4 8s ease-in-out infinite; }
+
+  @keyframes orbit1 { 0%,100%{transform:translate(0,0)} 50%{transform:translate(5px,-8px)} }
+  @keyframes orbit2 { 0%,100%{transform:translate(0,0)} 50%{transform:translate(-5px,-10px)} }
+  @keyframes orbit3 { 0%,100%{transform:translate(0,0)} 50%{transform:translate(8px,5px)} }
+  @keyframes orbit4 { 0%,100%{transform:translate(0,0)} 50%{transform:translate(-8px,8px)} }
+
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeInRight {
+    from { opacity: 0; transform: translateX(40px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  /* ─── SECTION TITLES ─── */
+  .section-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .section-tag {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--rose);
+    background: rgba(242, 196, 206, 0.3);
+    padding: 0.3rem 1rem;
+    border-radius: 50px;
+    margin-bottom: 1rem;
+  }
+
+  .section-title {
+    font-family: 'Lucida Sans', sans-serif;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 300;
+    color: var(--text);
+    line-height: 1.2;
+  }
+
+  .section-title em { font-style: italic; color: var(--rose); }
+
+  .section-desc {
+    font-size: 0.95rem;
+    color: var(--text-light);
+    margin-top: 0.8rem;
+    font-weight: 300;
+  }
+
+  /* ─── SECTIONS ─── */
+  section {
+    padding: 5rem 5%;
+  }
+
+  /* ─── CATEGORY FILTER ─── */
+  .category-filter {
+    display: flex;
+    justify-content: center;
+    gap: 0.8rem;
+    flex-wrap: wrap;
+    margin-bottom: 3rem;
+  }
+
+  .filter-btn {
+    padding: 0.55rem 1.5rem;
+    border-radius: 50px;
+    border: 1.5px solid rgba(217, 166, 160, 0.4);
+    background: transparent;
+    color: var(--text-light);
+    font-size: 0.82rem;
+    font-weight: 500;
+    cursor: pointer;
+    letter-spacing: 0.05em;
+    transition: all 0.25s ease;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  .filter-btn:hover, .filter-btn.active {
+    background: linear-gradient(135deg, var(--blush), var(--rose));
+    color: white;
+    border-color: transparent;
+    box-shadow: 0 6px 20px rgba(217, 166, 160, 0.4);
+  }
+
+  /* ─── PRODUCT GRID ─── */
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.8rem;
+  }
+
+  .product-card {
+    background: white;
+    border-radius: 24px;
+    overflow: hidden;
+    transition: all 0.4s ease;
+    cursor: pointer;
+    position: relative;
+    border: 1px solid rgba(242, 196, 206, 0.3);
+    animation: fadeInUp 0.6s ease both;
+  }
+
+  .product-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 25px 60px var(--shadow-deep);
+    border-color: rgba(217, 166, 160, 0.5);
+  }
+
+  .product-img {
+    height: 220px;
+    position: relative;
+    overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  .product-img-inner {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 5rem;
+    transition: transform 0.4s ease;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .product-card:hover .product-img-inner { transform: scale(1.05); }
+
+  .color-dots-preview {
+    display: flex; gap: 5px;
+    margin-top: 0.5rem;
+  }
+
+  .color-dot-preview {
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    border: 2px solid rgba(255,255,255,0.8);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  }
+
+  .product-badge {
+    position: absolute;
+    top: 12px; left: 12px;
+    background: linear-gradient(135deg, var(--blush), var(--rose));
+    color: white;
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.3rem 0.8rem;
+    border-radius: 50px;
+  }
+
+  .product-wishlist {
+    position: absolute;
+    top: 12px; right: 12px;
+    background: white;
+    border: none;
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem;
+    cursor: pointer;
+    box-shadow: 0 4px 12px var(--shadow);
+    transition: all 0.25s ease;
+  }
+
+  .product-wishlist:hover { transform: scale(1.15); }
+  .product-wishlist.active { background: var(--petal); }
+
+  .product-info {
+    padding: 1.2rem 1.4rem 1.4rem;
+  }
+
+  .product-category-tag {
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--mauve);
+    margin-bottom: 0.3rem;
+  }
+
+  .product-name {
+    font-family: 'Lucida Sans', sans-serif;
+    font-size: 1.3rem;
+    font-weight: 400;
+    color: var(--text);
+    margin-bottom: 0.3rem;
+    line-height: 1.3;
+  }
+
+  .product-mood {
+    font-size: 0.78rem;
+    color: var(--text-light);
+    font-style: italic;
+    font-family: 'Lucida Sans', sans-serif;
+    margin-bottom: 0.8rem;
+  }
+
+  .product-colors {
+    display: flex; gap: 5px; align-items: center; margin-bottom: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .color-swatch {
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    border: 2px solid rgba(255,255,255,0.9);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+    cursor: pointer;
+    transition: transform 0.2s;
+    position: relative;
+  }
+
+  .color-swatch:hover { transform: scale(1.3); z-index: 1; }
+
+  .product-footer {
+    display: flex; align-items: center; justify-content: space-between;
+  }
+
+  .product-price {
+    font-family: 'Lucida Sans', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 500;
+    color: var(--text);
+  }
+
+  .product-price span {
+    font-size: 0.8rem;
+    color: var(--text-light);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 400;
+  }
+
+  .add-cart-btn {
+    background: linear-gradient(135deg, var(--blush), var(--rose));
+    color: white;
+    border: none;
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(217, 166, 160, 0.4);
+  }
+
+  .add-cart-btn:hover {
+    transform: scale(1.15);
+    box-shadow: 0 8px 25px rgba(217, 166, 160, 0.6);
+  }
+
+  /* ─── TRENDING SECTION ─── */
+  .trending-section {
+    background: linear-gradient(135deg, var(--petal), var(--sage));
+    border-radius: 32px;
+    margin: 0 5%;
+    padding: 4rem 3rem;
+  }
+
+  .trending-scroll {
+    display: flex;
+    gap: 1.2rem;
+    overflow-x: auto;
+    padding-bottom: 0.5rem;
+    scrollbar-width: none;
+  }
+
+  .trending-scroll::-webkit-scrollbar { display: none; }
+
+  .trending-item {
+    flex-shrink: 0;
+    background: white;
+    border-radius: 20px;
+    padding: 1.2rem;
+    width: 200px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+    border: 1px solid rgba(242, 196, 206, 0.3);
+  }
+
+  .trending-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px var(--shadow-deep);
+  }
+
+  .trending-emoji { font-size: 2.5rem; margin-bottom: 0.5rem; }
+  .trending-name {
+    font-family: 'Lucida Sans', sans-serif;
+    font-size: 1rem;
+    color: var(--text);
+    font-weight: 400;
+    margin-bottom: 0.2rem;
+  }
+  .trending-price {
+    font-size: 0.85rem;
+    color: var(--rose);
+    font-weight: 600;
+  }
+
+  .trending-rank {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--blush), var(--rose));
+    color: white;
+    font-size: 0.65rem;
+    font-weight: 700;
+    padding: 0.2rem 0.6rem;
+    border-radius: 50px;
+    margin-bottom: 0.6rem;
+    letter-spacing: 0.05em;
+  }
+
+  /* ─── TRANSACTION HISTORY ─── */
+  .history-section { background: var(--cream); }
+
+  .history-tabs {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+    border-bottom: 2px solid rgba(242, 196, 206, 0.3);
+    padding-bottom: 0;
+  }
+
+  .history-tab {
+    padding: 0.7rem 1.5rem;
+    border: none;
+    background: none;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--text-light);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+    transition: all 0.2s;
+  }
+
+  .history-tab.active {
+    color: var(--rose);
+    border-bottom-color: var(--rose);
+  }
+
+  .transaction-card {
+    background: white;
+    border-radius: 20px;
+    padding: 1.4rem;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    border: 1px solid rgba(242, 196, 206, 0.3);
+    transition: all 0.3s ease;
+    cursor: pointer;
+  }
+
+  .transaction-card:hover {
+    box-shadow: 0 10px 30px var(--shadow);
+    transform: translateX(4px);
+  }
+
+  .tx-icon {
+    width: 55px; height: 55px;
+    border-radius: 18px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.5rem;
+    flex-shrink: 0;
+  }
+
+  .tx-info { flex: 1; }
+  .tx-name {
+    font-family: 'Lucida Sans', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 400;
+    color: var(--text);
+    margin-bottom: 0.2rem;
+  }
+  .tx-date { font-size: 0.78rem; color: var(--text-light); }
+  .tx-items { font-size: 0.78rem; color: var(--text-light); margin-top: 0.1rem; }
+
+  .tx-status {
+    text-align: right;
+  }
+
+  .tx-amount {
+    font-family: 'Lucida Sans', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 0.3rem;
+  }
+
+  .status-badge {
+    display: inline-block;
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding: 0.25rem 0.7rem;
+    border-radius: 50px;
+  }
+
+  .status-success { background: rgba(143, 195, 143, 0.2); color: #5C9E5C; }
+  .status-pending { background: rgba(242, 196, 206, 0.4); color: var(--rose); }
+  .status-process { background: rgba(191, 163, 184, 0.2); color: var(--mauve); }
+
+  /* ─── CART SIDEBAR ─── */
+  .cart-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(58, 45, 53, 0.5);
+    z-index: 2000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(4px);
+  }
+
+  .cart-overlay.open {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .cart-sidebar {
+    position: fixed;
+    top: 0; right: 0;
+    width: 400px;
+    max-width: 95vw;
+    height: 100vh;
+    background: var(--cream);
+    z-index: 2001;
+    transform: translateX(100%);
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    display: flex; flex-direction: column;
+    box-shadow: -20px 0 60px rgba(58, 45, 53, 0.15);
+  }
+
+  .cart-sidebar.open { transform: translateX(0); }
+
+  .cart-header {
+    padding: 1.5rem;
+    border-bottom: 1px solid rgba(242, 196, 206, 0.4);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+
+  .cart-title {
+    font-family: 'Lucida Sans', sans-serif;
+    font-size: 1.6rem;
+    font-weight: 400;
+  }
+
+  .close-btn {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    border: none;
+    background: var(--petal);
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--text);
+    transition: all 0.2s;
+  }
+
+  .close-btn:hover { background: var(--blush); }
+
+  .cart-body { flex: 1; overflow-y: auto; padding: 1.5rem; }
+
+  .cart-item {
+    display: flex; gap: 1rem;
+    background: white;
+    border-radius: 16px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border: 1px solid rgba(242, 196, 206, 0.3);
+  }
+
+  .cart-item-img {
+    width: 60px; height: 60px;
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.8rem;
+    flex-shrink: 0;
+  }
+
+  .cart-item-info { flex: 1; }
+  .cart-item-name {
+    font-family: 'Lucida Sans', sans-serif;
+    font-size: 1rem;
+    margin-bottom: 0.2rem;
+  }
+  .cart-item-shade { font-size: 0.75rem; color: var(--text-light); }
+  .cart-item-price { font-size: 0.9rem; font-weight: 600; color: var(--rose); margin-top: 0.3rem; }
+
+  .cart-item-controls {
+    display: flex; align-items: center; gap: 0.5rem;
+  }
+
+  .qty-btn {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(217,166,160,0.4);
+    background: none;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem;
+    color: var(--text);
+    transition: all 0.2s;
+  }
+
+  .qty-btn:hover { background: var(--petal); }
+  .qty-num { font-size: 0.85rem; font-weight: 600; min-width: 20px; text-align: center; }
+
+  .remove-item {
+    background: none;
+    border: none;
+    color: var(--text-light);
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: color 0.2s;
+    margin-top: 0.5rem;
+    display: block;
+  }
+
+  .remove-item:hover { color: var(--rose); }
+
+  .cart-footer {
+    padding: 1.5rem;
+    border-top: 1px solid rgba(242, 196, 206, 0.4);
+    background: white;
+  }
+
+  .cart-total {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 1.2rem;
+  }
+
+  .cart-total-label { font-size: 0.9rem; color: var(--text-light); }
+  .cart-total-amount {
+    font-family: 'Lucida Sans', sans-serif;
+    font-size: 1.8rem;
+    font-weight: 400;
+    color: var(--text);
+  }
+
+  .checkout-btn {
+    width: 100%;
+    background: linear-gradient(135deg, var(--blush), var(--rose));
+    color: white;
+    border: none;
+    padding: 1rem;
+    border-radius: 16px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    letter-spacing: 0.05em;
+    transition: all 0.3s ease;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  .checkout-btn:hover {
+    box-shadow: 0 10px 30px rgba(217, 166, 160, 0.5);
+    transform: translateY(-2px);
+  }
+
+  /* ─── PAYMENT MODAL ─── */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(58, 45, 53, 0.6);
+    z-index: 3000;
+    display: flex; align-items: center; justify-content: center;
+    padding: 1rem;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(8px);
+  }
+
+  .modal-overlay.open {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .modal {
+    background: var(--cream);
+    border-radius: 32px;
+    max-width: 480px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: 2rem;
+    transform: scale(0.9) translateY(20px);
+    transition: transform 0.3s ease;
+  }
+
+  .modal-overlay.open .modal {
+    transform: scale(1) translateY(0);
+  }
+
+  .modal-header {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  .modal-title {
+    font-family: 'Lucida Sans', sans-serif;
+    font-size: 2rem;
+    font-weight: 400;
+    color: var(--text);
+    margin-bottom: 0.3rem;
+  }
+
+  .modal-subtitle {
+    font-size: 0.85rem;
+    color: var(--text-light);
+  }
+
+  /* PAYMENT STEPS */
+  .payment-steps {
+    display: flex;
+    justify-content: center;
+    gap: 0;
+    margin-bottom: 2rem;
+    position: relative;
+  }
+
+  .payment-steps::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 15%;
+    right: 15%;
+    height: 2px;
+    background: rgba(242, 196, 206, 0.4);
+    transform: translateY(-50%);
+    z-index: 0;
+  }
+
+  .step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem;
+    flex: 1;
+    position: relative;
+    z-index: 1;
+  }
+
+  .step-circle {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: rgba(242, 196, 206, 0.4);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-light);
+    border: 2px solid rgba(242, 196, 206, 0.5);
+    transition: all 0.3s;
+    background: white;
+  }
+
+  .step.active .step-circle {
+    background: linear-gradient(135deg, var(--blush), var(--rose));
+    color: white;
+    border-color: transparent;
+    box-shadow: 0 4px 15px rgba(217, 166, 160, 0.4);
+  }
+
+  .step.done .step-circle {
+    background: linear-gradient(135deg, #A8D5A2, #7ABF74);
+    color: white;
+    border-color: transparent;
+  }
+
+  .step-label { font-size: 0.7rem; color: var(--text-light); font-weight: 500; }
+  .step.active .step-label { color: var(--rose); font-weight: 600; }
+
+  /* ORDER SUMMARY */
+  .order-summary {
+    background: white;
+    border-radius: 20px;
+    padding: 1.2rem;
+    margin-bottom: 1.5rem;
+    border: 1px solid rgba(242, 196, 206, 0.3);
+  }
+
+  .order-summary-title {
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-light);
+    margin-bottom: 1rem;
+  }
+
+  .order-row {
+    display: flex; justify-content: space-between;
+    font-size: 0.88rem;
+    color: var(--text);
+    padding: 0.4rem 0;
+  }
+
+  .order-row.total {
+    border-top: 1px solid rgba(242, 196, 206, 0.4);
+    margin-top: 0.5rem;
+    padding-top: 0.8rem;
+    font-weight: 600;
+  }
+
+  .order-row.total .val {
+    font-family: 'Lucida Sans', sans-serif;
+    font-size: 1.3rem;
+    color: var(--rose);
+  }
+
+  /* PAYMENT METHODS */
+  .payment-methods {
+    margin-bottom: 1.5rem;
+  }
+
+  .pm-title {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 0.8rem;
+    letter-spacing: 0.05em;
+  }
+
+  .pm-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.7rem;
+  }
+
+  .pm-option {
+    border: 2px solid rgba(242, 196, 206, 0.4);
+    border-radius: 16px;
+    padding: 0.9rem;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: white;
+  }
+
+  .pm-option:hover {
+    border-color: var(--blush);
+    background: var(--petal);
+  }
+
+  .pm-option.selected {
+    border-color: var(--rose);
+    background: rgba(242, 196, 206, 0.15);
+    box-shadow: 0 4px 15px rgba(217, 166, 160, 0.2);
+  }
+
+  .pm-icon { font-size: 1.3rem; }
+  .pm-name { font-size: 0.82rem; font-weight: 600; color: var(--text); }
+  .pm-desc { font-size: 0.7rem; color: var(--text-light); margin-top: 0.1rem; }
+
+  /* QRIS DISPLAY */
+  .qris-display {
+    text-align: center;
+    padding: 1.5rem;
+    background: white;
+    border-radius: 20px;
+    margin-bottom: 1.5rem;
+    border: 1px solid rgba(242, 196, 206, 0.3);
+  }
+
+  .qris-code {
+    width: 180px;
+    height: 180px;
+    margin: 0 auto 1rem;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 8px 25px var(--shadow);
+    position: relative;
+    background: white;
+    display: flex; align-items: center; justify-content: center;
+    border: 3px solid var(--rose);
+  }
+
+  .qris-svg {
+    width: 160px;
+    height: 160px;
+  }
+
+  .qris-amount {
+    font-family: 'Lucida Sans', sans-serif;
+    font-size: 1.8rem;
+    color: var(--text);
+    margin-bottom: 0.3rem;
+  }
+
+  .qris-instruction {
+    font-size: 0.8rem;
+    color: var(--text-light);
+    line-height: 1.5;
+  }
+
+  .qris-timer {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    background: rgba(242, 196, 206, 0.3);
+    padding: 0.4rem 1rem;
+    border-radius: 50px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--rose);
+    margin-top: 0.8rem;
+  }
+
+  /* FORM FIELDS */
+  .form-group {
+    margin-bottom: 1rem;
+  }
+
+  .form-label {
+    display: block;
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 0.4rem;
+    letter-spacing: 0.03em;
+  }
+
+  .form-input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1.5px solid rgba(242, 196, 206, 0.5);
+    border-radius: 12px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.88rem;
+    color: var(--text);
+    background: white;
+    outline: none;
+    transition: border-color 0.25s;
+  }
+
+  .form-input:focus {
+    border-color: var(--rose);
+    box-shadow: 0 0 0 3px rgba(217, 166, 160, 0.15);
+  }
+
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; }
+
+  /* SUCCESS STATE */
+  .payment-success {
+    text-align: center;
+    padding: 2rem 0;
+  }
+
+  .success-animation {
+    width: 90px; height: 90px;
+    background: linear-gradient(135deg, rgba(168,213,162,0.2), rgba(122,191,116,0.2));
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 1.5rem;
+    font-size: 2.5rem;
+    animation: successPop 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) both;
+  }
+
+  @keyframes successPop {
+    from { transform: scale(0); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+  }
+
+  .success-title {
+    font-family: 'Lucida Sans', sans-serif;
+    font-size: 2rem;
+    color: var(--text);
+    margin-bottom: 0.5rem;
+  }
+
+  .success-desc {
+    font-size: 0.88rem;
+    color: var(--text-light);
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+  }
+
+  .order-id {
+    font-size: 0.78rem;
+    color: var(--text-light);
+    background: rgba(242, 196, 206, 0.2);
+    padding: 0.5rem 1rem;
+    border-radius: 50px;
+    display: inline-block;
+    margin-bottom: 1.5rem;
+  }
+
+  /* ─── LIVE CHAT ─── */
+  .chat-bubble {
+    position: fixed;
+    bottom: 30px; right: 30px;
+    z-index: 1500;
+  }
+
+  .chat-toggle {
+    width: 60px; height: 60px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--blush), var(--rose));
+    border: none;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.5rem;
+    box-shadow: 0 8px 30px rgba(217, 166, 160, 0.5);
+    transition: all 0.3s ease;
+  }
+
+  .chat-toggle:hover { transform: scale(1.1); }
+
+  .chat-notification {
+    position: absolute;
+    top: -4px; right: -4px;
+    width: 18px; height: 18px;
+    background: #E88FA3;
+    border-radius: 50%;
+    border: 2px solid white;
+    font-size: 0.6rem;
+    color: white;
+    font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+  }
+
+  .chat-window {
+    position: absolute;
+    bottom: 75px; right: 0;
+    width: 340px;
+    max-height: 480px;
+    background: white;
+    border-radius: 24px;
+    box-shadow: 0 20px 60px rgba(58, 45, 53, 0.2);
+    display: flex; flex-direction: column;
+    overflow: hidden;
+    transform: scale(0.8) translateY(20px);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transform-origin: bottom right;
+  }
+
+  .chat-window.open {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .chat-win-header {
+    background: linear-gradient(135deg, var(--blush), var(--rose));
+    padding: 1rem 1.2rem;
+    display: flex; align-items: center; gap: 0.8rem;
+  }
+
+  .chat-avatar {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.3);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+  }
+
+  .chat-agent-info { flex: 1; }
+  .chat-agent-name { font-size: 0.9rem; font-weight: 600; color: white; }
+  .chat-status { font-size: 0.72rem; color: rgba(255,255,255,0.8); display: flex; align-items: center; gap: 0.3rem; }
+  .status-dot { width: 7px; height: 7px; background: #7ABF74; border-radius: 50%; }
+
+  .chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    max-height: 280px;
+  }
+
+  .chat-msg {
+    max-width: 80%;
+    padding: 0.7rem 0.9rem;
+    border-radius: 16px;
+    font-size: 0.83rem;
+    line-height: 1.5;
+  }
+
+  .chat-msg.bot {
+    background: var(--petal);
+    color: var(--text);
+    border-bottom-left-radius: 4px;
+    align-self: flex-start;
+  }
+
+  .chat-msg.user {
+    background: linear-gradient(135deg, var(--blush), var(--rose));
+    color: white;
+    border-bottom-right-radius: 4px;
+    align-self: flex-end;
+  }
+
+  .chat-input-area {
+    padding: 0.8rem;
+    border-top: 1px solid rgba(242, 196, 206, 0.4);
+    display: flex; gap: 0.6rem;
+  }
+
+  .chat-input {
+    flex: 1;
+    padding: 0.6rem 0.9rem;
+    border: 1.5px solid rgba(242, 196, 206, 0.5);
+    border-radius: 50px;
+    font-size: 0.82rem;
+    outline: none;
+    font-family: 'DM Sans', sans-serif;
+    color: var(--text);
+    transition: border-color 0.2s;
+  }
+
+  .chat-input:focus { border-color: var(--rose); }
+
+  .chat-send {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--blush), var(--rose));
+    border: none;
+    color: white;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+    flex-shrink: 0;
+  }
+
+  .chat-send:hover { transform: scale(1.1); }
+
+  /* ─── QUICK REPLY CHIPS ─── */
+  .quick-replies {
+    display: flex;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+    padding: 0 1rem 0.5rem;
+  }
+
+  .quick-reply {
+    font-size: 0.72rem;
+    padding: 0.3rem 0.8rem;
+    border-radius: 50px;
+    border: 1px solid rgba(242, 196, 206, 0.5);
+    background: none;
+    color: var(--rose);
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    transition: all 0.2s;
+  }
+
+  .quick-reply:hover { background: var(--petal); }
+
+  /* ─── PROMO BANNER ─── */
+  .promo-banner {
+    background: linear-gradient(135deg, var(--blush) 0%, var(--mauve) 50%, var(--rose) 100%);
+    text-align: center;
+    padding: 0.7rem;
+    font-size: 0.82rem;
+    color: white;
+    letter-spacing: 0.05em;
+    font-weight: 500;
+  }
+
+  .promo-banner marquee { display: inline-block; }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: var(--text);
+    color: rgba(255,255,255,0.7);
+    padding: 4rem 5% 2rem;
+    margin-top: 4rem;
+  }
+
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 3rem;
+    margin-bottom: 3rem;
+  }
+
+  .footer-brand .logo {
+    font-family: 'Lucida Sans', sans-serif;
+    font-size: 2rem;
+    color: white;
+    font-weight: 300;
+    margin-bottom: 0.8rem;
+  }
+
+  .footer-brand .logo span { color: var(--blush); font-style: italic; }
+  .footer-desc { font-size: 0.85rem; line-height: 1.7; margin-bottom: 1.5rem; }
+
+  .social-links { display: flex; gap: 0.8rem; }
+
+  .social-link {
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    background: rgba(242, 196, 206, 0.15);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem;
+    color: white;
+    transition: all 0.2s;
+    cursor: pointer;
+    text-decoration: none;
+  }
+
+  .social-link:hover { background: var(--rose); transform: translateY(-3px); }
+
+  .footer-col h4 {
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: white;
+    margin-bottom: 1.2rem;
+  }
+
+  .footer-col ul { list-style: none; }
+  .footer-col li { margin-bottom: 0.6rem; }
+  .footer-col a {
+    color: rgba(255,255,255,0.6);
+    text-decoration: none;
+    font-size: 0.85rem;
+    transition: color 0.2s;
+    cursor: pointer;
+  }
+  .footer-col a:hover { color: var(--blush); }
+
+  .footer-bottom {
+    border-top: 1px solid rgba(255,255,255,0.1);
+    padding-top: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.78rem;
+    color: rgba(255,255,255,0.4);
+  }
+
+  /* ─── PRODUCT MODAL ─── */
+  .product-modal .modal { max-width: 560px; }
+
+  .pm-img-large {
+    width: 100%;
+    height: 220px;
+    border-radius: 20px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 5rem;
+    margin-bottom: 1.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .pm-name {
+    font-family: 'Lucida Sans', sans-serif;
+    font-size: 1.8rem;
+    font-weight: 400;
+    color: var(--text);
+    margin-bottom: 0.3rem;
+  }
+
+  .pm-desc {
+    font-size: 0.88rem;
+    color: var(--text-light);
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+  }
+
+  .pm-shades {
+    margin-bottom: 1.5rem;
+  }
+
+  .pm-shades-title {
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-light);
+    margin-bottom: 0.8rem;
+  }
+
+  .pm-shade-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.6rem;
+  }
+
+  .shade-option {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    padding: 0.6rem 0.8rem;
+    border-radius: 12px;
+    border: 2px solid rgba(242, 196, 206, 0.3);
+    cursor: pointer;
+    transition: all 0.2s;
+    background: white;
+  }
+
+  .shade-option:hover, .shade-option.selected {
+    border-color: var(--rose);
+    background: rgba(242, 196, 206, 0.1);
+  }
+
+  .shade-circle-lg {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    border: 2px solid rgba(255,255,255,0.8);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    flex-shrink: 0;
+  }
+
+  .shade-name-sm {
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: var(--text);
+  }
+
+  .pm-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 1.5rem;
+  }
+
+  .pm-price-large {
+    font-family: 'Lucida Sans', sans-serif;
+    font-size: 2rem;
+    color: var(--text);
+  }
+
+  .pm-add-btn {
+    flex: 1;
+    margin-left: 1.5rem;
+    background: linear-gradient(135deg, var(--blush), var(--rose));
+    color: white;
+    border: none;
+    padding: 0.9rem;
+    border-radius: 14px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  .pm-add-btn:hover {
+    box-shadow: 0 10px 30px rgba(217, 166, 160, 0.5);
+    transform: translateY(-2px);
+  }
+
+  /* ─── EMPTY CART ─── */
+  .empty-cart {
+    text-align: center;
+    padding: 3rem 1rem;
+  }
+
+  .empty-icon { font-size: 3rem; margin-bottom: 1rem; }
+  .empty-title {
+    font-family: 'Lucida Sans', sans-serif;
+    font-size: 1.4rem;
+    color: var(--text);
+    margin-bottom: 0.5rem;
+  }
+  .empty-desc { font-size: 0.85rem; color: var(--text-light); }
+
+  /* ─── TOAST ─── */
+  .toast-container {
+    position: fixed;
+    bottom: 100px; right: 30px;
+    z-index: 5000;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .toast {
+    background: var(--text);
+    color: white;
+    padding: 0.8rem 1.2rem;
+    border-radius: 14px;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    box-shadow: 0 8px 25px rgba(58, 45, 53, 0.3);
+    animation: toastIn 0.4s ease both;
+    max-width: 280px;
+  }
+
+  @keyframes toastIn {
+    from { transform: translateX(100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+  }
+
+  @keyframes toastOut {
+    from { transform: translateX(0); opacity: 1; }
+    to { transform: translateX(100%); opacity: 0; }
+  }
+
+  /* ─── ANIMATIONS ─── */
+  .fade-hidden {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.6s ease;
+  }
+
+  .fade-show {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 768px) {
+    .hero { flex-direction: column; padding-top: 90px; text-align: center; }
+    .hero-visual { min-height: 300px; }
+    .hero-product-showcase { width: 280px; height: 280px; }
+    .showcase-main { width: 160px; height: 160px; }
+    .nav-links { display: none; }
+    .footer-grid { grid-template-columns: 1fr; }
+    .products-grid { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); }
+  }
+
+  /* ─── SECTION BG ─── */
+  .bg-petal { background: linear-gradient(180deg, var(--cream) 0%, var(--petal) 100%); }
+  .bg-sage { background: linear-gradient(180deg, var(--cream) 0%, var(--sage) 100%); }
+
+  /* ─── NAV ACTIVE ─── */
+  .nav-links a.active-nav { color: var(--rose); }
+
+  /* ─── MIDTRANS MOCK ─── */
+  .midtrans-badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-size: 0.72rem;
+    color: var(--text-light);
+    margin-top: 0.8rem;
+  }
+
+  .midtrans-badge img { height: 20px; }
+
+  .secure-badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    font-size: 0.72rem;
+    color: var(--text-light);
+    margin-top: 0.5rem;
+  }
+</style>
+</head>
+<body>
+
+<!-- PROMO BANNER -->
+<div class="promo-banner">
+  ✨ FREE ONGKIR untuk pembelian min. Rp75.000 &nbsp;|&nbsp; Kode: VELVETFREE &nbsp;|&nbsp; BELI 2 GRATIS 1 untuk semua Lippies! &nbsp;|&nbsp; New Arrival: Petal Glow Lip Glaze 🌸
+</div>
+
+<!-- NAVBAR -->
+<nav id="navbar">
+  <a class="nav-logo" href="#">APPEA<span>logo</span></a>
+  <ul class="nav-links">
+    <li><a onclick="scrollToSection('home')" class="active-nav">Home</a></li>
+    <li><a onclick="scrollToSection('products')">Produk</a></li>
+    <li><a onclick="scrollToSection('trending')">Trending</a></li>
+    <li><a onclick="scrollToSection('history')">Transaksi</a></li>
+    <li><a onclick="scrollToSection('about')">Tentang</a></li>
+  </ul>
+  <div class="nav-actions">
+    <button class="cart-btn" onclick="toggleCart()">
+      🛒 Keranjang
+      <div class="cart-count" id="cartCount">0</div>
+    </button>
+  </div>
+</nav>
+
+<!-- ─── HERO ─── -->
+<section class="hero" id="home">
+  <div class="hero-bg-circles"></div>
+  <div class="hero-content">
+    <div class="hero-badge">🌸 New Collection 2025</div>
+    <h1 class="hero-title">
+      Beauty That<br>
+      <em>Speaks Softly</em>
+    </h1>
+    <p class="hero-subtitle">
+      Temukan koleksi makeup pastel yang merayakan kelembutan dan kecantikan alami kamu. Dibuat untuk jiwa muda yang berani tampil halus.
+    </p>
+    <div class="hero-ctas">
+      <button class="btn-primary" onclick="scrollToSection('products')">Belanja Sekarang</button>
+      <button class="btn-outline" onclick="scrollToSection('trending')">Lihat Trending</button>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="hero-product-showcase">
+      <div class="showcase-circle showcase-main">
+        <div class="emoji">💄</div>
+        <div style="font-weight:300">Velvet Bloom</div>
+        <div class="label">Pastel Beauty</div>
+      </div>
+      <div class="showcase-orbit orb1" onclick="filterProducts('lips')">
+        <div class="o-emoji">💋</div>
+        <div class="o-label">Lippies</div>
+      </div>
+      <div class="showcase-orbit orb2" onclick="filterProducts('eyes')">
+        <div class="o-emoji">✨</div>
+        <div class="o-label">Eyeshadow</div>
+      </div>
+      <div class="showcase-orbit orb3" onclick="filterProducts('blush')">
+        <div class="o-emoji">🌸</div>
+        <div class="o-label">Blush</div>
+      </div>
+      <div class="showcase-orbit orb4" onclick="scrollToSection('trending')">
+        <div class="o-emoji">🔥</div>
+        <div class="o-label">Trending</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── PRODUCTS SECTION ─── -->
+<section id="products" class="bg-petal">
+  <div class="section-header fade-hidden">
+    <div class="section-tag">Koleksi Kami</div>
+    <h2 class="section-title">Temukan <em>Warna Kamu</em></h2>
+    <p class="section-desc">Setiap shade dipilih untuk melengkapi kecantikan natural kamu</p>
+  </div>
+
+  <div class="category-filter fade-hidden">
+    <button class="filter-btn active" onclick="filterProducts('all', this)">All Products</button>
+    <button class="filter-btn" onclick="filterProducts('lips', this)">💋 Lippies</button>
+    <button class="filter-btn" onclick="filterProducts('eyes', this)">✨ Eyeshadow</button>
+    <button class="filter-btn" onclick="filterProducts('blush', this)">🌸 Blush</button>
+  </div>
+
+  <div class="products-grid" id="productsGrid">
+    <!-- Products rendered by JS -->
+  </div>
+</section>
+
+<!-- ─── TRENDING SECTION ─── -->
+<section id="trending">
+  <div class="section-header fade-hidden">
+    <div class="section-tag">Paling Dicari</div>
+    <h2 class="section-title">Produk <em>Trending</em> Minggu Ini</h2>
+    <p class="section-desc">Produk yang paling banyak dicari dan disukai</p>
+  </div>
+  <div class="trending-section fade-hidden">
+    <div class="trending-scroll" id="trendingScroll">
+      <!-- Rendered by JS -->
+    </div>
+  </div>
+</section>
+
+<!-- ─── TRANSACTION HISTORY ─── -->
+<section id="history" class="history-section">
+  <div class="section-header fade-hidden">
+    <div class="section-tag">Akun Kamu</div>
+    <h2 class="section-title">Riwayat <em>Transaksi</em></h2>
+    <p class="section-desc">Pantau semua pesanan dan status pengirimanmu</p>
+  </div>
+
+  <div class="fade-hidden">
+    <div class="history-tabs">
+      <button class="history-tab active" onclick="switchHistoryTab('all', this)">Semua</button>
+      <button class="history-tab" onclick="switchHistoryTab('success', this)">Selesai</button>
+      <button class="history-tab" onclick="switchHistoryTab('process', this)">Diproses</button>
+      <button class="history-tab" onclick="switchHistoryTab('pending', this)">Menunggu</button>
+    </div>
+    <div id="transactionList">
+      <!-- Rendered by JS -->
+    </div>
+  </div>
+</section>
+
+<!-- ─── ABOUT SECTION ─── -->
+<section id="about" class="bg-sage">
+  <div class="section-header fade-hidden">
+    <div class="section-tag">Tentang Kami</div>
+    <h2 class="section-title">Diracik dengan <em>Cinta</em></h2>
+    <p class="section-desc">Velvet Bloom hadir untuk kamu yang percaya bahwa kecantikan sejati datang dari dalam, dan makeup adalah ekspresi, bukan topeng.</p>
+  </div>
+  <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem;" class="fade-hidden">
+    <div style="background:white; border-radius:24px; padding:2rem; text-align:center; border: 1px solid rgba(242,196,206,0.3);">
+      <div style="font-size:2.5rem; margin-bottom:1rem;">🌿</div>
+      <h3 style="font-family:'Lucida Sans',sans-serif; font-size:1.3rem; margin-bottom:0.5rem;">Clean Formula</h3>
+      <p style="font-size:0.85rem; color:var(--text-light); line-height:1.6;">Diformulasikan tanpa bahan berbahaya. Cocok untuk kulit sensitif dan remaja.</p>
+    </div>
+    <div style="background:white; border-radius:24px; padding:2rem; text-align:center; border: 1px solid rgba(242,196,206,0.3);">
+      <div style="font-size:2.5rem; margin-bottom:1rem;">🐰</div>
+      <h3 style="font-family:'Lucida Sans',sans-serif; font-size:1.3rem; margin-bottom:0.5rem;">Cruelty Free</h3>
+      <p style="font-size:0.85rem; color:var(--text-light); line-height:1.6;">100% tidak diuji pada hewan. Karena kecantikan tidak boleh menyakiti siapapun.</p>
+    </div>
+    <div style="background:white; border-radius:24px; padding:2rem; text-align:center; border: 1px solid rgba(242,196,206,0.3);">
+      <div style="font-size:2.5rem; margin-bottom:1rem;">♻️</div>
+      <h3 style="font-family:'Lucida Sans',sans-serif; font-size:1.3rem; margin-bottom:0.5rem;">Eco Packaging</h3>
+      <p style="font-size:0.85rem; color:var(--text-light); line-height:1.6;">Kemasan ramah lingkungan yang bisa didaur ulang. Cantik dan peduli bumi.</p>
+    </div>
+    <div style="background:white; border-radius:24px; padding:2rem; text-align:center; border: 1px solid rgba(242,196,206,0.3);">
+      <div style="font-size:2.5rem; margin-bottom:1rem;">💌</div>
+      <h3 style="font-family:'Lucida Sans',sans-serif; font-size:1.3rem; margin-bottom:0.5rem;">Gift Packaging</h3>
+      <p style="font-size:0.85rem; color:var(--text-light); line-height:1.6;">Setiap pesanan dikemas cantik, siap jadi hadiah spesial untuk orang tersayang.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="logo">Velvet<span>Bloom</span></div>
+      <p class="footer-desc">Makeup pastel untuk jiwa muda yang percaya bahwa kecantikan adalah ekspresi diri yang paling tulus.</p>
+      <div class="social-links">
+        <a class="social-link">📸</a>
+        <a class="social-link">🎵</a>
+        <a class="social-link">💬</a>
+        <a class="social-link">▶️</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Produk</h4>
+      <ul>
+        <li><a>Lippies Collection</a></li>
+        <li><a>Eyeshadow Palette</a></li>
+        <li><a>Blush Series</a></li>
+        <li><a>New Arrivals</a></li>
+        <li><a>Best Sellers</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Informasi</h4>
+      <ul>
+        <li><a>Tentang Kami</a></li>
+        <li><a>Blog Beauty</a></li>
+        <li><a>Tutorial Makeup</a></li>
+        <li><a>Kebijakan Privasi</a></li>
+        <li><a>Syarat &amp; Ketentuan</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Bantuan</h4>
+      <ul>
+        <li><a>FAQ</a></li>
+        <li><a>Cara Pemesanan</a></li>
+        <li><a>Pengiriman</a></li>
+        <li><a>Retur &amp; Refund</a></li>
+        <li><a onclick="toggleChat()">Live Chat</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 Velvet Bloom. All rights reserved.</span>
+    <span>Made with 💗 for beauty lovers</span>
+  </div>
+</footer>
+
+<!-- ─── CART OVERLAY ─── -->
+<div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+<div class="cart-sidebar" id="cartSidebar">
+  <div class="cart-header">
+    <div class="cart-title">🛒 Keranjang Kamu</div>
+    <button class="close-btn" onclick="toggleCart()">✕</button>
+  </div>
+  <div class="cart-body" id="cartBody">
+    <div class="empty-cart">
+      <div class="empty-icon">🛍️</div>
+      <div class="empty-title">Keranjang masih kosong</div>
+      <div class="empty-desc">Yuk, temukan produk favorit kamu!</div>
+    </div>
+  </div>
+  <div class="cart-footer" id="cartFooter" style="display:none">
+    <div class="cart-total">
+      <span class="cart-total-label">Total Pembayaran</span>
+      <span class="cart-total-amount" id="cartTotalDisplay">Rp0</span>
+    </div>
+    <button class="checkout-btn" onclick="openCheckout()">Lanjut Pembayaran ✨</button>
+  </div>
+</div>
+
+<!-- ─── PAYMENT MODAL ─── -->
+<div class="modal-overlay" id="paymentModal">
+  <div class="modal" id="paymentModalContent">
+    <!-- Rendered by JS based on step -->
+  </div>
+</div>
+
+<!-- ─── PRODUCT DETAIL MODAL ─── -->
+<div class="modal-overlay product-modal" id="productModal">
+  <div class="modal" id="productModalContent">
+  </div>
+</div>
+
+<!-- ─── LIVE CHAT ─── -->
+<div class="chat-bubble">
+  <button class="chat-toggle" onclick="toggleChat()">💬</button>
+  <div class="chat-notification" id="chatNotif">1</div>
+  <div class="chat-window" id="chatWindow">
+    <div class="chat-win-header">
+      <div class="chat-avatar">🌸</div>
+      <div class="chat-agent-info">
+        <div class="chat-agent-name">Beauty Advisor</div>
+        <div class="chat-status"><div class="status-dot"></div> Online sekarang</div>
+      </div>
+      <button class="close-btn" onclick="toggleChat()" style="background:rgba(255,255,255,0.2); color:white;">✕</button>
+    </div>
+    <div class="chat-messages" id="chatMessages">
+      <div class="chat-msg bot">Haii! 🌸 Selamat datang di Velvet Bloom! Ada yang bisa aku bantu?</div>
+      <div class="chat-msg bot">Lagi cari produk apa hari ini? Aku bisa rekomendasiin yang paling cocok buat kamu! ✨</div>
+    </div>
+    <div class="quick-replies" id="quickReplies">
+      <button class="quick-reply" onclick="sendQuickReply('Rekomendasiin lipstik dong!')">💋 Rekomendasi lipstik</button>
+      <button class="quick-reply" onclick="sendQuickReply('Ongkir berapa?')">🚚 Info ongkir</button>
+      <button class="quick-reply" onclick="sendQuickReply('Ada promo apa?')">🎁 Promo sekarang</button>
+    </div>
+    <div class="chat-input-area">
+      <input class="chat-input" id="chatInput" placeholder="Tulis pesan..." onkeydown="if(event.key==='Enter') sendChat()">
+      <button class="chat-send" onclick="sendChat()">➤</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST CONTAINER -->
+<div class="toast-container" id="toastContainer"></div>
+
+<script>
+// ═══════════════════════════════════════════════
+// DATA
+// ═══════════════════════════════════════════════
+const products = [
+  // LIPPIES
+  {
+    id: 1, category: 'lips',
+    name: 'Airy Blur Lip Mousse',
+    mood: 'soft blur, airy, muted pastel',
+    emoji: '💋',
+    badge: 'New',
+    price: 89000,
+    description: 'Tekstur mousse yang ringan dan airy, memberikan tampilan blur yang dreamy. Formula lembut yang membuat bibir terasa nyaman sepanjang hari.',
+    colors: [
+      { name: 'Cloud Beige', hex: '#E8D8CC' },
+      { name: 'Soft Peach', hex: '#F3C6B3' },
+      { name: 'Rosy Dust', hex: '#D9A6A0' },
+      { name: 'Mauve Whisper', hex: '#BFA3B8' },
+    ],
+    bg: 'linear-gradient(135deg, #F3C6B3, #E8D8CC)'
+  },
+  {
+    id: 2, category: 'lips',
+    name: 'Rosy Soft Lip Tint',
+    mood: 'natural flush, fresh lips',
+    emoji: '🌹',
+    badge: 'Best Seller',
+    price: 79000,
+    description: 'Tint lembut yang memberikan warna natural seperti blush di bibir. Lightweight dan tahan lama dengan finish yang segar dan muda.',
+    colors: [
+      { name: 'Bare Peach', hex: '#F4C7B0' },
+      { name: 'Rosy Pink', hex: '#E88FA3' },
+      { name: 'Peach Flush', hex: '#F2A98A' },
+      { name: 'Dusty Rose', hex: '#C97C8A' },
+    ],
+    bg: 'linear-gradient(135deg, #E88FA3, #F4C7B0)'
+  },
+  {
+    id: 3, category: 'lips',
+    name: 'Petal Glow Lip Glaze',
+    mood: 'glossy soft shine, healthy glow',
+    emoji: '✨',
+    badge: 'Trending',
+    price: 95000,
+    description: 'Lip glaze dengan shimmer halus yang memberikan glow sehat dan glossy. Seperti bibir natural yang bersinar dari dalam.',
+    colors: [
+      { name: 'Soft Nude Glow', hex: '#E9D2C2' },
+      { name: 'Peach Glow', hex: '#F3B79B' },
+      { name: 'Rosy Glow', hex: '#E58FA0' },
+      { name: 'Coral Shine', hex: '#F08A6C' },
+    ],
+    bg: 'linear-gradient(135deg, #F3B79B, #E9D2C2)'
+  },
+  {
+    id: 4, category: 'lips',
+    name: 'Cream Veil Lip Cushion',
+    mood: 'creamy, smooth, soft coverage',
+    emoji: '🍑',
+    badge: 'New',
+    price: 109000,
+    description: 'Formula creamy dengan cushion applicator yang memberikan coverage halus seperti kelopak bunga. Melembapkan dan menutrisi bibir.',
+    colors: [
+      { name: 'Ivory Nude', hex: '#F2E6DC' },
+      { name: 'Warm Beige', hex: '#E3C7AD' },
+      { name: 'Soft Rose', hex: '#DFA3A7' },
+      { name: 'Creamy Pink', hex: '#E9B7C3' },
+    ],
+    bg: 'linear-gradient(135deg, #E9B7C3, #F2E6DC)'
+  },
+  // EYESHADOW
+  {
+    id: 5, category: 'eyes',
+    name: 'A01 — Daily Nude',
+    mood: 'natural, no makeup makeup',
+    emoji: '👁️',
+    badge: 'Fav',
+    price: 145000,
+    description: '6 shades untuk everyday look yang natural. Perfect buat school atau hangout santai. Pigmented tapi tetap wearable setiap hari.',
+    colors: [
+      { name: 'Soft Beige', hex: '#EADBCF' },
+      { name: 'Warm Sand', hex: '#D8BFA8' },
+      { name: 'Cream Nude', hex: '#F1E2D6' },
+      { name: 'Peach Nude', hex: '#F3C3A7' },
+      { name: 'Soft Brown', hex: '#B89278' },
+      { name: 'Champagne Glow', hex: '#F6E3C9' },
+    ],
+    bg: 'linear-gradient(135deg, #F1E2D6, #D8BFA8)'
+  },
+  {
+    id: 6, category: 'eyes',
+    name: 'A02 — Rosy Pink',
+    mood: 'feminine, girly, soft blush look',
+    emoji: '🌸',
+    badge: 'Popular',
+    price: 145000,
+    description: '6 shades pink & mauve yang feminin dan girly. Buat tampilan soft blush eyes yang viral di TikTok. Shimmer halus yang cantik banget!',
+    colors: [
+      { name: 'Soft Pink', hex: '#F4C1CC' },
+      { name: 'Rosy Nude', hex: '#E3A6B0' },
+      { name: 'Dusty Rose', hex: '#C97C8A' },
+      { name: 'Peach Pink', hex: '#F2B6A0' },
+      { name: 'Mauve Pink', hex: '#B98C9B' },
+      { name: 'Soft Pink Shimmer', hex: '#F7D6DE' },
+    ],
+    bg: 'linear-gradient(135deg, #F4C1CC, #B98C9B)'
+  },
+  {
+    id: 7, category: 'eyes',
+    name: 'A03 — Soft Glow',
+    mood: 'dreamy & sedikit glam soft',
+    emoji: '💫',
+    badge: 'New',
+    price: 145000,
+    description: '6 shades dreamy dengan sedikit glam yang sophisticated. Cocok buat date night atau event spesial. Champagne gold yang memukau.',
+    colors: [
+      { name: 'Beige Glow', hex: '#E9D2C2' },
+      { name: 'Peach Glow', hex: '#F3B79B' },
+      { name: 'Warm Nude Shimmer', hex: '#E6C2A6' },
+      { name: 'Rosy Glow', hex: '#E58FA0' },
+      { name: 'Soft Coral', hex: '#F08A6C' },
+      { name: 'Champagne Gold', hex: '#F7E1B5' },
+    ],
+    bg: 'linear-gradient(135deg, #F7E1B5, #E58FA0)'
+  },
+  // BLUSH
+  {
+    id: 8, category: 'blush',
+    name: 'A01 — Soft Nude Flush',
+    mood: 'natural, no-makeup look',
+    emoji: '🌷',
+    badge: 'Classic',
+    price: 99000,
+    description: 'Duo blush + highlighter untuk tampilan natural yang sehat. Pipi merona natural seperti kulit sehat dengan glow cahaya lembut.',
+    colors: [
+      { name: 'Soft Nude Peach', hex: '#F3C3A7' },
+      { name: 'Champagne Silk', hex: '#F6E3C9' },
+    ],
+    bg: 'linear-gradient(135deg, #F6E3C9, #F3C3A7)'
+  },
+  {
+    id: 9, category: 'blush',
+    name: 'A02 — Rosy Bloom',
+    mood: 'feminine, girly, fresh',
+    emoji: '🌺',
+    badge: 'Best Seller',
+    price: 99000,
+    description: 'Duo blush pink + petal glow highlighter yang feminin. Pipi merona seperti bunga mekar dengan kilau lembut yang memesona.',
+    colors: [
+      { name: 'Rosy Pink', hex: '#E88FA3' },
+      { name: 'Petal Glow', hex: '#F7D6DE' },
+    ],
+    bg: 'linear-gradient(135deg, #F7D6DE, #E88FA3)'
+  },
+  {
+    id: 10, category: 'blush',
+    name: 'A03 — Warm Glow',
+    mood: 'glowing & warm K-beauty',
+    emoji: '☀️',
+    badge: 'K-Beauty',
+    price: 99000,
+    description: 'Duo warm coral + golden dew untuk K-beauty glow yang hangat. Kulit terlihat sehat, hangat, dan bercahaya secara natural.',
+    colors: [
+      { name: 'Warm Coral Nude', hex: '#F08A6C' },
+      { name: 'Golden Dew', hex: '#F7E1B5' },
+    ],
+    bg: 'linear-gradient(135deg, #F7E1B5, #F08A6C)'
+  },
+];
+
+const trendingData = [
+  { id: 2, rank: '#1', emoji: '🌹', name: 'Rosy Soft Lip Tint', price: 79000 },
+  { id: 3, rank: '#2', emoji: '✨', name: 'Petal Glow Lip Glaze', price: 95000 },
+  { id: 6, rank: '#3', emoji: '🌸', name: 'A02 — Rosy Pink', price: 145000 },
+  { id: 9, rank: '#4', emoji: '🌺', name: 'A02 — Rosy Bloom', price: 99000 },
+  { id: 1, rank: '#5', emoji: '💋', name: 'Airy Blur Lip Mousse', price: 89000 },
+  { id: 7, rank: '#6', emoji: '💫', name: 'A03 — Soft Glow', price: 145000 },
+  { id: 10, rank: '#7', emoji: '☀️', name: 'A03 — Warm Glow', price: 99000 },
+];
+
+const transactionsData = [
+  { id: 'VB-2025-0423', icon: '💋', bg: 'linear-gradient(135deg, #F3C6B3, #E8D8CC)', name: 'Airy Blur Lip Mousse', date: '23 April 2025', items: 'Rosy Dust + Mauve Whisper', amount: 178000, status: 'success' },
+  { id: 'VB-2025-0420', icon: '🌸', bg: 'linear-gradient(135deg, #F4C1CC, #B98C9B)', name: 'A02 — Rosy Pink Palette', date: '20 April 2025', items: '1 item', amount: 145000, status: 'success' },
+  { id: 'VB-2025-0418', icon: '✨', bg: 'linear-gradient(135deg, #F3B79B, #E9D2C2)', name: 'Petal Glow Lip Glaze', date: '18 April 2025', items: 'Peach Glow + Rosy Glow', amount: 190000, status: 'process' },
+  { id: 'VB-2025-0415', icon: '🌺', bg: 'linear-gradient(135deg, #F7D6DE, #E88FA3)', name: 'Rosy Bloom Blush', date: '15 April 2025', items: '1 item', amount: 99000, status: 'pending' },
+  { id: 'VB-2025-0412', icon: '🍑', bg: 'linear-gradient(135deg, #E9B7C3, #F2E6DC)', name: 'Cream Veil Lip Cushion', date: '12 April 2025', items: 'Soft Rose + Creamy Pink', amount: 218000, status: 'success' },
+];
+
+// ═══════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════
+let cart = [];
+let cartOpen = false;
+let chatOpen = false;
+let paymentStep = 0;
+let selectedPaymentMethod = '';
+let selectedShades = {};
+let currentFilter = 'all';
+let historyFilter = 'all';
+let qrisTimer = null;
+let qrisSeconds = 300;
+let selectedProductId = null;
+let chatNotifSeen = false;
+
+// ═══════════════════════════════════════════════
+// RENDER PRODUCTS
+// ═══════════════════════════════════════════════
+function renderProducts(filter = 'all') {
+  const grid = document.getElementById('productsGrid');
+  const filtered = filter === 'all' ? products : products.filter(p => p.category === filter);
+  
+  grid.innerHTML = filtered.map((p, i) => `
+    <div class="product-card" style="animation-delay:${i * 0.08}s" onclick="openProductModal(${p.id})">
+      <div class="product-img" style="background:${p.bg}">
+        <div class="product-img-inner">
+          <div>${p.emoji}</div>
+          <div class="color-dots-preview">
+            ${p.colors.slice(0,4).map(c => `<div class="color-dot-preview" style="background:${c.hex}"></div>`).join('')}
+          </div>
+        </div>
+        <div class="product-badge">${p.badge}</div>
+        <button class="product-wishlist" onclick="toggleWishlist(event, this)">🤍</button>
+      </div>
+      <div class="product-info">
+        <div class="product-category-tag">${getCategoryLabel(p.category)}</div>
+        <div class="product-name">${p.name}</div>
+        <div class="product-mood">${p.mood}</div>
+        <div class="product-colors">
+          ${p.colors.map(c => `<div class="color-swatch" style="background:${c.hex}" title="${c.name}"></div>`).join('')}
+        </div>
+        <div class="product-footer">
+          <div class="product-price">Rp${(p.price/1000).toFixed(0)}k<span>/pcs</span></div>
+          <button class="add-cart-btn" onclick="quickAddToCart(event, ${p.id})">+</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function getCategoryLabel(cat) {
+  return { lips: '💋 LIPPIES', eyes: '✨ EYESHADOW', blush: '🌸 BLUSH' }[cat];
+}
+
+function filterProducts(filter, btn) {
+  currentFilter = filter;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  renderProducts(filter);
+  if (filter !== 'all') scrollToSection('products');
+}
+
+// ═══════════════════════════════════════════════
+// RENDER TRENDING
+// ═══════════════════════════════════════════════
+function renderTrending() {
+  const scroll = document.getElementById('trendingScroll');
+  scroll.innerHTML = trendingData.map(t => `
+    <div class="trending-item" onclick="openProductModal(${t.id})">
+      <div class="trending-rank">${t.rank}</div>
+      <div class="trending-emoji">${t.emoji}</div>
+      <div class="trending-name">${t.name}</div>
+      <div class="trending-price">Rp${(t.price/1000).toFixed(0)}k</div>
+    </div>
+  `).join('');
+}
+
+// ═══════════════════════════════════════════════
+// RENDER TRANSACTIONS
+// ═══════════════════════════════════════════════
+function renderTransactions(filter = 'all') {
+  const list = document.getElementById('transactionList');
+  const filtered = filter === 'all' ? transactionsData : transactionsData.filter(t => t.status === filter);
+  
+  if (filtered.length === 0) {
+    list.innerHTML = `<div style="text-align:center;padding:3rem;color:var(--text-light);font-size:0.9rem;">Tidak ada transaksi untuk filter ini</div>`;
+    return;
+  }
+
+  list.innerHTML = filtered.map(tx => `
+    <div class="transaction-card">
+      <div class="tx-icon" style="background:${tx.bg}">${tx.icon}</div>
+      <div class="tx-info">
+        <div class="tx-name">${tx.name}</div>
+        <div class="tx-date">📅 ${tx.date}</div>
+        <div class="tx-items">🛍️ ${tx.items} · ${tx.id}</div>
+      </div>
+      <div class="tx-status">
+        <div class="tx-amount">Rp${tx.amount.toLocaleString('id')}</div>
+        <span class="status-badge status-${tx.status}">
+          ${tx.status === 'success' ? '✅ Selesai' : tx.status === 'process' ? '🔄 Diproses' : '⏳ Menunggu'}
+        </span>
+      </div>
+    </div>
+  `).join('');
+}
+
+function switchHistoryTab(filter, btn) {
+  historyFilter = filter;
+  document.querySelectorAll('.history-tab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderTransactions(filter);
+}
+
+// ═══════════════════════════════════════════════
+// PRODUCT MODAL
+// ═══════════════════════════════════════════════
+function openProductModal(id) {
+  selectedProductId = id;
+  const p = products.find(x => x.id === id);
+  if (!p) return;
+  selectedShades[id] = selectedShades[id] || p.colors[0].name;
+
+  const content = document.getElementById('productModalContent');
+  content.innerHTML = `
+    <div style="display:flex; justify-content:flex-end; margin-bottom:0.5rem;">
+      <button class="close-btn" onclick="closeProductModal()">✕</button>
+    </div>
+    <div class="pm-img-large" style="background:${p.bg}">
+      <div style="font-size:5rem;">${p.emoji}</div>
+      <div style="display:flex; gap:6px; margin-top:0.5rem;">
+        ${p.colors.map(c => `<div class="color-dot-preview" style="background:${c.hex};width:18px;height:18px;"></div>`).join('')}
+      </div>
+    </div>
+    <div class="product-category-tag" style="margin-bottom:0.3rem;">${getCategoryLabel(p.category)}</div>
+    <div class="pm-name">${p.name}</div>
+    <div class="product-mood" style="margin-bottom:1rem;">${p.mood}</div>
+    <div class="pm-desc">${p.description}</div>
+    <div class="pm-shades">
+      <div class="pm-shades-title">Pilih Shade</div>
+      <div class="pm-shade-grid" id="shadeGrid_${id}">
+        ${p.colors.map(c => `
+          <div class="shade-option ${selectedShades[id] === c.name ? 'selected' : ''}" onclick="selectShade(${id}, '${c.name}', this)">
+            <div class="shade-circle-lg" style="background:${c.hex}"></div>
+            <div class="shade-name-sm">${c.name}</div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+    <div class="pm-footer">
+      <div class="pm-price-large">Rp${p.price.toLocaleString('id')}</div>
+      <button class="pm-add-btn" onclick="addToCartFromModal(${id})">+ Tambah ke Keranjang</button>
+    </div>
+  `;
+
+  document.getElementById('productModal').classList.add('open');
+}
+
+function selectShade(productId, shadeName, el) {
+  selectedShades[productId] = shadeName;
+  document.querySelectorAll(`#shadeGrid_${productId} .shade-option`).forEach(e => e.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+function closeProductModal() {
+  document.getElementById('productModal').classList.remove('open');
+}
+
+document.getElementById('productModal').addEventListener('click', function(e) {
+  if (e.target === this) closeProductModal();
+});
+
+// ═══════════════════════════════════════════════
+// CART
+// ═══════════════════════════════════════════════
+function addToCartFromModal(id) {
+  const p = products.find(x => x.id === id);
+  const shade = selectedShades[id] || p.colors[0].name;
+  addToCart(id, shade);
+  closeProductModal();
+}
+
+function quickAddToCart(e, id) {
+  e.stopPropagation();
+  const p = products.find(x => x.id === id);
+  const shade = p.colors[0].name;
+  addToCart(id, shade);
+}
+
+function addToCart(id, shade) {
+  const p = products.find(x => x.id === id);
+  const key = `${id}-${shade}`;
+  const existing = cart.find(c => c.key === key);
+  
+  if (existing) {
+    existing.qty++;
+  } else {
+    cart.push({ key, id, shade, name: p.name, emoji: p.emoji, price: p.price, qty: 1 });
+  }
+
+  updateCartUI();
+  showToast(`💋 ${p.name} (${shade}) ditambahkan!`);
+}
+
+function removeFromCart(key) {
+  cart = cart.filter(c => c.key !== key);
+  updateCartUI();
+}
+
+function updateQty(key, delta) {
+  const item = cart.find(c => c.key === key);
+  if (!item) return;
+  item.qty += delta;
+  if (item.qty <= 0) removeFromCart(key);
+  else updateCartUI();
+}
+
+function updateCartUI() {
+  const total = cart.reduce((s, c) => s + c.price * c.qty, 0);
+  const count = cart.reduce((s, c) => s + c.qty, 0);
+
+  document.getElementById('cartCount').textContent = count;
+  document.getElementById('cartTotalDisplay').textContent = `Rp${total.toLocaleString('id')}`;
+
+  const body = document.getElementById('cartBody');
+  const footer = document.getElementById('cartFooter');
+
+  if (cart.length === 0) {
+    body.innerHTML = `
+      <div class="empty-cart">
+        <div class="empty-icon">🛍️</div>
+        <div class="empty-title">Keranjang masih kosong</div>
+        <div class="empty-desc">Yuk, temukan produk favorit kamu!</div>
+      </div>`;
+    footer.style.display = 'none';
+  } else {
+    body.innerHTML = cart.map(item => `
+      <div class="cart-item">
+        <div class="cart-item-img" style="background:linear-gradient(135deg, rgba(242,196,206,0.3), rgba(249,228,234,0.3))">${item.emoji}</div>
+        <div class="cart-item-info">
+          <div class="cart-item-name">${item.name}</div>
+          <div class="cart-item-shade">Shade: ${item.shade}</div>
+          <div class="cart-item-price">Rp${item.price.toLocaleString('id')}</div>
+          <button class="remove-item" onclick="removeFromCart('${item.key}')">Hapus</button>
+        </div>
+        <div class="cart-item-controls" style="flex-direction:column;gap:0.5rem;align-items:center;">
+          <button class="qty-btn" onclick="updateQty('${item.key}', 1)">+</button>
+          <span class="qty-num">${item.qty}</span>
+          <button class="qty-btn" onclick="updateQty('${item.key}', -1)">−</button>
+        </div>
+      </div>
+    `).join('');
+    footer.style.display = 'block';
+  }
+}
+
+function toggleCart() {
+  cartOpen = !cartOpen;
+  document.getElementById('cartSidebar').classList.toggle('open', cartOpen);
+  document.getElementById('cartOverlay').classList.toggle('open', cartOpen);
+  document.body.style.overflow = cartOpen ? 'hidden' : '';
+}
+
+// ═══════════════════════════════════════════════
+// CHECKOUT / PAYMENT
+// ═══════════════════════════════════════════════
+function openCheckout() {
+  toggleCart();
+  paymentStep = 0;
+  renderPaymentModal();
+  document.getElementById('paymentModal').classList.add('open');
+}
+
+function renderPaymentModal() {
+  const modal = document.getElementById('paymentModalContent');
+  const total = cart.reduce((s, c) => s + c.price * c.qty, 0);
+  const subtotal = total;
+  const ongkir = 0;
+  const grandTotal = subtotal + ongkir;
+
+  const steps = ['Alamat', 'Pembayaran', 'Konfirmasi', 'Selesai'];
+
+  const stepsHtml = `
+    <div class="payment-steps">
+      ${steps.map((s, i) => `
+        <div class="step ${paymentStep > i ? 'done' : paymentStep === i ? 'active' : ''}">
+          <div class="step-circle">${paymentStep > i ? '✓' : i + 1}</div>
+          <div class="step-label">${s}</div>
+        </div>
+      `).join('')}
+    </div>
+  `;
+
+  const summaryHtml = `
+    <div class="order-summary">
+      <div class="order-summary-title">Ringkasan Pesanan</div>
+      ${cart.map(item => `
+        <div class="order-row"><span>${item.emoji} ${item.name} (${item.shade}) x${item.qty}</span><span>Rp${(item.price * item.qty).toLocaleString('id')}</span></div>
+      `).join('')}
+      <div class="order-row"><span>Ongkos Kirim</span><span style="color:#7ABF74">GRATIS</span></div>
+      <div class="order-row total"><span>Total Bayar</span><span class="val">Rp${grandTotal.toLocaleString('id')}</span></div>
+    </div>
+  `;
+
+  if (paymentStep === 0) {
+    modal.innerHTML = `
+      <button class="close-btn" onclick="closePaymentModal()" style="float:right;margin-bottom:1rem;">✕</button>
+      <div class="modal-header" style="clear:both;">
+        <div class="modal-title">Alamat Pengiriman</div>
+        <div class="modal-subtitle">Pastikan alamat sudah benar ya! 📦</div>
+      </div>
+      ${stepsHtml}
+      ${summaryHtml}
+      <div class="form-group">
+        <label class="form-label">Nama Lengkap</label>
+        <input class="form-input" id="recipientName" placeholder="Nama penerima paket" value="">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Nomor WhatsApp</label>
+        <input class="form-input" id="recipientPhone" placeholder="08xx xxxx xxxx" type="tel">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Alamat Lengkap</label>
+        <input class="form-input" id="recipientAddress" placeholder="Jl. Bunga Matahari No. 5, RT/RW...">
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Kota</label>
+          <input class="form-input" id="recipientCity" placeholder="Kota/Kabupaten">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Kode Pos</label>
+          <input class="form-input" id="recipientZip" placeholder="60xxx" maxlength="5">
+        </div>
+      </div>
+      <button class="checkout-btn" onclick="nextPaymentStep()" style="margin-top:0.5rem;">Lanjut ke Pembayaran →</button>
+    `;
+  } else if (paymentStep === 1) {
+    modal.innerHTML = `
+      <button class="close-btn" onclick="closePaymentModal()" style="float:right;margin-bottom:1rem;">✕</button>
+      <div class="modal-header" style="clear:both;">
+        <div class="modal-title">Metode Bayar</div>
+        <div class="modal-subtitle">Pilih cara pembayaran favoritmu ✨</div>
+      </div>
+      ${stepsHtml}
+      ${summaryHtml}
+      <div class="payment-methods">
+        <div class="pm-title">Pilih Metode Pembayaran</div>
+        <div class="pm-options">
+          <div class="pm-option ${selectedPaymentMethod === 'qris' ? 'selected' : ''}" onclick="selectPM('qris', this)">
+            <div class="pm-icon">⊡</div>
+            <div class="pm-info"><div class="pm-name">QRIS</div><div class="pm-desc">Scan & bayar instan</div></div>
+          </div>
+          <div class="pm-option ${selectedPaymentMethod === 'bca' ? 'selected' : ''}" onclick="selectPM('bca', this)">
+            <div class="pm-icon">🏦</div>
+            <div class="pm-info"><div class="pm-name">Transfer BCA</div><div class="pm-desc">Virtual Account</div></div>
+          </div>
+          <div class="pm-option ${selectedPaymentMethod === 'mandiri' ? 'selected' : ''}" onclick="selectPM('mandiri', this)">
+            <div class="pm-icon">🏛️</div>
+            <div class="pm-info"><div class="pm-name">Transfer Mandiri</div><div class="pm-desc">Virtual Account</div></div>
+          </div>
+          <div class="pm-option ${selectedPaymentMethod === 'gopay' ? 'selected' : ''}" onclick="selectPM('gopay', this)">
+            <div class="pm-icon">💚</div>
+            <div class="pm-info"><div class="pm-name">GoPay</div><div class="pm-desc">via Midtrans</div></div>
+          </div>
+          <div class="pm-option ${selectedPaymentMethod === 'ovo' ? 'selected' : ''}" onclick="selectPM('ovo', this)">
+            <div class="pm-icon">💜</div>
+            <div class="pm-info"><div class="pm-name">OVO</div><div class="pm-desc">via Midtrans</div></div>
+          </div>
+          <div class="pm-option ${selectedPaymentMethod === 'dana' ? 'selected' : ''}" onclick="selectPM('dana', this)">
+            <div class="pm-icon">🔵</div>
+            <div class="pm-info"><div class="pm-name">DANA</div><div class="pm-desc">via Midtrans</div></div>
+          </div>
+        </div>
+      </div>
+      <div style="display:flex;gap:0.8rem;margin-top:0.5rem;">
+        <button class="btn-outline" onclick="prevPaymentStep()" style="flex:0.4;padding:0.9rem;border-radius:14px;font-size:0.9rem;">← Kembali</button>
+        <button class="checkout-btn" onclick="nextPaymentStep()" style="flex:1;">Konfirmasi Pesanan →</button>
+      </div>
+      <div class="midtrans-badge">🔒 Pembayaran aman via <strong style="color:var(--rose);margin-left:3px;">Midtrans</strong></div>
+    `;
+  } else if (paymentStep === 2) {
+    const orderId = 'VB-' + Date.now().toString().slice(-8);
+    
+    let paymentContent = '';
+    if (selectedPaymentMethod === 'qris') {
+      paymentContent = `
+        <div class="qris-display">
+          <div style="font-size:0.75rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-light);margin-bottom:0.8rem;">Scan QR Code ini</div>
+          <div class="qris-code">
+            <svg class="qris-svg" viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg">
+              <rect width="160" height="160" fill="white"/>
+              <rect x="10" y="10" width="40" height="40" fill="none" stroke="#3A2D35" stroke-width="4"/>
+              <rect x="15" y="15" width="30" height="30" fill="none" stroke="#3A2D35" stroke-width="2"/>
+              <rect x="20" y="20" width="20" height="20" fill="#3A2D35"/>
+              <rect x="110" y="10" width="40" height="40" fill="none" stroke="#3A2D35" stroke-width="4"/>
+              <rect x="115" y="15" width="30" height="30" fill="none" stroke="#3A2D35" stroke-width="2"/>
+              <rect x="120" y="20" width="20" height="20" fill="#3A2D35"/>
+              <rect x="10" y="110" width="40" height="40" fill="none" stroke="#3A2D35" stroke-width="4"/>
+              <rect x="15" y="115" width="30" height="30" fill="none" stroke="#3A2D35" stroke-width="2"/>
+              <rect x="20" y="120" width="20" height="20" fill="#3A2D35"/>
+              <rect x="60" y="10" width="5" height="5" fill="#3A2D35"/>
+              <rect x="70" y="10" width="5" height="5" fill="#3A2D35"/>
+              <rect x="60" y="20" width="5" height="5" fill="#3A2D35"/>
+              <rect x="75" y="15" width="5" height="5" fill="#3A2D35"/>
+              <rect x="65" y="25" width="5" height="5" fill="#3A2D35"/>
+              <rect x="80" y="10" width="5" height="5" fill="#3A2D35"/>
+              <rect x="85" y="20" width="5" height="5" fill="#3A2D35"/>
+              <rect x="90" y="15" width="5" height="5" fill="#3A2D35"/>
+              <rect x="95" y="10" width="5" height="5" fill="#3A2D35"/>
+              <rect x="60" y="60" width="40" height="5" fill="#3A2D35"/>
+              <rect x="60" y="70" width="5" height="30" fill="#3A2D35"/>
+              <rect x="95" y="70" width="5" height="30" fill="#3A2D35"/>
+              <rect x="60" y="95" width="40" height="5" fill="#3A2D35"/>
+              <rect x="70" y="75" width="20" height="15" fill="#3A2D35"/>
+              <rect x="110" y="60" width="5" height="5" fill="#3A2D35"/>
+              <rect x="120" y="60" width="5" height="5" fill="#3A2D35"/>
+              <rect x="130" y="60" width="5" height="5" fill="#3A2D35"/>
+              <rect x="140" y="60" width="5" height="5" fill="#3A2D35"/>
+              <rect x="110" y="70" width="15" height="5" fill="#3A2D35"/>
+              <rect x="130" y="70" width="15" height="5" fill="#3A2D35"/>
+              <rect x="110" y="80" width="5" height="5" fill="#3A2D35"/>
+              <rect x="125" y="80" width="5" height="5" fill="#3A2D35"/>
+              <rect x="140" y="80" width="5" height="5" fill="#3A2D35"/>
+              <rect x="110" y="90" width="30" height="5" fill="#3A2D35"/>
+              <rect x="10" y="60" width="5" height="5" fill="#3A2D35"/>
+              <rect x="20" y="60" width="5" height="5" fill="#3A2D35"/>
+              <rect x="35" y="60" width="5" height="5" fill="#3A2D35"/>
+              <rect x="45" y="60" width="5" height="5" fill="#3A2D35"/>
+              <rect x="10" y="70" width="15" height="5" fill="#3A2D35"/>
+              <rect x="30" y="70" width="20" height="5" fill="#3A2D35"/>
+              <rect x="10" y="80" width="5" height="5" fill="#3A2D35"/>
+              <rect x="20" y="80" width="10" height="5" fill="#3A2D35"/>
+              <rect x="40" y="80" width="10" height="5" fill="#3A2D35"/>
+              <rect x="15" y="90" width="35" height="5" fill="#3A2D35"/>
+              <rect x="10" y="100" width="10" height="5" fill="#3A2D35"/>
+              <rect x="30" y="100" width="5" height="5" fill="#3A2D35"/>
+              <rect x="45" y="100" width="5" height="5" fill="#3A2D35"/>
+              <rect x="110" y="110" width="5" height="5" fill="#3A2D35"/>
+              <rect x="120" y="110" width="5" height="5" fill="#3A2D35"/>
+              <rect x="130" y="110" width="5" height="5" fill="#3A2D35"/>
+              <rect x="145" y="110" width="5" height="5" fill="#3A2D35"/>
+              <rect x="115" y="120" width="15" height="5" fill="#3A2D35"/>
+              <rect x="135" y="120" width="10" height="5" fill="#3A2D35"/>
+              <rect x="110" y="130" width="10" height="5" fill="#3A2D35"/>
+              <rect x="125" y="130" width="20" height="5" fill="#3A2D35"/>
+              <rect x="110" y="140" width="35" height="5" fill="#3A2D35"/>
+            </svg>
+          </div>
+          <div class="qris-amount">Rp${grandTotal.toLocaleString('id')}</div>
+          <div class="qris-instruction">Scan dengan aplikasi mobile banking atau e-wallet kamu.<br>GoPay, OVO, DANA, ShopeePay, dan semua QRIS.</div>
+          <div class="qris-timer" id="qrisTimer">⏱ ${formatTime(qrisSeconds)}</div>
+        </div>
+      `;
+    } else if (['bca', 'mandiri'].includes(selectedPaymentMethod)) {
+      const vaNumber = selectedPaymentMethod === 'bca' ? '8808' + Math.random().toString().slice(2, 14) : '88908' + Math.random().toString().slice(2, 12);
+      paymentContent = `
+        <div class="qris-display">
+          <div style="font-size:2rem;margin-bottom:0.5rem;">${selectedPaymentMethod === 'bca' ? '🏦' : '🏛️'}</div>
+          <div style="font-size:0.8rem;color:var(--text-light);margin-bottom:0.5rem;">Virtual Account ${selectedPaymentMethod.toUpperCase()}</div>
+          <div style="font-family:'Lucida Sans',sans-serif;font-size:1.8rem;letter-spacing:0.1em;color:var(--text);background:var(--petal);padding:0.8rem 1.5rem;border-radius:12px;margin:0.8rem 0;cursor:pointer;" onclick="navigator.clipboard && navigator.clipboard.writeText('${vaNumber}')">
+            ${vaNumber.match(/.{1,4}/g).join(' ')}
+          </div>
+          <div style="font-size:0.75rem;color:var(--text-light)">Klik nomor VA untuk copy</div>
+          <div class="qris-amount">Rp${grandTotal.toLocaleString('id')}</div>
+          <div class="qris-instruction">Transfer tepat sesuai nominal di atas.<br>Pembayaran otomatis dikonfirmasi.</div>
+          <div class="qris-timer" id="qrisTimer">⏱ ${formatTime(qrisSeconds)}</div>
+        </div>
+      `;
+    } else {
+      paymentContent = `
+        <div class="qris-display">
+          <div style="font-size:2.5rem;margin-bottom:0.5rem;">${selectedPaymentMethod === 'gopay' ? '💚' : selectedPaymentMethod === 'ovo' ? '💜' : '🔵'}</div>
+          <div style="font-size:0.85rem;font-weight:600;color:var(--text);margin-bottom:0.3rem;">${selectedPaymentMethod.toUpperCase()}</div>
+          <div style="font-size:0.78rem;color:var(--text-light);margin-bottom:1rem;">via Midtrans</div>
+          <div class="qris-amount">Rp${grandTotal.toLocaleString('id')}</div>
+          <div class="qris-instruction">Kamu akan diarahkan ke aplikasi ${selectedPaymentMethod.toUpperCase()}<br>untuk menyelesaikan pembayaran.</div>
+          <button style="margin-top:1rem;background:linear-gradient(135deg,var(--blush),var(--rose));color:white;border:none;padding:0.8rem 2rem;border-radius:50px;font-size:0.88rem;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;" onclick="simulatePaymentComplete()">
+            Buka Aplikasi ${selectedPaymentMethod.toUpperCase()} →
+          </button>
+          <div class="qris-timer" id="qrisTimer" style="margin-top:0.8rem;">⏱ ${formatTime(qrisSeconds)}</div>
+        </div>
+      `;
+    }
+
+    modal.innerHTML = `
+      <button class="close-btn" onclick="closePaymentModal()" style="float:right;margin-bottom:1rem;">✕</button>
+      <div class="modal-header" style="clear:both;">
+        <div class="modal-title">Selesaikan Pembayaran</div>
+        <div class="modal-subtitle">Order ID: ${orderId}</div>
+      </div>
+      ${stepsHtml}
+      ${paymentContent}
+      <div style="display:flex;gap:0.8rem;margin-top:0.5rem;">
+        <button class="btn-outline" onclick="prevPaymentStep()" style="flex:0.4;padding:0.9rem;border-radius:14px;font-size:0.85rem;">← Kembali</button>
+        <button class="checkout-btn" onclick="simulatePaymentComplete()" style="flex:1;">Konfirmasi Sudah Bayar ✓</button>
+      </div>
+      <div class="secure-badge">🔒 256-bit SSL Encryption · Powered by <strong style="color:var(--rose);margin-left:2px;">Midtrans</strong></div>
+    `;
+
+    qrisSeconds = 300;
+    if (qrisTimer) clearInterval(qrisTimer);
+    qrisTimer = setInterval(() => {
+      qrisSeconds--;
+      const timerEl = document.getElementById('qrisTimer');
+      if (timerEl) timerEl.textContent = '⏱ ' + formatTime(qrisSeconds);
+      if (qrisSeconds <= 0) {
+        clearInterval(qrisTimer);
+        if (timerEl) timerEl.textContent = '⌛ Waktu habis';
+      }
+    }, 1000);
+
+  } else if (paymentStep === 3) {
+    const orderId = 'VB-' + Date.now().toString().slice(-8);
+    modal.innerHTML = `
+      <div class="payment-success">
+        <div class="success-animation">✅</div>
+        <div class="success-title">Pembayaran Berhasil!</div>
+        <p class="success-desc">Yeay! Pesananmu sudah dikonfirmasi. 🎉<br>Kami akan segera memproses dan mengirim paketmu dengan penuh cinta 💌</p>
+        <div class="order-id">Order ID: ${orderId}</div>
+        <div style="background:var(--petal);border-radius:16px;padding:1.2rem;margin-bottom:1.5rem;text-align:left;">
+          <div style="font-size:0.8rem;font-weight:600;color:var(--text-light);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:0.8rem;">Detail Pesanan</div>
+          ${cart.map(item => `
+            <div style="display:flex;justify-content:space-between;font-size:0.85rem;padding:0.3rem 0;color:var(--text);">
+              <span>${item.emoji} ${item.name} (${item.shade}) x${item.qty}</span>
+              <span>Rp${(item.price * item.qty).toLocaleString('id')}</span>
+            </div>
+          `).join('')}
+          <div style="border-top:1px solid rgba(242,196,206,0.4);margin-top:0.7rem;padding-top:0.7rem;display:flex;justify-content:space-between;font-weight:600;font-size:0.9rem;">
+            <span>Total</span><span style="color:var(--rose);">Rp${cart.reduce((s,c)=>s+c.price*c.qty,0).toLocaleString('id')}</span>
+          </div>
+        </div>
+        <button class="btn-primary" onclick="closePaymentModal();clearCartAfterSuccess();" style="width:100%;border-radius:14px;">Lihat Transaksi Saya 🛍️</button>
+      </div>
+    `;
+  }
+}
+
+function selectPM(method, el) {
+  selectedPaymentMethod = method;
+  document.querySelectorAll('.pm-option').forEach(e => e.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+function nextPaymentStep() {
+  if (paymentStep === 1 && !selectedPaymentMethod) {
+    showToast('⚠️ Pilih metode pembayaran dulu ya!');
+    return;
+  }
+  paymentStep++;
+  renderPaymentModal();
+}
+
+function prevPaymentStep() {
+  paymentStep--;
+  renderPaymentModal();
+}
+
+function simulatePaymentComplete() {
+  if (qrisTimer) clearInterval(qrisTimer);
+  paymentStep = 3;
+  renderPaymentModal();
+}
+
+function closePaymentModal() {
+  if (qrisTimer) clearInterval(qrisTimer);
+  document.getElementById('paymentModal').classList.remove('open');
+}
+
+function clearCartAfterSuccess() {
+  transactionsData.unshift({
+    id: 'VB-' + Date.now().toString().slice(-8),
+    icon: cart[0]?.emoji || '💋',
+    bg: 'linear-gradient(135deg, #F3C6B3, #E8D8CC)',
+    name: cart[0]?.name || 'Produk Velvet Bloom',
+    date: new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' }),
+    items: `${cart.reduce((s,c)=>s+c.qty,0)} item`,
+    amount: cart.reduce((s,c)=>s+c.price*c.qty,0),
+    status: 'process'
+  });
+  cart = [];
+  updateCartUI();
+  renderTransactions(historyFilter);
+  scrollToSection('history');
+  showToast('🎉 Terima kasih! Pesananmu sudah dicatat.');
+}
+
+document.getElementById('paymentModal').addEventListener('click', function(e) {
+  if (e.target === this) closePaymentModal();
+});
+
+function formatTime(seconds) {
+  const m = Math.floor(seconds / 60).toString().padStart(2, '0');
+  const s = (seconds % 60).toString().padStart(2, '0');
+  return `${m}:${s}`;
+}
+
+// ═══════════════════════════════════════════════
+// LIVE CHAT
+// ═══════════════════════════════════════════════
+const botReplies = {
+  'Rekomendasiin lipstik dong!': 'Hii! Aku rekomendasiin Rosy Soft Lip Tint – bestseller banget! Shade Rosy Pink cocok buat daily look. Atau kalau kamu mau yang glossy, coba Petal Glow Lip Glaze ya! ✨💋',
+  'Ongkir berapa?': 'Free ongkir untuk pembelian min. Rp75.000 dengan kode VELVETFREE! 🚚✨ Pengiriman 2-3 hari kerja ke seluruh Indonesia.',
+  'Ada promo apa?': 'Sekarang ada promo BELI 2 GRATIS 1 untuk semua Lippies! 🎁 Dan gratis ongkir min. Rp75.000. Promo berlaku sampai akhir bulan ya!',
+  'default': ['Makasih udah chat! Boleh aku tanyain skin tone kamu buat rekomendasi yang lebih pas? 🌸', 'Ooh oke! Ada yang bisa aku bantu lagi ga? Aku siap bantu kamu nemuin shade yang paling cocok 💕', 'Hmm, untuk pertanyaan lebih detail, kamu juga bisa DM Instagram kita ya! @velvetbloom.id 🌸']
+};
+let defaultReplyIdx = 0;
+
+function toggleChat() {
+  chatOpen = !chatOpen;
+  document.getElementById('chatWindow').classList.toggle('open', chatOpen);
+  if (chatOpen) {
+    document.getElementById('chatNotif').style.display = 'none';
+    chatNotifSeen = true;
+  }
+}
+
+function sendQuickReply(msg) {
+  addChatMsg(msg, 'user');
+  document.getElementById('quickReplies').style.display = 'none';
+  setTimeout(() => {
+    const reply = botReplies[msg] || botReplies['default'][defaultReplyIdx % botReplies['default'].length];
+    defaultReplyIdx++;
+    addChatMsg(reply, 'bot');
+  }, 800);
+}
+
+function sendChat() {
+  const input = document.getElementById('chatInput');
+  const msg = input.value.trim();
+  if (!msg) return;
+  input.value = '';
+  addChatMsg(msg, 'user');
+  setTimeout(() => {
+    const reply = botReplies[msg] || botReplies['default'][defaultReplyIdx % botReplies['default'].length];
+    defaultReplyIdx++;
+    addChatMsg(reply, 'bot');
+  }, 1000);
+}
+
+function addChatMsg(text, type) {
+  const messages = document.getElementById('chatMessages');
+  const div = document.createElement('div');
+  div.className = `chat-msg ${type}`;
+  div.textContent = text;
+  messages.appendChild(div);
+  messages.scrollTop = messages.scrollHeight;
+}
+
+// ═══════════════════════════════════════════════
+// WISHLIST
+// ═══════════════════════════════════════════════
+function toggleWishlist(e, btn) {
+  e.stopPropagation();
+  btn.classList.toggle('active');
+  btn.textContent = btn.classList.contains('active') ? '❤️' : '🤍';
+  showToast(btn.classList.contains('active') ? '❤️ Ditambahkan ke wishlist!' : 'Dihapus dari wishlist');
+}
+
+// ═══════════════════════════════════════════════
+// TOAST
+// ═══════════════════════════════════════════════
+function showToast(msg) {
+  const container = document.getElementById('toastContainer');
+  const toast = document.createElement('div');
+  toast.className = 'toast';
+  toast.textContent = msg;
+  container.appendChild(toast);
+  setTimeout(() => {
+    toast.style.animation = 'toastOut 0.4s ease forwards';
+    setTimeout(() => toast.remove(), 400);
+  }, 2800);
+}
+
+// ═══════════════════════════════════════════════
+// SCROLL ANIMATIONS
+// ═══════════════════════════════════════════════
+function scrollToSection(id) {
+  document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+}
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('fade-show');
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.fade-hidden').forEach(el => observer.observe(el));
+
+// ═══════════════════════════════════════════════
+// NAVBAR SCROLL
+// ═══════════════════════════════════════════════
+window.addEventListener('scroll', () => {
+  const nav = document.getElementById('navbar');
+  nav.style.boxShadow = window.scrollY > 50 ? '0 4px 30px rgba(217, 166, 160, 0.15)' : 'none';
+});
+
+// ═══════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════
+renderProducts();
+renderTrending();
+renderTransactions();
+
+setTimeout(() => {
+  if (!chatNotifSeen) {
+    document.getElementById('chatNotif').style.display = 'flex';
+  }
+}, 3000);
+</script>
+</body>
+</html>
