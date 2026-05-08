@@ -1694,6 +1694,69 @@
     color: var(--text-light);
     margin-top: 0.5rem;
   }
+
+  /* ─── SHADE FINDER ─── */
+  .shade-finder-step { animation: fadeIn 0.3s ease; }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+  .sf-question {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 1.2rem;
+  }
+
+  .sf-options {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+    gap: 0.8rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .sf-option {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    background: white;
+    border: 2px solid transparent;
+    border-radius: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .sf-option:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(191, 143, 163, 0.2);
+  }
+
+  .sf-option.selected {
+    border-color: var(--rose);
+    background: linear-gradient(135deg, rgba(242, 196, 206, 0.1), rgba(249, 228, 234, 0.1));
+    box-shadow: 0 4px 12px rgba(191, 143, 163, 0.3);
+  }
+
+  .sf-color {
+    width: 60px;
+    height: 60px;
+    border-radius: 12px;
+    margin-bottom: 0.5rem;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+  }
+
+  .sf-label {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--text);
+    text-align: center;
+  }
+
+  .sf-buttons {
+    display: flex;
+    gap: 0.8rem;
+    margin-top: 2rem;
+  }
 </style>
 </head>
 <body>
@@ -1734,8 +1797,8 @@
       Temukan koleksi makeup pastel yang merayakan kelembutan dan kecantikan alami kamu. Dibuat untuk jiwa muda yang berani tampil halus.
     </p>
     <div class="hero-ctas">
-      <button class="btn-primary" onclick="scrollToSection('products')">Belanja Sekarang</button>
-      <button class="btn-outline" onclick="scrollToSection('trending')">Lihat Trending</button>
+      <button class="btn-primary" onclick="openShadeFinder()">🎨 Cari Shade Cocok</button>
+      <button class="btn-outline" onclick="scrollToSection('products')">Belanja Sekarang</button>
     </div>
   </div>
   <div class="hero-visual">
@@ -1934,6 +1997,65 @@
 <!-- ─── PRODUCT DETAIL MODAL ─── -->
 <div class="modal-overlay product-modal" id="productModal">
   <div class="modal" id="productModalContent">
+  </div>
+</div>
+
+<!-- ─── SHADE FINDER MODAL ─── -->
+<div class="modal-overlay" id="shadeFinderModal">
+  <div class="modal" id="shadeFinderContent" style="max-width:600px;">
+    <button class="close-btn" onclick="closeShadeFinder()" style="float:right;margin-bottom:1rem;">✕</button>
+    <div class="modal-header" style="clear:both;">
+      <div class="modal-title">🎨 Cari Shade Cocok</div>
+      <div class="modal-subtitle">Temukan warna yang sempurna untuk warna kulitmu</div>
+    </div>
+
+    <div id="shadeFinderStep1" class="shade-finder-step">
+      <div class="sf-question">Warna kulit kamu?</div>
+      <div class="sf-options">
+        <div class="sf-option" onclick="selectSkinTone('fair', this)">
+          <div class="sf-color" style="background:linear-gradient(135deg, #F9E4D4, #EDD5C3);"></div>
+          <div class="sf-label">Fair</div>
+        </div>
+        <div class="sf-option" onclick="selectSkinTone('medium', this)">
+          <div class="sf-color" style="background:linear-gradient(135deg, #D8B5A0, #C9A589);"></div>
+          <div class="sf-label">Medium</div>
+        </div>
+        <div class="sf-option" onclick="selectSkinTone('tan', this)">
+          <div class="sf-color" style="background:linear-gradient(135deg, #C19A6B, #B08968);"></div>
+          <div class="sf-label">Tan</div>
+        </div>
+        <div class="sf-option" onclick="selectSkinTone('deep', this)">
+          <div class="sf-color" style="background:linear-gradient(135deg, #8B6F47, #6B5237);"></div>
+          <div class="sf-label">Deep</div>
+        </div>
+      </div>
+    </div>
+
+    <div id="shadeFinderStep2" class="shade-finder-step" style="display:none;">
+      <div class="sf-question">Undertone kulit kamu?</div>
+      <div class="sf-options" style="grid-template-columns:1fr 1fr;">
+        <div class="sf-option" onclick="selectUndertone('warm', this)">
+          <div style="font-size:2rem;margin-bottom:0.5rem;">🔥</div>
+          <div class="sf-label">Warm</div>
+          <div style="font-size:0.7rem;color:var(--text-light);margin-top:0.2rem;">Peach, Coral, Emas</div>
+        </div>
+        <div class="sf-option" onclick="selectUndertone('cool', this)">
+          <div style="font-size:2rem;margin-bottom:0.5rem;">❄️</div>
+          <div class="sf-label">Cool</div>
+          <div style="font-size:0.7rem;color:var(--text-light);margin-top:0.2rem;">Pink, Mauve, Silver</div>
+        </div>
+        <div class="sf-option" onclick="selectUndertone('neutral', this)">
+          <div style="font-size:2rem;margin-bottom:0.5rem;">⚖️</div>
+          <div class="sf-label">Neutral</div>
+          <div style="font-size:0.7rem;color:var(--text-light);margin-top:0.2rem;">Balanced, Cocok Semua</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sf-buttons">
+      <button class="btn-outline" id="sfBackBtn" onclick="backShadeFinder()" style="display:none;flex:0.4;border-radius:14px;">← Kembali</button>
+      <button class="btn-primary" id="sfNextBtn" onclick="nextShadeFinder()" style="flex:1;border-radius:14px;">Lihat Rekomendasi →</button>
+    </div>
   </div>
 </div>
 
@@ -2173,6 +2295,27 @@ let qrisSeconds = 300;
 let selectedProductId = null;
 let chatNotifSeen = false;
 
+// Shade Finder State
+let shadeFinderStep = 0;
+let selectedSkinTone = null;
+let selectedUndertone = null;
+
+// Shade recommendations map
+const shadeRecommendations = {
+  'fair-cool': { products: [6, 9, 2], label: 'Fair + Cool' },
+  'fair-warm': { products: [1, 4, 8], label: 'Fair + Warm' },
+  'fair-neutral': { products: [5, 3, 10], label: 'Fair + Neutral' },
+  'medium-cool': { products: [6, 2, 7], label: 'Medium + Cool' },
+  'medium-warm': { products: [1, 9, 3], label: 'Medium + Warm' },
+  'medium-neutral': { products: [5, 4, 10], label: 'Medium + Neutral' },
+  'tan-cool': { products: [2, 6, 7], label: 'Tan + Cool' },
+  'tan-warm': { products: [3, 1, 10], label: 'Tan + Warm' },
+  'tan-neutral': { products: [5, 9, 4], label: 'Tan + Neutral' },
+  'deep-cool': { products: [6, 2, 10], label: 'Deep + Cool' },
+  'deep-warm': { products: [1, 3, 9], label: 'Deep + Warm' },
+  'deep-neutral': { products: [7, 5, 4], label: 'Deep + Neutral' },
+};
+
 // ═══════════════════════════════════════════════
 // RENDER PRODUCTS
 // ═══════════════════════════════════════════════
@@ -2211,6 +2354,116 @@ function renderProducts(filter = 'all') {
 function getCategoryLabel(cat) {
   return { lips: '💋 LIPPIES', eyes: '✨ EYESHADOW', blush: '🌸 BLUSH' }[cat];
 }
+
+// ═══════════════════════════════════════════════
+// SHADE FINDER
+// ═══════════════════════════════════════════════
+function openShadeFinder() {
+  shadeFinderStep = 0;
+  selectedSkinTone = null;
+  selectedUndertone = null;
+  document.getElementById('shadeFinderModal').classList.add('open');
+  updateShadeFinderUI();
+}
+
+function closeShadeFinder() {
+  document.getElementById('shadeFinderModal').classList.remove('open');
+}
+
+function selectSkinTone(tone, el) {
+  selectedSkinTone = tone;
+  document.querySelectorAll('#shadeFinderStep1 .sf-option').forEach(e => e.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+function selectUndertone(undertone, el) {
+  selectedUndertone = undertone;
+  document.querySelectorAll('#shadeFinderStep2 .sf-option').forEach(e => e.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+function nextShadeFinder() {
+  if (shadeFinderStep === 0 && !selectedSkinTone) {
+    showToast('⚠️ Pilih warna kulitmu dulu ya!');
+    return;
+  }
+  if (shadeFinderStep === 1 && !selectedUndertone) {
+    showToast('⚠️ Pilih undertone kulit dulu ya!');
+    return;
+  }
+
+  if (shadeFinderStep === 0) {
+    shadeFinderStep = 1;
+    updateShadeFinderUI();
+  } else if (shadeFinderStep === 1) {
+    showShadeFinderResults();
+  }
+}
+
+function backShadeFinder() {
+  if (shadeFinderStep > 0) {
+    shadeFinderStep--;
+    updateShadeFinderUI();
+  }
+}
+
+function updateShadeFinderUI() {
+  document.getElementById('shadeFinderStep1').style.display = shadeFinderStep === 0 ? 'block' : 'none';
+  document.getElementById('shadeFinderStep2').style.display = shadeFinderStep === 1 ? 'block' : 'none';
+
+  document.getElementById('sfBackBtn').style.display = shadeFinderStep === 0 ? 'none' : 'block';
+  document.getElementById('sfNextBtn').textContent = shadeFinderStep === 1 ? 'Lihat Rekomendasi →' : 'Lanjut →';
+}
+
+function showShadeFinderResults() {
+  const key = `${selectedSkinTone}-${selectedUndertone}`;
+  const rec = shadeRecommendations[key];
+
+  if (!rec) {
+    showToast('❌ Kombinasi tidak ditemukan');
+    return;
+  }
+
+  closeShadeFinder();
+
+  // Filter dan tampilkan produk
+  const filtered = products.filter(p => rec.products.includes(p.id));
+  const grid = document.getElementById('productsGrid');
+
+  grid.innerHTML = filtered.map((p, i) => `
+    <div class="product-card" style="animation-delay:${i * 0.08}s" onclick="openProductModal(${p.id})">
+      <div class="product-img" style="background:${p.bg}">
+        <div class="product-img-inner">
+          <div>${p.emoji}</div>
+          <div class="color-dots-preview">
+            ${p.colors.slice(0,4).map(c => `<div class="color-dot-preview" style="background:${c.hex}"></div>`).join('')}
+          </div>
+        </div>
+        <div class="product-badge">👌 Cocok</div>
+        <button class="product-wishlist" onclick="toggleWishlist(event, this)">🤍</button>
+      </div>
+      <div class="product-info">
+        <div class="product-category-tag">${getCategoryLabel(p.category)}</div>
+        <div class="product-name">${p.name}</div>
+        <div class="product-mood">${p.mood}</div>
+        <div class="product-colors">
+          ${p.colors.map(c => `<div class="color-swatch" style="background:${c.hex}" title="${c.name}"></div>`).join('')}
+        </div>
+        <div class="product-footer">
+          <div class="product-price">Rp${(p.price/1000).toFixed(0)}k<span>/pcs</span></div>
+          <button class="add-cart-btn" onclick="quickAddToCart(event, ${p.id})">+</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+
+  scrollToSection('products');
+  showToast(`✨ ${rec.label} - ${filtered.length} produk cocok buat kamu!`);
+}
+
+document.getElementById('shadeFinderModal').addEventListener('click', function(e) {
+  if (e.target === this) closeShadeFinder();
+});
 
 function filterProducts(filter, btn) {
   currentFilter = filter;
