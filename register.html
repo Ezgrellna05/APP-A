@@ -24,20 +24,57 @@
         .btn-primary { width: 100%; padding: 13px; background: var(--primary); color: white; border: none; border-radius: 30px; font-weight: 600; cursor: pointer; margin-top: 15px; }
         .footer-link { font-size: 13px; margin-top: 15px; color: var(--text-light); }
         .footer-link a { color: var(--primary); text-decoration: none; font-weight: 600; }
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            font-size: 13px;
+            display: none;
+        }
+        .success-message.show {
+            display: block;
+        }
     </style>
 </head>
 <body>
     <div class="auth-card">
         <div class="logo">Gabung APPÉA 🍎</div>
-        <form onsubmit="event.preventDefault(); window.location.href='login.html';">
-            <div class="form-group"><label>Nama Lengkap</label><input type="text" required></div>
-            <div class="form-group"><label>Email</label><input type="email" required></div>
+        <div class="success-message" id="successMsg"></div>
+        <form onsubmit="event.preventDefault(); handleRegister();">
+            <div class="form-group"><label>Nama Lengkap</label><input type="text" id="regName" required></div>
+            <div class="form-group"><label>Email</label><input type="email" id="regEmail" required></div>
             <div class="form-group"><label>Nomor Telepon</label><input type="tel" required></div>
             <div class="form-group"><label>Alamat Lengkap</label><textarea rows="2" required></textarea></div>
-            <div class="form-group"><label>Password</label><input type="password" required></div>
+            <div class="form-group"><label>Password</label><input type="password" id="regPassword" required></div>
             <button type="submit" class="btn-primary">Buat Akun</button>
         </form>
         <div class="footer-link">Sudah punya akun? <a href="login.html">Login</a></div>
     </div>
+    <script>
+        function handleRegister() {
+            const email = document.getElementById('regEmail').value.trim().toLowerCase();
+            const password = document.getElementById('regPassword').value;
+            const successMsg = document.getElementById('successMsg');
+            const existingUsers = JSON.parse(localStorage.getItem('appeaUsers')) || [];
+            if (existingUsers.find(u => u.email === email)) {
+                successMsg.textContent = 'Email sudah terdaftar. Gunakan email lain atau login.';
+                successMsg.style.background = '#f8d7da';
+                successMsg.style.color = '#721c24';
+                successMsg.classList.add('show');
+                return;
+            }
+            const newUser = { email: email, password: password, role: 'customer' };
+            existingUsers.push(newUser);
+            localStorage.setItem('appeaUsers', JSON.stringify(existingUsers));
+            successMsg.textContent = 'Akun berhasil dibuat! Redirecting ke halaman login...';
+            successMsg.style.background = '#d4edda';
+            successMsg.style.color = '#155724';
+            successMsg.classList.add('show');
+            setTimeout(() => { window.location.href = 'login.html'; }, 2000);
+        }
+    </script>
 </body>
 </html>
