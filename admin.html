@@ -1,33 +1,47 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
   <title>APPÉA 🍎</title>
   <style>
     :root {
-      --bg: #FDF6F0;
-      --sidebar-bg: linear-gradient(160deg, #F9ECF0 0%, #EFE6F7 50%, #E5F5ED 100%);
-      --sidebar-hover: rgba(245,198,208,0.4);
-      --primary: #C45E73;
-      --primary-light: #F5C6D0;
-      --primary-soft: #FDF0F3;
-      --accent: #7B5EA7;
-      --accent2: #3AA87A;
-      --text: #2D1B2E;
-      --text-light: #A08CA2;
-      --border: rgba(213,165,185,0.35);
-      --card: #ffffff;
-      --green: #1A5C3E;
-      --green-light: #C0E8D5;
-      --yellow: #E8899A;
-      --yellow-light: #F5C6D0;
-      --blue: #7B5EA7;
-      --blue-light: #D4C5E8;
-      --red: #C45E73;
-      --red-light: #F5C6D0;
-      --shadow: 0 4px 24px rgba(180,120,150,0.12);
-      --shadow-md: 0 8px 32px rgba(180,120,150,0.22);
+      --blush: #F2C4CE;
+      --petal: #F9E4EA;
+      --sage: #E8F0EC;
+      --cream: #FDF8F5;
+      --nude: #E3C7AD;
+      --rose: #D9A6A0;
+      --mauve: #BFA3B8;
+      --text: #3A2D35;
+      --text-light: #7A6570;
+      --white: #FFFFFF;
+      --shadow: rgba(191, 143, 163, 0.15);
+      --shadow-deep: rgba(191, 143, 163, 0.3);
+
+      /* Legacy variables for compatibility */
+      --bg: #FDF8F5;
+      --sidebar-bg: linear-gradient(160deg, #F9E4EA 0%, #E8F0EC 50%, #F2C4CE 100%);
+      --sidebar-hover: rgba(242, 196, 206, 0.3);
+      --primary: #D9A6A0;
+      --primary-light: #F2C4CE;
+      --primary-soft: #F9E4EA;
+      --accent: #BFA3B8;
+      --accent2: #8FA3A0;
+      --border: rgba(242, 196, 206, 0.3);
+      --card: #FFFFFF;
+      --green: #5A8A7A;
+      --green-light: #D4E8E0;
+      --yellow: #E8B8A8;
+      --yellow-light: #F2C4CE;
+      --blue: #BFA3B8;
+      --blue-light: #E8D8E8;
+      --red: #D9A6A0;
+      --red-light: #F2C4CE;
+      --shadow: 0 4px 24px rgba(191, 143, 163, 0.15);
+      --shadow-md: 0 8px 32px rgba(191, 143, 163, 0.3);
       --radius: 16px;
       --radius-sm: 10px;
     }
@@ -40,7 +54,7 @@
 
     body {
       font-family: 'DM Sans', sans-serif;
-      background: var(--bg);
+      background: #FDF3F5;
       color: var(--text);
       display: flex;
       min-height: 100vh;
@@ -55,10 +69,12 @@
         transform: translateY(0) rotate(0deg) translateX(0);
         opacity: 0.8;
       }
+
       50% {
         transform: translateY(50vh) rotate(180deg) translateX(30px);
         opacity: 0.5;
       }
+
       100% {
         transform: translateY(110vh) rotate(360deg) translateX(-20px);
         opacity: 0;
@@ -70,6 +86,7 @@
         opacity: 0;
         transform: translateY(-20px) scale(0.97);
       }
+
       to {
         opacity: 1;
         transform: none;
@@ -81,6 +98,7 @@
         opacity: 0;
         transform: translateY(-10px);
       }
+
       to {
         opacity: 1;
         transform: none;
@@ -92,6 +110,7 @@
         opacity: 0;
         transform: translateY(10px);
       }
+
       to {
         opacity: 1;
         transform: none;
@@ -99,9 +118,12 @@
     }
 
     @keyframes blink {
-      0%, 100% {
+
+      0%,
+      100% {
         opacity: 1;
       }
+
       50% {
         opacity: 0.4;
       }
@@ -133,8 +155,8 @@
     .sidebar {
       width: 240px;
       min-height: 100vh;
-      background: linear-gradient(160deg, #F9ECF0 0%, #EFE6F7 50%, #E5F5ED 100%);
-      border-right: 1px solid rgba(213,165,185,0.35);
+      background: linear-gradient(160deg, #F9E4EA 0%, #E8F0EC 50%, #F2C4CE 100%);
+      border-right: 1px solid rgba(217, 166, 160, 0.25);
       display: flex;
       flex-direction: column;
       position: fixed;
@@ -146,14 +168,14 @@
 
     .sidebar-logo {
       padding: 24px 20px 20px;
-      border-bottom: 1px solid rgba(213,165,185,0.35);
+      border-bottom: 1px solid rgba(217, 166, 160, 0.25);
     }
 
     .logo-main {
       font-family: 'Playfair Display', serif;
       font-size: 22px;
       font-weight: 700;
-      background: linear-gradient(135deg, #C45E73, #7B5EA7);
+      background: linear-gradient(135deg, #D9A6A0, #BFA3B8);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
@@ -190,17 +212,17 @@
     }
 
     .nav-item:hover {
-      background: rgba(245,198,208,0.4);
-      color: #7A2C3E;
-      border-left-color: #C45E73;
+      background: rgba(242, 196, 206, 0.3);
+      color: #5A6B65;
+      border-left-color: #D9A6A0;
     }
 
     .nav-item.active {
-      background: linear-gradient(135deg, rgba(245,198,208,0.7), rgba(212,197,232,0.5));
-      color: #7A2C3E;
-      border-left-color: #C45E73;
+      background: linear-gradient(135deg, rgba(242, 196, 206, 0.5), rgba(232, 216, 232, 0.4));
+      color: #5A6B65;
+      border-left-color: #D9A6A0;
       font-weight: 600;
-      box-shadow: 0 2px 12px rgba(196,94,115,0.15);
+      box-shadow: 0 2px 12px rgba(217, 166, 160, 0.15);
     }
 
     .nav-icon {
@@ -210,7 +232,7 @@
     }
 
     .badge {
-      background: linear-gradient(135deg, #E8899A, #C45E73);
+      background: linear-gradient(135deg, #E8B8A8, #D9A6A0);
       color: white;
       border-radius: 20px;
       font-size: 10px;
@@ -222,7 +244,7 @@
     .sidebar-footer {
       margin-top: auto;
       padding: 16px 20px;
-      border-top: 1px solid rgba(213,165,185,0.35);
+      border-top: 1px solid rgba(217, 166, 160, 0.25);
       display: flex;
       align-items: center;
       gap: 10px;
@@ -231,7 +253,7 @@
     .user-av {
       width: 36px;
       height: 36px;
-      background: linear-gradient(135deg, #E8899A, #A98EC7);
+      background: linear-gradient(135deg, #E8B8A8, #BFA3B8);
       border-radius: 50%;
       display: flex;
       align-items: center;
@@ -244,7 +266,7 @@
 
     .user-name {
       font-size: 13px;
-      color: #2D1B2E;
+      color: #3A2D35;
       font-weight: 500;
     }
 
@@ -337,6 +359,7 @@
       padding: 24px 28px;
       overflow-y: auto;
       height: calc(100vh - 65px);
+      background: #FDF3F5;
     }
 
     .page.active {
@@ -447,7 +470,7 @@
       align-items: center;
       gap: 10px;
       padding: 8px 0;
-      border-bottom: 1px solid rgba(213,165,185,0.25);
+      border-bottom: 1px solid rgba(217, 166, 160, 0.25);
     }
 
     .laporan-item:last-child {
@@ -558,7 +581,7 @@
     }
 
     thead th {
-      background: #F9ECF0;
+      background: #F9E4EA;
       padding: 10px 16px;
       text-align: left;
       font-size: 11px;
@@ -570,12 +593,12 @@
     }
 
     tbody tr {
-      border-bottom: 1px solid rgba(213,165,185,0.2);
+      border-bottom: 1px solid rgba(217, 166, 160, 0.2);
       transition: background 0.15s;
     }
 
     tbody tr:hover {
-      background: rgba(245,198,208,0.1);
+      background: rgba(217, 166, 160, 0.08);
     }
 
     tbody tr:last-child {
@@ -592,7 +615,7 @@
        BADGES & STATUS
        ============================================ */
     .sku-badge {
-      background: #F5C6D0;
+      background: #F2C4CE;
       color: var(--text-light);
       padding: 2px 7px;
       border-radius: 4px;
@@ -609,18 +632,18 @@
     }
 
     .cat-badge.lippies {
-      background: #F5C6D0;
-      color: #7A2C3E;
+      background: #F2C4CE;
+      color: #5A6B65;
     }
 
     .cat-badge.eyeshadow {
-      background: #D4C5E8;
-      color: #4A2A7A;
+      background: #E8D8E8;
+      color: #5A6B65;
     }
 
     .cat-badge.blush {
-      background: #C0E8D5;
-      color: #1A5C3E;
+      background: #D4E8E0;
+      color: #5A8A7A;
     }
 
     .low-stock {
@@ -650,21 +673,21 @@
     }
 
     .status-badge.aktif {
-      background: #C0E8D5;
-      color: #1A5C3E;
+      background: #D4E8E0;
+      color: #5A8A7A;
     }
 
     .status-badge.aktif::before {
-      background: #3AA87A;
+      background: #8FA3A0;
     }
 
     .status-badge.nonaktif {
-      background: #F5C6D0;
-      color: #C45E73;
+      background: #F2C4CE;
+      color: #D9A6A0;
     }
 
     .status-badge.nonaktif::before {
-      background: #C45E73;
+      background: #D9A6A0;
     }
 
     .status-badge.diblokir {
@@ -677,26 +700,26 @@
     }
 
     .status-badge.pending {
-      background: #F5C6D0;
-      color: #7A2C3E;
+      background: #F2C4CE;
+      color: #5A6B65;
     }
 
     .status-badge.pending::before {
-      background: #E8899A;
+      background: #E8B8A8;
     }
 
     .status-badge.diproses {
-      background: #D4C5E8;
-      color: #4A2A7A;
+      background: #E8D8E8;
+      color: #5A6B65;
     }
 
     .status-badge.diproses::before {
-      background: #7B5EA7;
+      background: #BFA3B8;
     }
 
     .status-badge.dikirim {
-      background: #D4C5E8;
-      color: #7B5EA7;
+      background: #E8D8E8;
+      color: #BFA3B8;
     }
 
     .status-badge.dikirim::before {
@@ -704,21 +727,21 @@
     }
 
     .status-badge.selesai {
-      background: #C0E8D5;
-      color: #1A5C3E;
+      background: #D4E8E0;
+      color: #5A8A7A;
     }
 
     .status-badge.selesai::before {
-      background: #3AA87A;
+      background: #8FA3A0;
     }
 
     .status-badge.dibatalkan {
-      background: #F5C6D0;
-      color: #C45E73;
+      background: #F2C4CE;
+      color: #D9A6A0;
     }
 
     .status-badge.dibatalkan::before {
-      background: #C45E73;
+      background: #D9A6A0;
     }
 
     .role-badge {
@@ -730,18 +753,18 @@
     }
 
     .role-badge.admin {
-      background: #F5C6D0;
-      color: #7A2C3E;
+      background: #F2C4CE;
+      color: #5A6B65;
     }
 
     .role-badge.seller {
-      background: #D4C5E8;
-      color: #4A2A7A;
+      background: #E8D8E8;
+      color: #5A6B65;
     }
 
     .role-badge.customer {
-      background: #C0E8D5;
-      color: #1A5C3E;
+      background: #D4E8E0;
+      color: #5A8A7A;
     }
 
     /* ============================================
@@ -767,21 +790,21 @@
     }
 
     .btn-icon.edit {
-      background: #F5C6D0;
-      color: #C45E73;
+      background: #F2C4CE;
+      color: #D9A6A0;
     }
 
     .btn-icon.edit:hover {
-      background: #E8899A;
+      background: #E8B8A8;
     }
 
     .btn-icon.del {
-      background: #F5C6D0;
-      color: #C45E73;
+      background: #F2C4CE;
+      color: #D9A6A0;
     }
 
     .btn-icon.del:hover {
-      background: #E8899A;
+      background: #E8B8A8;
       color: white;
     }
 
@@ -796,8 +819,8 @@
 
     .btn-next {
       padding: 5px 12px;
-      background: #C0E8D5;
-      color: #1A5C3E;
+      background: #D4E8E0;
+      color: #5A8A7A;
       border: none;
       border-radius: var(--radius-sm);
       font-size: 12px;
@@ -808,7 +831,7 @@
     }
 
     .btn-next:hover {
-      background: #7FC9A8;
+      background: #8FA3A0;
     }
 
     .order-id {
@@ -838,7 +861,7 @@
     }
 
     .expand-row {
-      background: rgba(245,198,208,0.08);
+      background: rgba(217, 166, 160, 0.08);
       display: none;
     }
 
@@ -928,7 +951,7 @@
       align-items: center;
       gap: 10px;
       padding: 10px 0;
-      border-bottom: 1px solid rgba(213,165,185,0.25);
+      border-bottom: 1px solid rgba(217, 166, 160, 0.25);
     }
 
     .category-item:last-child {
@@ -1255,10 +1278,21 @@
       flex-shrink: 0;
     }
 
-    .user-stat-icon.purple { background: #D4C5E8; }
-    .user-stat-icon.green  { background: #C0E8D5; }
-    .user-stat-icon.blue   { background: #C5DCF0; }
-    .user-stat-icon.red    { background: #F5C6D0; }
+    .user-stat-icon.purple {
+      background: #E8D8E8;
+    }
+
+    .user-stat-icon.green {
+      background: #D4E8E0;
+    }
+
+    .user-stat-icon.blue {
+      background: #E8D8E8;
+    }
+
+    .user-stat-icon.red {
+      background: #F2C4CE;
+    }
 
     .user-stat-label {
       font-size: 11px;
@@ -1293,22 +1327,22 @@
     }
 
     .btn-block.block {
-      background: #F5C6D0;
-      color: #7A2C3E;
+      background: #F2C4CE;
+      color: #5A6B65;
     }
 
     .btn-block.block:hover {
-      background: #E8899A;
+      background: #E8B8A8;
       color: white;
     }
 
     .btn-block.unblock {
-      background: #C0E8D5;
-      color: #1A5C3E;
+      background: #D4E8E0;
+      color: #5A8A7A;
     }
 
     .btn-block.unblock:hover {
-      background: #7FC9A8;
+      background: #8FA3A0;
       color: white;
     }
 
@@ -1349,55 +1383,84 @@
     }
   </style>
 </head>
+
 <body>
   <!-- PETALS BACKGROUND -->
-  <div class="petals-container" id="petalsContainer"></div>
+  <div class="petals-container"
+       id="petalsContainer"></div>
 
   <!-- LOGIN PAGE -->
-  <div class="login-page" id="loginPage">
+  <div class="login-page"
+       id="loginPage">
     <div class="login-box">
       <div class="login-logo">APPÉA 🍎</div>
-      <div class="login-tagline">FRESH • JUICY • NATURAL GLOW<br>Inspired by the goodness of apples for a fresh, healthy glow every single day.</div>
-      <input type="text" class="form-input" id="loginUser" placeholder="Username / Email" value="admin@appea.id">
-      <input type="password" class="form-input" id="loginPass" placeholder="Password" value="admin123">
-      <button class="login-btn" onclick="doLogin()">Masuk →</button>
-      <div class="login-err" id="loginErr">Username atau password salah.</div>
+      <div class="login-tagline">FRESH • JUICY • NATURAL GLOW<br>Inspired by the goodness of apples for a fresh, healthy
+        glow every single day.</div>
+      <input type="text"
+             class="form-input"
+             id="loginUser"
+             placeholder="Username / Email"
+             value="admin@appea.id">
+      <input type="password"
+             class="form-input"
+             id="loginPass"
+             placeholder="Password"
+             value="admin123">
+      <button class="login-btn"
+              onclick="doLogin()">Masuk →</button>
+      <div class="login-err"
+           id="loginErr">Username atau password salah.</div>
     </div>
   </div>
 
   <!-- SIDEBAR -->
-  <aside class="sidebar" id="sidebar" style="display: none">
+  <aside class="sidebar"
+         id="sidebar"
+         style="display: none">
     <div class="sidebar-logo">
       <div class="logo-main">APPÉA 🍎</div>
-      <div class="logo-sub">FRESH • JUICY • NATURAL GLOW<br>Inspired by the goodness of apples for a fresh, healthy glow every single day.</div>
+      <div class="logo-sub">FRESH • JUICY • NATURAL GLOW<br>Inspired by the goodness of apples for a fresh, healthy glow
+        every single day.</div>
     </div>
     <div class="sidebar-label">Menu</div>
-    <div class="nav-item active" onclick="navigate('dashboard', this)"><span class="nav-icon">📊</span> Dashboard</div>
-    <div class="nav-item" onclick="navigate('inventori', this)"><span class="nav-icon">📦</span> Inventori</div>
-    <div class="nav-item" onclick="navigate('pesanan', this)"><span class="nav-icon">🛒</span> Pesanan<span class="badge" id="pesananBadge">3</span></div>
-    <div class="nav-item" onclick="navigate('masterdata', this)"><span class="nav-icon">🗂️</span> Master Data</div>
-    <div class="nav-item" onclick="navigate('pengguna', this)"><span class="nav-icon">👥</span> Pengguna</div>
+    <div class="nav-item active"
+         onclick="navigate('dashboard', this)"><span class="nav-icon">📊</span> Dashboard</div>
+    <div class="nav-item"
+         onclick="navigate('inventori', this)"><span class="nav-icon">📦</span> Inventori</div>
+    <div class="nav-item"
+         onclick="navigate('pesanan', this)"><span class="nav-icon">🛒</span> Pesanan<span class="badge"
+            id="pesananBadge">3</span></div>
+    <div class="nav-item"
+         onclick="navigate('masterdata', this)"><span class="nav-icon">🗂️</span> Master Data</div>
+    <div class="nav-item"
+         onclick="navigate('pengguna', this)"><span class="nav-icon">👥</span> Pengguna</div>
     <div class="sidebar-footer">
       <div class="user-av">🍎</div>
       <div>
         <div class="user-name">APPÉA Admin</div>
       </div>
-      <button class="logout-btn" onclick="doLogout()" title="Logout">⇥</button>
+      <button class="logout-btn"
+              onclick="doLogout()"
+              title="Logout">⇥</button>
     </div>
   </aside>
 
   <!-- MAIN CONTENT -->
-  <main class="main" id="mainContent" style="display: none">
+  <main class="main"
+        id="mainContent"
+        style="display: none">
     <div class="topbar">
       <div class="page-title">
         <h1 id="pageTitle">Dashboard</h1>
         <p id="pageDate"></p>
       </div>
-      <button class="notif-btn" onclick="toggleNotif()">🔔<span class="notif-dot"></span></button>
+      <button class="notif-btn"
+              onclick="toggleNotif()">🔔<span class="notif-dot"></span></button>
     </div>
 
     <!-- NOTIFICATIONS PANEL -->
-    <div class="notif-panel" id="notifPanel">
+    <div class="notif-panel"
+         id="notifPanel">
       <div class="notif-header">🔔 Notifikasi</div>
       <div class="notif-item"><strong>Pesanan Baru - ORD-001</strong>Siti Rahayu menunggu konfirmasi</div>
       <div class="notif-item"><strong>Stok Rendah - Petal Glow</strong>Sisa 17 unit (min 20)</div>
@@ -1406,7 +1469,8 @@
     </div>
 
     <!-- PAGE: DASHBOARD -->
-    <div class="page active" id="page-dashboard">
+    <div class="page active"
+         id="page-dashboard">
       <div class="stats-grid">
         <div class="stat-card">
           <div class="stat-icon green">📈</div>
@@ -1444,7 +1508,8 @@
       <div class="dash-charts">
         <div class="chart-card">
           <div class="chart-title">Jumlah Pesanan Bulanan</div>
-          <canvas id="chartPesanan" height="160"></canvas>
+          <canvas id="chartPesanan"
+                  height="160"></canvas>
         </div>
         <div class="chart-card">
           <div class="chart-title">Produk Terlaris (Qty)</div>
@@ -1454,17 +1519,27 @@
     </div>
 
     <!-- PAGE: INVENTORI -->
-    <div class="page" id="page-inventori">
+    <div class="page"
+         id="page-inventori">
       <div class="table-card">
         <div class="table-header">
-          <input type="text" class="search-input" placeholder="Cari produk..." id="invSearch" oninput="renderInv()">
+          <input type="text"
+                 class="search-input"
+                 placeholder="Cari produk..."
+                 id="invSearch"
+                 oninput="renderInv()">
           <div class="filter-tabs">
-            <button class="tab-btn active" onclick="setInvCat('Semua', this)">Semua</button>
-            <button class="tab-btn" onclick="setInvCat('Lippies', this)">Lippies</button>
-            <button class="tab-btn" onclick="setInvCat('Eyeshadow', this)">Eyeshadow</button>
-            <button class="tab-btn" onclick="setInvCat('Blush', this)">Blush</button>
+            <button class="tab-btn active"
+                    onclick="setInvCat('Semua', this)">Semua</button>
+            <button class="tab-btn"
+                    onclick="setInvCat('Lippies', this)">Lippies</button>
+            <button class="tab-btn"
+                    onclick="setInvCat('Eyeshadow', this)">Eyeshadow</button>
+            <button class="tab-btn"
+                    onclick="setInvCat('Blush', this)">Blush</button>
           </div>
-          <button class="btn-primary" onclick="openModal('addProduct')">+ Produk Baru</button>
+          <button class="btn-primary"
+                  onclick="openModal('addProduct')">+ Produk Baru</button>
         </div>
         <table>
           <thead>
@@ -1485,17 +1560,28 @@
     </div>
 
     <!-- PAGE: PESANAN -->
-    <div class="page" id="page-pesanan">
+    <div class="page"
+         id="page-pesanan">
       <div class="table-card">
         <div class="table-header">
-          <input type="text" class="search-input" placeholder="Cari pesanan..." id="ordSearch" oninput="renderOrd()">
+          <input type="text"
+                 class="search-input"
+                 placeholder="Cari pesanan..."
+                 id="ordSearch"
+                 oninput="renderOrd()">
           <div class="filter-tabs">
-            <button class="tab-btn active" onclick="setOrdFilter('Semua', this)">Semua (10)</button>
-            <button class="tab-btn" onclick="setOrdFilter('Pending', this)">Pending (2)</button>
-            <button class="tab-btn" onclick="setOrdFilter('Diproses', this)">Diproses (2)</button>
-            <button class="tab-btn" onclick="setOrdFilter('Dikirim', this)">Dikirim (1)</button>
-            <button class="tab-btn" onclick="setOrdFilter('Selesai', this)">Selesai (4)</button>
-            <button class="tab-btn" onclick="setOrdFilter('Dibatalkan', this)">Dibatalkan (1)</button>
+            <button class="tab-btn active"
+                    onclick="setOrdFilter('Semua', this)">Semua (10)</button>
+            <button class="tab-btn"
+                    onclick="setOrdFilter('Pending', this)">Pending (2)</button>
+            <button class="tab-btn"
+                    onclick="setOrdFilter('Diproses', this)">Diproses (2)</button>
+            <button class="tab-btn"
+                    onclick="setOrdFilter('Dikirim', this)">Dikirim (1)</button>
+            <button class="tab-btn"
+                    onclick="setOrdFilter('Selesai', this)">Selesai (4)</button>
+            <button class="tab-btn"
+                    onclick="setOrdFilter('Dibatalkan', this)">Dibatalkan (1)</button>
           </div>
         </div>
         <table>
@@ -1516,10 +1602,13 @@
     </div>
 
     <!-- PAGE: MASTER DATA -->
-    <div class="page" id="page-masterdata">
+    <div class="page"
+         id="page-masterdata">
       <div class="master-tabs">
-        <div class="master-tab active" onclick="switchMaster('kategori', this)">🏷️ Kategori</div>
-        <div class="master-tab" onclick="switchMaster('brand', this)">⭐ Brand</div>
+        <div class="master-tab active"
+             onclick="switchMaster('kategori', this)">🏷️ Kategori</div>
+        <div class="master-tab"
+             onclick="switchMaster('brand', this)">⭐ Brand</div>
       </div>
       <div id="master-kategori">
         <div class="master-grid">
@@ -1529,12 +1618,17 @@
           </div>
           <div class="master-card">
             <div class="master-card-title">Tambah Kategori</div>
-            <div class="form-group"><label class="form-label">Nama Kategori</label><input type="text" class="form-input" id="newKatInput" placeholder="e.g. Foundation"></div>
-            <button class="btn-primary" onclick="addKat()">+ Tambah</button>
+            <div class="form-group"><label class="form-label">Nama Kategori</label><input type="text"
+                     class="form-input"
+                     id="newKatInput"
+                     placeholder="e.g. Foundation"></div>
+            <button class="btn-primary"
+                    onclick="addKat()">+ Tambah</button>
           </div>
         </div>
       </div>
-      <div id="master-brand" style="display: none">
+      <div id="master-brand"
+           style="display: none">
         <div class="master-grid">
           <div class="master-card">
             <div class="master-card-title">Daftar Brand (<span id="brandCount">2</span>)</div>
@@ -1542,23 +1636,30 @@
           </div>
           <div class="master-card">
             <div class="master-card-title">Tambah Brand</div>
-            <div class="form-group"><label class="form-label">Nama Brand</label><input type="text" class="form-input" id="newBrandInput" placeholder="e.g. APPÉA Core"></div>
-            <button class="btn-primary" onclick="addBrand()">+ Tambah</button>
+            <div class="form-group"><label class="form-label">Nama Brand</label><input type="text"
+                     class="form-input"
+                     id="newBrandInput"
+                     placeholder="e.g. APPÉA Core"></div>
+            <button class="btn-primary"
+                    onclick="addBrand()">+ Tambah</button>
           </div>
         </div>
       </div>
     </div>
 
     <!-- PAGE: PENGGUNA -->
-    <div class="page" id="page-pengguna">
+    <div class="page"
+         id="page-pengguna">
       <!-- Stats Cards -->
       <div class="user-stats-grid">
         <div class="user-stat-card">
           <div class="user-stat-icon purple">👥</div>
           <div>
             <div class="user-stat-label">Total User</div>
-            <div class="user-stat-value" id="statTotalUser">0</div>
-            <div class="user-stat-sub" id="statUserSub">terdaftar</div>
+            <div class="user-stat-value"
+                 id="statTotalUser">0</div>
+            <div class="user-stat-sub"
+                 id="statUserSub">terdaftar</div>
           </div>
           <div class="bg-decor">👥</div>
         </div>
@@ -1566,7 +1667,8 @@
           <div class="user-stat-icon green">🏪</div>
           <div>
             <div class="user-stat-label">Seller Aktif</div>
-            <div class="user-stat-value" id="statSeller">0</div>
+            <div class="user-stat-value"
+                 id="statSeller">0</div>
             <div class="user-stat-sub">seller terdaftar</div>
           </div>
           <div class="bg-decor">🏪</div>
@@ -1575,7 +1677,8 @@
           <div class="user-stat-icon blue">🛡️</div>
           <div>
             <div class="user-stat-label">Admin</div>
-            <div class="user-stat-value" id="statAdmin">0</div>
+            <div class="user-stat-value"
+                 id="statAdmin">0</div>
             <div class="user-stat-sub">akun admin</div>
           </div>
           <div class="bg-decor">🛡️</div>
@@ -1584,7 +1687,8 @@
           <div class="user-stat-icon red">🔒</div>
           <div>
             <div class="user-stat-label">Diblokir</div>
-            <div class="user-stat-value" id="statBlocked">0</div>
+            <div class="user-stat-value"
+                 id="statBlocked">0</div>
             <div class="user-stat-sub">akun diblokir</div>
           </div>
           <div class="bg-decor">🔒</div>
@@ -1593,15 +1697,25 @@
 
       <div class="table-card">
         <div class="table-header">
-          <input type="text" class="search-input" placeholder="Cari pengguna..." id="userSearch" oninput="renderUsers()">
+          <input type="text"
+                 class="search-input"
+                 placeholder="Cari pengguna..."
+                 id="userSearch"
+                 oninput="renderUsers()">
           <div class="filter-tabs">
-            <button class="tab-btn active" onclick="setUserFilter('Semua', this)">Semua (<span id="tabSemua">0</span>)</button>
-            <button class="tab-btn" onclick="setUserFilter('Customer', this)">Customer (<span id="tabCustomer">0</span>)</button>
-            <button class="tab-btn" onclick="setUserFilter('Seller', this)">Seller (<span id="tabSeller">0</span>)</button>
-            <button class="tab-btn" onclick="setUserFilter('Admin', this)">Admin (<span id="tabAdmin">0</span>)</button>
-            <button class="tab-btn" onclick="setUserFilter('Diblokir', this)">Diblokir (<span id="tabDiblokir">0</span>)</button>
+            <button class="tab-btn active"
+                    onclick="setUserFilter('Semua', this)">Semua (<span id="tabSemua">0</span>)</button>
+            <button class="tab-btn"
+                    onclick="setUserFilter('Customer', this)">Customer (<span id="tabCustomer">0</span>)</button>
+            <button class="tab-btn"
+                    onclick="setUserFilter('Seller', this)">Seller (<span id="tabSeller">0</span>)</button>
+            <button class="tab-btn"
+                    onclick="setUserFilter('Admin', this)">Admin (<span id="tabAdmin">0</span>)</button>
+            <button class="tab-btn"
+                    onclick="setUserFilter('Diblokir', this)">Diblokir (<span id="tabDiblokir">0</span>)</button>
           </div>
-          <button class="btn-primary" onclick="openModal('addUser')">+ Tambah User</button>
+          <button class="btn-primary"
+                  onclick="openModal('addUser')">+ Tambah User</button>
         </div>
         <table>
           <thead>
@@ -1622,91 +1736,181 @@
   </main>
 
   <!-- MODAL: Add Product -->
-  <div class="modal-overlay" id="modal-addProduct" onclick="closeOuter(event, 'addProduct')">
+  <div class="modal-overlay"
+       id="modal-addProduct"
+       onclick="closeOuter(event, 'addProduct')">
     <div class="modal">
-      <div class="modal-title">Produk Baru <button class="modal-close" onclick="closeModal('addProduct')">✕</button></div>
-      <div class="form-group"><label class="form-label">Nama Produk</label><input type="text" class="form-input" id="np-name" placeholder="Nama produk"></div>
+      <div class="modal-title">Produk Baru <button class="modal-close"
+                onclick="closeModal('addProduct')">✕</button></div>
+      <div class="form-group"><label class="form-label">Nama Produk</label><input type="text"
+               class="form-input"
+               id="np-name"
+               placeholder="Nama produk"></div>
       <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px">
-        <div class="form-group"><label class="form-label">SKU</label><input type="text" class="form-input" id="np-sku" placeholder="LIP-005"></div>
-        <div class="form-group"><label class="form-label">Kategori</label><select class="form-input" id="np-kat"><option>Lippies</option><option>Eyeshadow</option><option>Blush</option></select></div>
-        <div class="form-group"><label class="form-label">Harga (Rp)</label><input type="number" class="form-input" id="np-harga" placeholder="89000"></div>
-        <div class="form-group"><label class="form-label">Total Stok</label><input type="number" class="form-input" id="np-stok" placeholder="100"></div>
-        <div class="form-group"><label class="form-label">Stok Min</label><input type="number" class="form-input" id="np-min" placeholder="20"></div>
+        <div class="form-group"><label class="form-label">SKU</label><input type="text"
+                 class="form-input"
+                 id="np-sku"
+                 placeholder="LIP-005"></div>
+        <div class="form-group"><label class="form-label">Kategori</label><select class="form-input"
+                  id="np-kat">
+            <option>Lippies</option>
+            <option>Eyeshadow</option>
+            <option>Blush</option>
+          </select></div>
+        <div class="form-group"><label class="form-label">Harga (Rp)</label><input type="number"
+                 class="form-input"
+                 id="np-harga"
+                 placeholder="89000"></div>
+        <div class="form-group"><label class="form-label">Total Stok</label><input type="number"
+                 class="form-input"
+                 id="np-stok"
+                 placeholder="100"></div>
+        <div class="form-group"><label class="form-label">Stok Min</label><input type="number"
+                 class="form-input"
+                 id="np-min"
+                 placeholder="20"></div>
       </div>
       <div class="modal-actions">
-        <button class="btn-cancel" onclick="closeModal('addProduct')">Batal</button>
-        <button class="btn-primary" onclick="addProduct()">Simpan</button>
+        <button class="btn-cancel"
+                onclick="closeModal('addProduct')">Batal</button>
+        <button class="btn-primary"
+                onclick="addProduct()">Simpan</button>
       </div>
     </div>
   </div>
 
   <!-- MODAL: Order Detail -->
-  <div class="modal-overlay" id="modal-orderDetail" onclick="closeOuter(event, 'orderDetail')">
+  <div class="modal-overlay"
+       id="modal-orderDetail"
+       onclick="closeOuter(event, 'orderDetail')">
     <div class="modal">
-      <div class="modal-title">Detail Pesanan <button class="modal-close" onclick="closeModal('orderDetail')">✕</button></div>
+      <div class="modal-title">Detail Pesanan <button class="modal-close"
+                onclick="closeModal('orderDetail')">✕</button></div>
       <div id="orderDetailContent"></div>
-      <div class="modal-actions"><button class="btn-cancel" onclick="closeModal('orderDetail')">Tutup</button></div>
+      <div class="modal-actions"><button class="btn-cancel"
+                onclick="closeModal('orderDetail')">Tutup</button></div>
     </div>
   </div>
 
   <!-- MODAL: Add User -->
-  <div class="modal-overlay" id="modal-addUser" onclick="closeOuter(event, 'addUser')">
+  <div class="modal-overlay"
+       id="modal-addUser"
+       onclick="closeOuter(event, 'addUser')">
     <div class="modal">
-      <div class="modal-title">Pengguna Baru <button class="modal-close" onclick="closeModal('addUser')">✕</button></div>
-      <div class="form-group"><label class="form-label">Nama Lengkap</label><input type="text" class="form-input" id="nu-name" placeholder="Nama lengkap"></div>
-      <div class="form-group"><label class="form-label">Email</label><input type="email" class="form-input" id="nu-email" placeholder="email@contoh.com"></div>
-      <div class="form-group"><label class="form-label">Role</label><select class="form-input" id="nu-role"><option>Customer</option><option>Seller</option><option>Admin</option></select></div>
+      <div class="modal-title">Pengguna Baru <button class="modal-close"
+                onclick="closeModal('addUser')">✕</button></div>
+      <div class="form-group"><label class="form-label">Nama Lengkap</label><input type="text"
+               class="form-input"
+               id="nu-name"
+               placeholder="Nama lengkap"></div>
+      <div class="form-group"><label class="form-label">Email</label><input type="email"
+               class="form-input"
+               id="nu-email"
+               placeholder="email@contoh.com"></div>
+      <div class="form-group"><label class="form-label">Role</label><select class="form-input"
+                id="nu-role">
+          <option>Customer</option>
+          <option>Seller</option>
+          <option>Admin</option>
+        </select></div>
       <div class="modal-actions">
-        <button class="btn-cancel" onclick="closeModal('addUser')">Batal</button>
-        <button class="btn-primary" onclick="addUser()">Simpan</button>
+        <button class="btn-cancel"
+                onclick="closeModal('addUser')">Batal</button>
+        <button class="btn-primary"
+                onclick="addUser()">Simpan</button>
       </div>
     </div>
   </div>
 
   <!-- MODAL: Confirm Delete -->
-  <div class="modal-overlay" id="modal-del" onclick="closeOuter(event, 'del')">
-    <div class="modal" style="max-width: 340px; text-align: center">
+  <div class="modal-overlay"
+       id="modal-del"
+       onclick="closeOuter(event, 'del')">
+    <div class="modal"
+         style="max-width: 340px; text-align: center">
       <div style="font-size: 40px; margin-bottom: 12px">🗑️</div>
-      <div class="modal-title" style="justify-content: center; font-size: 16px" id="delTitle">Hapus item ini?</div>
-      <p style="font-size: 13px; color: var(--text-light); margin-bottom: 4px" id="delSub">Tindakan ini tidak dapat dibatalkan.</p>
-      <div class="modal-actions" style="justify-content: center">
-        <button class="btn-cancel" onclick="closeModal('del')">Batal</button>
-        <button class="btn-primary" style="background: var(--red)" onclick="confirmDel()">Hapus</button>
+      <div class="modal-title"
+           style="justify-content: center; font-size: 16px"
+           id="delTitle">Hapus item ini?</div>
+      <p style="font-size: 13px; color: var(--text-light); margin-bottom: 4px"
+         id="delSub">Tindakan ini tidak dapat dibatalkan.</p>
+      <div class="modal-actions"
+           style="justify-content: center">
+        <button class="btn-cancel"
+                onclick="closeModal('del')">Batal</button>
+        <button class="btn-primary"
+                style="background: var(--red)"
+                onclick="confirmDel()">Hapus</button>
       </div>
     </div>
   </div>
 
   <!-- MODAL: Edit User -->
-  <div class="modal-overlay" id="modal-editUser" onclick="closeOuter(event, 'editUser')">
+  <div class="modal-overlay"
+       id="modal-editUser"
+       onclick="closeOuter(event, 'editUser')">
     <div class="modal">
-      <div class="modal-title">Edit Pengguna <button class="modal-close" onclick="closeModal('editUser')">✕</button></div>
-      <div class="form-group"><label class="form-label">Nama Lengkap</label><input type="text" class="form-input" id="eu-name" placeholder="Nama lengkap"></div>
-      <div class="form-group"><label class="form-label">Email</label><input type="email" class="form-input" id="eu-email" placeholder="email@contoh.com"></div>
-      <div class="form-group"><label class="form-label">Role</label><select class="form-input" id="eu-role"><option>Customer</option><option>Seller</option><option>Admin</option></select></div>
-      <div class="form-group"><label class="form-label">Status</label><select class="form-input" id="eu-status"><option>Aktif</option><option>Nonaktif</option></select></div>
-      <input type="hidden" id="eu-index">
+      <div class="modal-title">Edit Pengguna <button class="modal-close"
+                onclick="closeModal('editUser')">✕</button></div>
+      <div class="form-group"><label class="form-label">Nama Lengkap</label><input type="text"
+               class="form-input"
+               id="eu-name"
+               placeholder="Nama lengkap"></div>
+      <div class="form-group"><label class="form-label">Email</label><input type="email"
+               class="form-input"
+               id="eu-email"
+               placeholder="email@contoh.com"></div>
+      <div class="form-group"><label class="form-label">Role</label><select class="form-input"
+                id="eu-role">
+          <option>Customer</option>
+          <option>Seller</option>
+          <option>Admin</option>
+        </select></div>
+      <div class="form-group"><label class="form-label">Status</label><select class="form-input"
+                id="eu-status">
+          <option>Aktif</option>
+          <option>Nonaktif</option>
+        </select></div>
+      <input type="hidden"
+             id="eu-index">
       <div class="modal-actions">
-        <button class="btn-cancel" onclick="closeModal('editUser')">Batal</button>
-        <button class="btn-primary" onclick="saveEditUser()">Simpan</button>
+        <button class="btn-cancel"
+                onclick="closeModal('editUser')">Batal</button>
+        <button class="btn-primary"
+                onclick="saveEditUser()">Simpan</button>
       </div>
     </div>
   </div>
 
   <!-- MODAL: Confirm Block -->
-  <div class="modal-overlay" id="modal-blockUser" onclick="closeOuter(event, 'blockUser')">
-    <div class="modal" style="max-width: 360px; text-align: center">
-      <div style="font-size: 44px; margin-bottom: 12px" id="blockIcon">🔒</div>
-      <div class="modal-title" style="justify-content: center; font-size: 17px" id="blockTitle">Blokir Pengguna?</div>
-      <p style="font-size: 13px; color: var(--text-light); margin-bottom: 4px" id="blockSub">Pengguna tidak dapat login selama diblokir.</p>
-      <input type="hidden" id="blockIndex">
-      <div class="modal-actions" style="justify-content: center">
-        <button class="btn-cancel" onclick="closeModal('blockUser')">Batal</button>
-        <button class="btn-primary" id="blockConfirmBtn" style="background: #C45E73" onclick="confirmBlock()">🔒 Blokir</button>
+  <div class="modal-overlay"
+       id="modal-blockUser"
+       onclick="closeOuter(event, 'blockUser')">
+    <div class="modal"
+         style="max-width: 360px; text-align: center">
+      <div style="font-size: 44px; margin-bottom: 12px"
+           id="blockIcon">🔒</div>
+      <div class="modal-title"
+           style="justify-content: center; font-size: 17px"
+           id="blockTitle">Blokir Pengguna?</div>
+      <p style="font-size: 13px; color: var(--text-light); margin-bottom: 4px"
+         id="blockSub">Pengguna tidak dapat login selama diblokir.</p>
+      <input type="hidden"
+             id="blockIndex">
+      <div class="modal-actions"
+           style="justify-content: center">
+        <button class="btn-cancel"
+                onclick="closeModal('blockUser')">Batal</button>
+        <button class="btn-primary"
+                id="blockConfirmBtn"
+                style="background: #D9A6A0"
+                onclick="confirmBlock()">🔒 Blokir</button>
       </div>
     </div>
   </div>
 
-  <div class="toast" id="toast"></div>
+  <div class="toast"
+       id="toast"></div>
 
   <script>
     // ============================================
@@ -1722,7 +1926,18 @@
       { id: 7, name: 'Soft Glow Eyeshadow A03', sku: 'EYE-003', kat: 'Eyeshadow', harga: 145000, stok: 182, min: 16, icon: '✨', shades: [{ name: 'Pearl Dew', stok: 62 }, { name: 'Rose Gold', stok: 63 }, { name: 'Warm Mink', stok: 57 }] },
       { id: 8, name: 'Apple Blossom Blush', sku: 'BLU-001', kat: 'Blush', harga: 85000, stok: 138, min: 20, icon: '🍎', shades: [{ name: 'Flush Pink', stok: 46 }, { name: 'Peach Fizz', stok: 48 }, { name: 'Berry Swirl', stok: 44 }] },
       { id: 9, name: 'Dewy Coral Blush', sku: 'BLU-002', kat: 'Blush', harga: 90000, stok: 122, min: 18, icon: '🍎', shades: [{ name: 'Coral Kiss', stok: 42 }, { name: 'Warm Apricot', stok: 40 }, { name: 'Sun Rose', stok: 40 }] },
-      { id: 10, name: 'Natural Flush Blush', sku: 'BLU-003', kat: 'Blush', harga: 80000, stok: 116, min: 22, icon: '🍎', shades: [{ name: 'Barely There', stok: 40 }, { name: 'Pink Petal', stok: 38 }, { name: 'Soft Vermillion', stok: 38 }] }
+      { id: 10, name: 'Natural Flush Blush', sku: 'BLU-003', kat: 'Blush', harga: 80000, stok: 116, min: 22, icon: '🍎', shades: [{ name: 'Barely There', stok: 40 }, { name: 'Pink Petal', stok: 38 }, { name: 'Soft Vermillion', stok: 38 }] },
+      // WEB DESIGN PRODUCT - APPLE CONCEPT
+      // LIPPIES (VERSI APPLE CONCEPT)
+      { id: 11, name: 'Airy Blur Lip Mousse (Apple)', sku: 'LIP-APP-001', kat: 'Lippies', harga: 89000, stok: 120, min: 20, icon: '💄', shades: [{ name: 'Soft Apple Cream #F6B1A3', stok: 30 }, { name: 'Peach Bloom #FF9A84', stok: 30 }, { name: 'Rosy Apple Air #F07285', stok: 30 }, { name: 'Muted Apple Berry #C85C6E', stok: 30 }] },
+      { id: 12, name: 'Rosy Soft Lip Tint (Apple)', sku: 'LIP-APP-002', kat: 'Lippies', harga: 75000, stok: 120, min: 20, icon: '💄', shades: [{ name: 'Juicy Peach Splash #FF9B7A', stok: 30 }, { name: 'Apple Pink Pop #FF5F7A', stok: 30 }, { name: 'Fresh Coral Bite #FF7A5C', stok: 30 }, { name: 'Deep Rosy Juice #D94C63', stok: 30 }] },
+      { id: 13, name: 'Petal Glow Lip Glaze (Apple)', sku: 'LIP-APP-003', kat: 'Lippies', harga: 95000, stok: 120, min: 20, icon: '💄', shades: [{ name: 'Glass Peach Glow #FFB3A0', stok: 30 }, { name: 'Juicy Coral Glow #FF8A6C', stok: 30 }, { name: 'Rosy Syrup #FF6F8C', stok: 30 }, { name: 'Apple Red Shine #E53935', stok: 30 }] },
+      { id: 14, name: 'Cream Veil Lip Cushion (Apple)', sku: 'LIP-APP-004', kat: 'Lippies', harga: 110000, stok: 120, min: 20, icon: '💄', shades: [{ name: 'Fresh Apple Glow #FF9A8A', stok: 30 }, { name: 'Juicy Peach Pop #FF8F6B', stok: 30 }, { name: 'Apple Pink Juice #FF5C7A', stok: 30 }, { name: 'Red Apple Cream #E94B4B', stok: 30 }] },
+      // EYESHADOW (APPLE VERSION)
+      { id: 15, name: 'Apple Bloom Eyeshadow A01', sku: 'EYE-APP-001', kat: 'Eyeshadow', harga: 145000, stok: 180, min: 20, icon: '✨', shades: [{ name: 'Apple Milk #F7D4C6', stok: 26 }, { name: 'Golden Apple Skin #F2B89F', stok: 26 }, { name: 'Apricot Apple #FFA889', stok: 26 }, { name: 'Soft Apple Coral #FF8F73', stok: 26 }, { name: 'Toasted Apple Seed #A8745C', stok: 26 }, { name: 'Apple Shine #FFD9C7', stok: 26 }] },
+      { id: 16, name: 'Apple Blossom Eyeshadow A02', sku: 'EYE-APP-002', kat: 'Eyeshadow', harga: 145000, stok: 180, min: 20, icon: '✨', shades: [{ name: 'Blossom Petal #FFB3C1', stok: 26 }, { name: 'Apple Bloom #FF6F8C', stok: 26 }, { name: 'Fresh Apple Bite #E94B63', stok: 26 }, { name: 'Peach Blossom #FF8F7A', stok: 26 }, { name: 'Berry Apple Core #B94A5F', stok: 26 }, { name: 'Blossom Sparkle #FFD1DC', stok: 26 }] },
+      { id: 17, name: 'Juicy Apple Eyeshadow A03', sku: 'EYE-APP-003', kat: 'Eyeshadow', harga: 145000, stok: 180, min: 20, icon: '✨', shades: [{ name: 'Apple Flesh #F7CBB8', stok: 26 }, { name: 'Juicy Apple #FF9A84', stok: 26 }, { name: 'Apple Coral #FF8A6C', stok: 26 }, { name: 'Rosy Apple Juice #FF6A85', stok: 26 }, { name: 'Ripe Apple Pop #FF6F4F', stok: 26 }, { name: 'Golden Apple Drip #FFD27F', stok: 26 }] },
+      { id: 18, name: 'Vanilla Apple Eyeshadow Quad', sku: 'EYE-APP-QUAD-001', kat: 'Eyeshadow', harga: 165000, stok: 100, min: 15, icon: '✨', shades: [{ name: 'Vanilla Apple #F6E1D2', stok: 25 }, { name: 'Brown Sugar Peach #C88B73', stok: 25 }, { name: 'Roasted Apple Bark #7E5647', stok: 25 }, { name: 'Sugar Apple Sparkle #F6D0BC', stok: 25 }] }
     ];
 
     let orders = [
@@ -2304,7 +2519,7 @@
             <div class="user-av-sm" style="background: ${u.color}">${u.initials}</div>
             <div>
               <div style="font-weight: 500">${u.name}</div>
-              <div style="font-size: 11px; color: var(--text-light)">@${u.name.replace(/\s+/g,'').toLowerCase().slice(0,10)}</div>
+              <div style="font-size: 11px; color: var(--text-light)">@${u.name.replace(/\s+/g, '').toLowerCase().slice(0, 10)}</div>
             </div>
           </td>
           <td style="font-size: 12px; color: var(--text-light)">${u.email}</td>
@@ -2485,4 +2700,5 @@
     }
   </script>
 </body>
+
 </html>
