@@ -2487,11 +2487,6 @@ onclick="toggleWishlistSidebar()"></div>
 <div class="toast-container" id="toastContainer"></div>
 
 <script>
-// Cek jika bukan customer yang logged in, redirect ke login
-if (localStorage.getItem('appeaLoggedIn') !== '1' || localStorage.getItem('appeaRole') !== 'customer') {
-    window.location.href = 'login.html';
-}
-
 // ═══════════════════════════════════════════════
 // DATA
 // ═══════════════════════════════════════════════
