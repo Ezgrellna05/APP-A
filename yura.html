@@ -2095,7 +2095,7 @@
 <!-- NAVBAR -->
 <nav id="navbar">
   <a class="nav-logo" href="#">APPÉA<span>
-    <img src="images/logo.png" alt="APPÉA Logo">
+    <img src="product/image/logo.png" alt="APPEA logo">
     </span>
   </a>
   <ul class="nav-links">
@@ -2487,6 +2487,11 @@ onclick="toggleWishlistSidebar()"></div>
 <div class="toast-container" id="toastContainer"></div>
 
 <script>
+// Cek jika bukan customer yang logged in, redirect ke login
+if (localStorage.getItem('appeaLoggedIn') !== '1' || localStorage.getItem('appeaRole') !== 'customer') {
+    window.location.href = 'login.html';
+}
+
 // ═══════════════════════════════════════════════
 // DATA
 // ═══════════════════════════════════════════════

@@ -1913,6 +1913,11 @@
        id="toast"></div>
 
   <script>
+    // Cek jika bukan admin, redirect ke login
+    if (localStorage.getItem('appeaLoggedIn') !== '1' || localStorage.getItem('appeaRole') !== 'admin') {
+        window.location.href = 'login.html';
+    }
+
     // ============================================
     // DATA STORE
     // ============================================
