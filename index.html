@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>APPÉA 🍎 - Beauty That Speaks Softly</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #FDF6F0;
+            --sidebar-bg: linear-gradient(160deg, #F9ECF0 0%, #EFE6F7 50%, #E5F5ED 100%);
+            --primary: #C45E73;
+            --text: #2D1B2E;
+            --text-light: #A08CA2;
+            --white: #ffffff;
+            --shadow: 0 4px 24px rgba(180,120,150,0.12);
+        }
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--sidebar-bg);
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+        .welcome-card {
+            background: var(--white);
+            padding: 50px;
+            border-radius: 20px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+        .logo { font-size: 32px; font-weight: 700; color: var(--primary); margin-bottom: 10px; }
+        .tagline { font-size: 14px; color: var(--text-light); margin-bottom: 30px; }
+        .btn-primary {
+            width: 100%; padding: 14px; background: var(--primary); color: white;
+            border: none; border-radius: 30px; font-weight: 600; cursor: pointer; margin-bottom: 10px;
+        }
+        .btn-secondary {
+            width: 100%; padding: 14px; background: transparent; color: var(--primary);
+            border: 2px solid var(--primary); border-radius: 30px; font-weight: 600; cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="welcome-card">
+        <div class="logo">APPÉA 🍎</div>
+        <div class="tagline">Glow with nature's touch.</div>
+        <button class="btn-primary" onclick="window.location.href='register.html'">Daftar Akun Baru</button>
+        <button class="btn-secondary" onclick="window.location.href='login.html'">Masuk</button>
+    </div>
+
+    <script>
+        // Cek jika sudah login, redirect sesuai role
+        if (localStorage.getItem('appeaLoggedIn') === '1') {
+            const role = localStorage.getItem('appeaRole');
+            if (role === 'admin') {
+                window.location.href = 'admin.html';
+            } else if (role === 'customer') {
+                window.location.href = 'yura.html';
+            }
+        }
+    </script>
+</body>
+</html>

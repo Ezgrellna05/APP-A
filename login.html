@@ -49,12 +49,6 @@
         .footer-link { font-size: 13px; margin-top: 20px; color: var(--text-light); }
         .footer-link a { color: var(--primary); text-decoration: none; font-weight: 600; }
     </style>
-    <script>
-        // Cek jika admin sudah login, langsung redirect ke admin.html
-        if (localStorage.getItem('appeaLoggedIn') === '1' && localStorage.getItem('appeaRole') === 'admin') {
-            window.location.href = 'admin.html';
-        }
-    </script>
 </head>
 <body>
     <div class="auth-card">
